@@ -1,92 +1,74 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8"/>
 <title>
 Examining binomial regression of events/trials and overdispersion | Mental Health Data Science with Melanie Wall	</title>
-<link rel="profile" href="https://gmpg.org/xfn/11">
-<link rel="stylesheet" type="text/css" media="all" href="./../../../../wp-content/themes/twentyten/style.css?ver=20240716">
-<link rel="pingback" href="./../../../../xmlrpc.php">
-<meta name="robots" content="max-image-preview:large">
-<link rel="dns-prefetch" href="//secure.gravatar.com">
-<link rel="dns-prefetch" href="//stats.wp.com">
-<link rel="dns-prefetch" href="//v0.wordpress.com">
-<link rel="dns-prefetch" href="//i0.wp.com">
-<link rel="dns-prefetch" href="//jetpack.wordpress.com">
-<link rel="dns-prefetch" href="//s0.wp.com">
-<link rel="dns-prefetch" href="//public-api.wordpress.com">
-<link rel="dns-prefetch" href="//0.gravatar.com">
-<link rel="dns-prefetch" href="//1.gravatar.com">
-<link rel="dns-prefetch" href="//2.gravatar.com">
-<link rel="alternate" type="application/rss+xml" title="Mental Health Data Science with Melanie Wall &raquo; Feed" href="./../../../../feed/index.html">
-<link rel="alternate" type="application/rss+xml" title="Mental Health Data Science with Melanie Wall &raquo; Comments Feed" href="./../../../../comments/feed/index.html">
-<link rel="alternate" type="application/rss+xml" title="Mental Health Data Science with Melanie Wall &raquo; Examining binomial regression of events/trials and overdispersion Comments Feed" href="./feed/index.html">
-<script type="text/javascript">
-/* <![CDATA[ */
-window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"concatemoji":".\/\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.6.1"}};
-/*! This file is auto-generated */
-!function(i,n){var o,s,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),r=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===r[t]})}function u(e,t,n){switch(t){case"flag":return n(e,"🏳️‍⚧️","🏳️​⚧️")?!1:!n(e,"🇺🇳","🇺​🇳")&&!n(e,"🏴󠁧󠁢󠁥󠁮󠁧󠁿","🏴​󠁧​󠁢​󠁥​󠁮​󠁧​󠁿");case"emoji":return!n(e,"🐦‍⬛","🐦​⬛")}return!1}function f(e,t,n){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):i.createElement("canvas"),a=r.getContext("2d",{willReadFrequently:!0}),o=(a.textBaseline="top",a.font="600 32px Arial",{});return e.forEach(function(e){o[e]=t(a,e,n)}),o}function t(e){var t=i.createElement("script");t.src=e,t.defer=!0,i.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",s=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){i.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"}),a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=function(e){c(n=e.data),a.terminate(),t(n)})}catch(e){}c(n=f(s,u,p))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
-/* ]]> */
-</script>
-<style id="wp-emoji-styles-inline-css" type="text/css">img.wp-smiley, img.emoji {
-		display: inline !important;
-		border: none !important;
-		box-shadow: none !important;
-		height: 1em !important;
-		width: 1em !important;
-		margin: 0 0.07em !important;
-		vertical-align: -0.1em !important;
-		background: none !important;
-		padding: 0 !important;
-	}</style>
-<link rel="stylesheet" id="wp-block-library-css" href="./../../../../wp-includes/css/dist/block-library/style.min.css?ver=6.6.1" type="text/css" media="all">
+<link href="https://gmpg.org/xfn/11" rel="profile"/>
+<link href="./../../../../wp-content/themes/twentyten/style.css?ver=20240716" media="all" rel="stylesheet" type="text/css"/>
+
+<meta content="max-image-preview:large" name="robots"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="./../../../../wp-includes/css/dist/block-library/style.min.css?ver=6.6.1" id="wp-block-library-css" media="all" rel="stylesheet" type="text/css"/>
 <style id="wp-block-library-theme-inline-css" type="text/css">.wp-block-audio :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio :where(figcaption){color:#ffffffa6}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed :where(figcaption){color:#ffffffa6}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:#ffffffa6}:root :where(.wp-block-image figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme :root :where(.wp-block-image figcaption){color:#ffffffa6}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-bottom:4px solid;border-top:4px solid;color:currentColor;margin-bottom:1.75em}.wp-block-pullquote cite,.wp-block-pullquote footer,.wp-block-pullquote__citation{color:currentColor;font-size:.8125em;font-style:normal;text-transform:uppercase}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;font-style:normal;position:relative}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote.is-style-plain{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table :where(figcaption){color:#ffffffa6}.wp-block-video :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video :where(figcaption){color:#ffffffa6}.wp-block-video{margin:0 0 1em}:root :where(.wp-block-template-part.has-background){margin-bottom:0;margin-top:0;padding:1.25em 2.375em}</style>
-<link rel="stylesheet" id="mediaelement-css" href="./../../../../wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.17" type="text/css" media="all">
-<link rel="stylesheet" id="wp-mediaelement-css" href="./../../../../wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=6.6.1" type="text/css" media="all">
+<link href="./../../../../wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.17" id="mediaelement-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="./../../../../wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=6.6.1" id="wp-mediaelement-css" media="all" rel="stylesheet" type="text/css"/>
 <style id="jetpack-sharing-buttons-style-inline-css" type="text/css">.jetpack-sharing-buttons__services-list{display:flex;flex-direction:row;flex-wrap:wrap;gap:0;list-style-type:none;margin:5px;padding:0}.jetpack-sharing-buttons__services-list.has-small-icon-size{font-size:12px}.jetpack-sharing-buttons__services-list.has-normal-icon-size{font-size:16px}.jetpack-sharing-buttons__services-list.has-large-icon-size{font-size:24px}.jetpack-sharing-buttons__services-list.has-huge-icon-size{font-size:36px}@media print{.jetpack-sharing-buttons__services-list{display:none!important}}.editor-styles-wrapper .wp-block-jetpack-sharing-buttons{gap:0;padding-inline-start:0}ul.jetpack-sharing-buttons__services-list.has-background{padding:1.25em 2.375em}</style>
-<link rel="stylesheet" id="awsm-ead-public-css" href="./../../../../wp-content/plugins/embed-any-document/css/embed-public.min.css?ver=2.7.4" type="text/css" media="all">
-<link rel="stylesheet" id="nfd-wonder-blocks-utilities-css" href="./../../../../wp-content/plugins/bluehost-wordpress-plugin/vendor/newfold-labs/wp-module-patterns/assets/build/utilities.css?ver=2.4.1" type="text/css" media="all">
-<link rel="stylesheet" id="gdm-gutenberg-block-backend-js-css" href="./../../../../wp-content/plugins/google-drive-embedder/css/gdm-blocks.css?ver=6.6.1" type="text/css" media="all">
+<link href="./../../../../wp-content/plugins/embed-any-document/css/embed-public.min.css?ver=2.7.4" id="awsm-ead-public-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="./../../../../wp-content/plugins/bluehost-wordpress-plugin/vendor/newfold-labs/wp-module-patterns/assets/build/utilities.css?ver=2.4.1" id="nfd-wonder-blocks-utilities-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="./../../../../wp-content/plugins/google-drive-embedder/css/gdm-blocks.css?ver=6.6.1" id="gdm-gutenberg-block-backend-js-css" media="all" rel="stylesheet" type="text/css"/>
 <style id="classic-theme-styles-inline-css" type="text/css">/*! This file is auto-generated */
 .wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}</style>
 <style id="global-styles-inline-css" type="text/css">:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #fff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--blue: #0066cc;--wp--preset--color--medium-gray: #666;--wp--preset--color--light-gray: #f1f1f1;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
 :where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
 :where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
 :root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}</style>
-<link rel="stylesheet" id="twentyten-block-style-css" href="./../../../../wp-content/themes/twentyten/blocks.css?ver=20230627" type="text/css" media="all">
-<link rel="stylesheet" id="social-logos-css" href="./../../../../wp-content/plugins/jetpack/_inc/social-logos/social-logos.min.css?ver=13.8" type="text/css" media="all">
-<link rel="stylesheet" id="jetpack_css-css" href="./../../../../wp-content/plugins/jetpack/css/jetpack.css?ver=13.8" type="text/css" media="all">
-<script type="text/javascript" id="jetpack_related-posts-js-extra">
+<link href="./../../../../wp-content/themes/twentyten/blocks.css?ver=20230627" id="twentyten-block-style-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="./../../../../wp-content/plugins/jetpack/_inc/social-logos/social-logos.min.css?ver=13.8" id="social-logos-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="./../../../../wp-content/plugins/jetpack/css/jetpack.css?ver=13.8" id="jetpack_css-css" media="all" rel="stylesheet" type="text/css"/>
+<script id="jetpack_related-posts-js-extra" type="text/javascript">
 /* <![CDATA[ */
 var related_posts_js_options = {"post_heading":"h4"};
 /* ]]> */
 </script>
-<script type="text/javascript" src="./../../../../wp-content/plugins/jetpack/_inc/build/related-posts/related-posts.min.js?ver=20240116" id="jetpack_related-posts-js"></script>
-<script type="text/javascript" src="./../../../../wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
-<script type="text/javascript" src="./../../../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
-<script type="text/javascript" src="./../../../../wp-content/plugins/bluehost-wordpress-plugin/vendor/newfold-labs/wp-module-patterns/assets/build/utilities.js?ver=2.4.1" id="nfd-wonder-blocks-utilities-js"></script>
-<link rel="https://api.w.org/" href="./../../../../wp-json/index.html">
-<link rel="alternate" title="JSON" type="application/json" href="./../../../../wp-json/wp/v2/posts/426/index.html">
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="./../../../../xmlrpc.php?rsd">
-<meta name="generator" content="WordPress 6.6.1">
-<link rel="canonical" href="./index.html">
-<link rel="shortlink" href="./../../../../index.html?p=426">
-<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="./../../../../wp-json/oembed/1.0/embed/index.html?url=https%3A%2F%2F%2F2023%2F06%2F24%2Fexamining-binomial-regression-of-events-trials-and-overdispersion%2F">
-<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="./../../../../wp-json/oembed/1.0/embed/index.html?url=https%3A%2F%2F%2F2023%2F06%2F24%2Fexamining-binomial-regression-of-events-trials-and-overdispersion%2F#038;format=xml">
-	<style>img#wpstats{display:none}</style>
-		
-<!-- Jetpack Open Graph Tags -->
-<meta property="og:type" content="article">
-<meta property="og:title" content="Examining binomial regression of events/trials and overdispersion">
-<meta property="og:url" content="./index.html">
-<meta property="og:description" content="Melanie Wall 2023-06-24 knitr::opts_chunk$set(echo = TRUE) This document shows different ways to code/model binomial count (event/trials) data in r glm() packange and also demonstrates the results …">
-<meta property="article:published_time" content="2023-06-24T21:22:54+00:00">
-<meta property="article:modified_time" content="2023-06-24T21:22:57+00:00">
-<meta property="og:site_name" content="Mental Health Data Science with Melanie Wall">
-<meta property="og:image" content="https://s0.wp.com/i/blank.jpg">
-<meta property="og:image:alt">
-<meta property="og:locale" content="en_US">
+<script id="jetpack_related-posts-js" src="./../../../../wp-content/plugins/jetpack/_inc/build/related-posts/related-posts.min.js?ver=20240116" type="text/javascript"></script>
+<script id="jquery-core-js" src="./../../../../wp-includes/js/jquery/jquery.min.js?ver=3.7.1" type="text/javascript"></script>
+<script id="jquery-migrate-js" src="./../../../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" type="text/javascript"></script>
+<script id="nfd-wonder-blocks-utilities-js" src="./../../../../wp-content/plugins/bluehost-wordpress-plugin/vendor/newfold-labs/wp-module-patterns/assets/build/utilities.js?ver=2.4.1" type="text/javascript"></script>
 
+
+
+
+<link href="https://genxstat.github.io/mental-health-data-science/2023/06/24/examining-binomial-regression-of-events-trials-and-overdispersion/" rel="canonical"/>
+
+
+
+<style>img#wpstats{display:none}</style>
+<!-- Jetpack Open Graph Tags -->
+<meta content="article" property="og:type"/>
+<meta content="Examining binomial regression of events/trials and overdispersion" property="og:title"/>
+<meta content="https://genxstat.github.io/mental-health-data-science/2023/06/24/examining-binomial-regression-of-events-trials-and-overdispersion/" property="og:url"/>
+<meta content="Melanie Wall 2023-06-24 knitr::opts_chunk$set(echo = TRUE) This document shows different ways to code/model binomial count (event/trials) data in r glm() package and also demonstrates the results …" property="og:description"/>
+<meta content="2023-06-24T21:22:54+00:00" property="article:published_time"/>
+<meta content="2023-06-24T21:22:57+00:00" property="article:modified_time"/>
+<meta content="Mental Health Data Science with Melanie Wall" property="og:site_name"/>
+<meta content="https://genxstat.github.io/mental-health-data-science/wp-content/uploads/2021/01/logo-2021.jpg" property="og:image"/>
+<meta content="Mental Health Data Science logo" property="og:image:alt"/>
+<meta content="en_US" property="og:locale"/>
 <!-- End Jetpack Open Graph Tags -->
 <style id="wpforms-css-vars-root">:root {
 					--wpforms-field-border-radius: 3px;
@@ -139,1798 +121,418 @@ var related_posts_js_options = {"post_heading":"h4"};
 --wpforms-container-shadow-size-box-shadow: none;
 
 				}</style>
-</head>
-
+<style id="static-fixes">.entry-content pre{overflow-x:auto;white-space:pre;font-size:13px;line-height:1.45}</style></head>
 <body class="post-template-default single single-post postid-426 single-format-standard">
-<div id="wrapper" class="hfeed">
-	<div id="header">
-		<div id="masthead">
-			<div id="branding" role="banner">
-								<div id="site-title">
-					<span>
-						<a href="./../../../../index.html" rel="home">Mental Health Data Science with Melanie Wall</a>
-					</span>
-				</div>
-				<div id="site-description">I am a biostatistician who has worked on applied research questions in psychosocial and behavioral public health and psychiatry my whole career. Here is a place to post ideas, helpful hints, and maybe start discussions about this exciting work especially as we enter a new era of Data Science</div>
-
-				<img src="./../../../../wp-content/uploads/2021/01/cropped-logo-2021-wider2-scaled-1.jpg" width="940" height="" alt="Mental Health Data Science with Melanie Wall" decoding="async">			</div>
+<div class="hfeed" id="wrapper">
+<div id="header">
+<div id="masthead">
+<div id="branding" role="banner">
+<div id="site-title">
+<span>
+<a href="./../../../../index.html" rel="home">Mental Health Data Science with Melanie Wall</a>
+</span>
+</div>
+<div id="site-description">I am a biostatistician who has worked on applied research questions in psychosocial and behavioral public health and psychiatry my whole career. Here is a place to post ideas, helpful hints, and maybe start discussions about this exciting work especially as we enter a new era of Data Science</div>
+<img alt="Mental Health Data Science with Melanie Wall" decoding="async" height="" src="./../../../../wp-content/uploads/2021/01/cropped-logo-2021-wider2-scaled-1.jpg" width="940"/> </div>
 <!-- #branding -->
-
-			<div id="access" role="navigation">
-								<div class="skip-link screen-reader-text"><a href="#content">Skip to content</a></div>
-				<div class="menu"><ul>
+<div id="access" role="navigation">
+<div class="skip-link screen-reader-text"><a href="#content">Skip to content</a></div>
+<div class="menu"><ul>
 <li><a href="./../../../../index.html">Home</a></li>
 <li class="page_item page-item-25"><a href="./../../../../about-me/index.html">About me</a></li>
 </ul></div>
-			</div>
+</div>
 <!-- #access -->
-		</div>
+</div>
 <!-- #masthead -->
-	</div>
+</div>
 <!-- #header -->
-
-	<div id="main">
-
-		<div id="container">
-			<div id="content" role="main">
-
-			
-
-				<div id="nav-above" class="navigation">
-					<div class="nav-previous"><a href="./../../../../2021/05/29/data-scientists-myself-included-need-regular-reminders-about-problems-of-interpreting-odds-ratios-from-logistic-regression/index.html" rel="prev"><span class="meta-nav">&larr;</span> Data scientists, myself included, need regular reminders about problems of interpreting odds ratios from logistic regression</a></div>
-					<div class="nav-next"></div>
-				</div>
+<div id="main">
+<div id="container">
+<div id="content" role="main">
+<div class="navigation" id="nav-above">
+<div class="nav-previous"><a href="./../../../../2021/05/29/data-scientists-myself-included-need-regular-reminders-about-problems-of-interpreting-odds-ratios-from-logistic-regression/index.html" rel="prev"><span class="meta-nav">←</span> Data scientists, myself included, need regular reminders about problems of interpreting odds ratios from logistic regression</a></div>
+<div class="nav-next"></div>
+</div>
 <!-- #nav-above -->
-
-				<div id="post-426" class="post-426 post type-post status-publish format-standard hentry category-uncategorized">
-					<h1 class="entry-title">Examining binomial regression of events/trials and overdispersion</h1>
-
-					<div class="entry-meta">
-						<span class="meta-prep meta-prep-author">Posted on</span> <a href="./index.html" title="9:22 pm" rel="bookmark"><span class="entry-date">June 24, 2023</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="./../../../../author/admin/index.html" title="View all posts by melanie">melanie</a></span>					</div>
+<div class="post-426 post type-post status-publish format-standard hentry category-uncategorized" id="post-426">
+<h1 class="entry-title">Examining binomial regression of events/trials and overdispersion</h1>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="./index.html" rel="bookmark" title="9:22 pm"><span class="entry-date">June 24, 2023</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="./../../../../author/admin/index.html">Melanie Wall</a></span> </div>
 <!-- .entry-meta -->
+<div class="entry-content"><p>This document shows different ways to code/model binomial count
+(events/trials) data with R’s <code>glm()</code> function, and also
+demonstrates the results when we aggregate data across units and when we
+account for overdispersion across units.</p>
+<p>The data for demonstration are about bird extinctions, from the R
+package <strong>Sleuth3</strong>. To get it:
+<code>install.packages("Sleuth3")</code>. The data (shown below) are
+from 18 islands (the Krunnit Islands in Finland) and are counts of how
+many different bird species there are, i.e. “trials”
+(<code>AtRisk</code>), and how many species went extinct, i.e. “events”
+(<code>Extinct</code>).</p>
+<p>For illustration, I created a dichotomous predictor variable called
+<code>group</code>, which is 0 for big islands and 1 for small
+islands.</p>
+<pre class="r"><code>library(Sleuth3)
+library(tidyverse)</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.2     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.1
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>krunnit &lt;- case2101
 
-					<div class="entry-content">
-						
+####create a grouping variable for demonstration
+krunnit$group = if_else(krunnit$Area &lt; 10,1,0)
 
+# &gt; krunnit
+#             Island   Area AtRisk Extinct group
+# 1       Ulkokrunni 185.80     75       5     0
+# 2        Maakrunni 105.80     67       3     0
+# 3        Ristikari  30.70     66      10     0
+# 4   Isonkivenletto   8.50     51       6     1
+# 5   Hietakraasukka   4.80     28       3     1
+# 6        Kraasukka   4.50     20       4     1
+# 7       Lansiletto   4.30     43       8     1
+# 8      Pihlajakari   3.60     31       3     1
+# 9             Tyni   2.60     28       5     1
+# 10    Tasasenletto   1.70     32       6     1
+# 11          Raiska   1.20     30       8     1
+# 12     Pohjanletto   0.70     20       2     1
+# 13            Toro   0.70     31       9     1
+# 14      Luusiletto   0.60     16       5     1
+# 15   Vatunginletto   0.40     15       7     1
+# 16   Vatunginnokka   0.30     33       8     1
+# 17       Tiirakari   0.20     40      13     1
+# 18 Ristikarenletto   0.07      6       3     1</code></pre>
+<h2 id="two-ways-of-coding-a-binomial-in-glm">Two ways of coding a
+binomial in <code>glm()</code></h2>
+<ol type="1">
+<li>The proportion (events/trials) as the outcome, with
+<code>weights = trials</code></li>
+<li><code>cbind(events, trials - events)</code> as a bivariate outcome,
+with no need to include weights</li>
+</ol>
+<p>See below:</p>
+<pre class="r"><code>krunnit$prop = krunnit$Extinct/krunnit$AtRisk
 
+###uses proportion as outcome with weight = number of trials ("AtRisk"); n=18 islands
+fit1&lt;-glm(prop ~ group, family = binomial(), weights = AtRisk, data = krunnit)
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta http-equiv="Content-Style-Type" content="text/css">
-    <title></title>
-    <meta name="Generator" content="Cocoa HTML Writer">
-    <meta name="CocoaVersion" content="2299">
-    <style type="text/css">p.p3 {
-        margin: 0.0px 0.0px 0.0px 0.0px;
-        line-height: 18.6px;
-        font: 13.0px Courier;
-        color: #262626;
-        -webkit-text-stroke: #262626;
-        background-color: #f2f2f2
-    }
+###uses number of events ("Extinct") and number of non-events ("AtRisk - Extinct") as bivariate outcome (using cbind);  n=18 islands
+fit2&lt;-glm(cbind(Extinct, AtRisk - Extinct) ~ group, family = binomial(), data = krunnit)</code></pre>
+<h2 id="what-if-we-aggregate-events-across-islands-so-the-data-are-summarized-just-by-group">What
+if we aggregate events across islands so the data are summarized just by
+group?</h2>
+<pre class="r"><code>###aggregates events and non-events across islands
 
-    p.p5 {
-        margin: 0.0px 0.0px 0.0px 0.0px;
-        line-height: 18.6px;
-        font: 13.0px Courier;
-        color: #262626;
-        -webkit-text-stroke: #262626;
-        background-color: #ffffff
-    }
-
-    p.p6 {
-        margin: 0.0px 0.0px 0.0px 0.0px;
-        line-height: 18.6px;
-        font: 13.0px Menlo;
-        color: #262626;
-        -webkit-text-stroke: #262626;
-        background-color: #ffffff
-    }
-
-    p.p7 {
-        margin: 0.0px 0.0px 0.0px 0.0px;
-        line-height: 18.6px;
-        font: 13.0px Courier;
-        color: #262626;
-        -webkit-text-stroke: #262626;
-        background-color: #f2f2f2;
-        min-height: 16.0px
-    }
-
-    span.s1 {
-        font-kerning: none
-    }
-
-    span.s2 {
-        font: 13.0px Menlo;
-        font-kerning: none
-    }
-
-    span.s3 {
-        font: 13.0px Courier;
-        font-kerning: none
-    }
-
-    span.s4 {
-        font: 13.0px 'Apple Symbols';
-        font-kerning: none
-    }
-
-    span.s5 {
-        text-decoration: underline;
-        font-kerning: none
-    }
-
-    span.s6 {
-        font: 18.0px 'Helvetica Neue';
-        font-kerning: none;
-        color: #2965a8;
-        -webkit-text-stroke: 0px #2965a8
-    }</style>
-
-
-    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">Melanie Wall</span>
-    </h4>
-    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">2023-06-24</span>
-    </h4>
-    <p class="p3">
-        <span class="s1">knitr::opts_chunk$set(echo = TRUE)</span>
-    </p>
-    <h3 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 26.4px; font: 24.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">This document shows different ways to code/model binomial count (event/trials) data in r glm() packange and also demonstrates the results when we aggregate data across units and also when we account for overdispersion across units.</span>
-    </h3>
-    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">The data for demonstration are about Bird Extinctions from the R package Sleuth3. To get it: install.packages(“Sleuth3”). Data (shown below) are from 18 islands (Krunnit Islands in Finland) and are counts of how many different bird species there are, i.e. “trials” (AtRisk) and how many species went extinct, i.e. “events” (Extinct)</span>
-    </h4>
-    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">For illustration, I created a dichotomous predictor variable called group which is 0 for big islands and 1 for small islands</span>
-    </h4>
-    <p class="p3">
-        <span class="s1">library(Sleuth3)</span>
-    </p>
-    <p class="p3">
-        <span class="s1">library(tidyverse)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">## </span>
-        <span class="s2">──</span>
-        <span class="s1"> Attaching core tidyverse packages </span>
-        <span class="s2">────────────────────────</span>
-        <span class="s1"> tidyverse 2.0.0 </span>
-        <span class="s2">──</span>
-    </p>
-    <p class="p5">
-        <span class="s1">## </span>
-        <span class="s2">✔</span>
-        <span class="s1">
-             dplyr 
-            <span class="Apple-converted-space"></span>
-            1.1.2 
-            <span class="Apple-converted-space"></span>
-        </span>
-        <span class="s2">✔</span>
-        <span class="s1">
-             readr 
-            <span class="Apple-converted-space"></span>
-            2.1.4
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## </span>
-        <span class="s2">✔</span>
-        <span class="s1">
-             forcats 
-            <span class="Apple-converted-space"></span>
-            1.0.0 
-            <span class="Apple-converted-space"></span>
-        </span>
-        <span class="s2">✔</span>
-        <span class="s1">
-             stringr 
-            <span class="Apple-converted-space"></span>
-            1.5.0
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## </span>
-        <span class="s2">✔</span>
-        <span class="s1">
-             ggplot2 
-            <span class="Apple-converted-space"></span>
-            3.4.2 
-            <span class="Apple-converted-space"></span>
-        </span>
-        <span class="s2">✔</span>
-        <span class="s1">
-             tibble
-            <span class="Apple-converted-space"></span>
-            3.2.1
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## </span>
-        <span class="s2">✔</span>
-        <span class="s1">
-             lubridate 1.9.2 
-            <span class="Apple-converted-space"></span>
-        </span>
-        <span class="s2">✔</span>
-        <span class="s1">
-             tidyr 
-            <span class="Apple-converted-space"></span>
-            1.3.0
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## </span>
-        <span class="s2">✔</span>
-        <span class="s1">
-             purrr 
-            <span class="Apple-converted-space"></span>
-            1.0.1
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p6">
-        <span class="s3">## </span>
-        <span class="s1">──</span>
-        <span class="s3"> Conflicts </span>
-        <span class="s1">──────────────────────────────────────────</span>
-        <span class="s3"> tidyverse_conflicts() </span>
-        <span class="s1">──</span>
-    </p>
-    <p class="p5">
-        <span class="s1">## </span>
-        <span class="s2">✖</span>
-        <span class="s1"> dplyr::filter() masks stats::filter()</span>
-    </p>
-    <p class="p5">
-        <span class="s1">## </span>
-        <span class="s2">✖</span>
-        <span class="s1">
-             dplyr::lag()
-            <span class="Apple-converted-space"></span>
-            masks stats::lag()
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## </span>
-        <span class="s4">ℹ</span>
-        <span class="s1"> Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span>
-    </p>
-    <p class="p3">
-        <span class="s1">krunnit &lt;- case2101</span>
-    </p>
-    <p class="p7">
-        <span class="s1"></span>
-        <br>
-    </p>
-    <p class="p3">
-        <span class="s1">####create a grouping variable for demonstration</span>
-    </p>
-    <p class="p3">
-        <span class="s1">krunnit$group = if_else(krunnit$Area &lt; 10,1,0)</span>
-    </p>
-    <p class="p7">
-        <span class="s1"></span>
-        <br>
-    </p>
-    <p class="p3">
-        <span class="s1"># &gt; krunnit</span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 
-            <span class="Apple-converted-space"></span>
-            Island 
-            <span class="Apple-converted-space"></span>
-            Area AtRisk Extinct group
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 1 
-            <span class="Apple-converted-space"></span>
-            Ulkokrunni 185.80 
-            <span class="Apple-converted-space"></span>
-            75 
-            <span class="Apple-converted-space"></span>
-            5 
-            <span class="Apple-converted-space"></span>
-            0
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 2
-            <span class="Apple-converted-space"></span>
-            Maakrunni 105.80 
-            <span class="Apple-converted-space"></span>
-            67 
-            <span class="Apple-converted-space"></span>
-            3 
-            <span class="Apple-converted-space"></span>
-            0
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 3
-            <span class="Apple-converted-space"></span>
-            Ristikari
-            <span class="Apple-converted-space"></span>
-            30.70 
-            <span class="Apple-converted-space"></span>
-            66
-            <span class="Apple-converted-space"></span>
-            10 
-            <span class="Apple-converted-space"></span>
-            0
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 4 
-            <span class="Apple-converted-space"></span>
-            Isonkivenletto 
-            <span class="Apple-converted-space"></span>
-            8.50 
-            <span class="Apple-converted-space"></span>
-            51 
-            <span class="Apple-converted-space"></span>
-            6 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 5 
-            <span class="Apple-converted-space"></span>
-            Hietakraasukka 
-            <span class="Apple-converted-space"></span>
-            4.80 
-            <span class="Apple-converted-space"></span>
-            28 
-            <span class="Apple-converted-space"></span>
-            3 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 6
-            <span class="Apple-converted-space"></span>
-            Kraasukka 
-            <span class="Apple-converted-space"></span>
-            4.50 
-            <span class="Apple-converted-space"></span>
-            20 
-            <span class="Apple-converted-space"></span>
-            4 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 7 
-            <span class="Apple-converted-space"></span>
-            Lansiletto 
-            <span class="Apple-converted-space"></span>
-            4.30 
-            <span class="Apple-converted-space"></span>
-            43 
-            <span class="Apple-converted-space"></span>
-            8 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 8
-            <span class="Apple-converted-space"></span>
-            Pihlajakari 
-            <span class="Apple-converted-space"></span>
-            3.60 
-            <span class="Apple-converted-space"></span>
-            31 
-            <span class="Apple-converted-space"></span>
-            3 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 9 
-            <span class="Apple-converted-space"></span>
-            Tyni 
-            <span class="Apple-converted-space"></span>
-            2.60 
-            <span class="Apple-converted-space"></span>
-            28 
-            <span class="Apple-converted-space"></span>
-            5 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 10
-            <span class="Apple-converted-space"></span>
-            Tasasenletto 
-            <span class="Apple-converted-space"></span>
-            1.70 
-            <span class="Apple-converted-space"></span>
-            32 
-            <span class="Apple-converted-space"></span>
-            6 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 11
-            <span class="Apple-converted-space"></span>
-            Raiska 
-            <span class="Apple-converted-space"></span>
-            1.20 
-            <span class="Apple-converted-space"></span>
-            30 
-            <span class="Apple-converted-space"></span>
-            8 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 12 
-            <span class="Apple-converted-space"></span>
-            Pohjanletto 
-            <span class="Apple-converted-space"></span>
-            0.70 
-            <span class="Apple-converted-space"></span>
-            20 
-            <span class="Apple-converted-space"></span>
-            2 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 13
-            <span class="Apple-converted-space"></span>
-            Toro 
-            <span class="Apple-converted-space"></span>
-            0.70 
-            <span class="Apple-converted-space"></span>
-            31 
-            <span class="Apple-converted-space"></span>
-            9 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 14
-            <span class="Apple-converted-space"></span>
-            Luusiletto 
-            <span class="Apple-converted-space"></span>
-            0.60 
-            <span class="Apple-converted-space"></span>
-            16 
-            <span class="Apple-converted-space"></span>
-            5 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 15 
-            <span class="Apple-converted-space"></span>
-            Vatunginletto 
-            <span class="Apple-converted-space"></span>
-            0.40 
-            <span class="Apple-converted-space"></span>
-            15 
-            <span class="Apple-converted-space"></span>
-            7 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 16 
-            <span class="Apple-converted-space"></span>
-            Vatunginnokka 
-            <span class="Apple-converted-space"></span>
-            0.30 
-            <span class="Apple-converted-space"></span>
-            33 
-            <span class="Apple-converted-space"></span>
-            8 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 17 
-            <span class="Apple-converted-space"></span>
-            Tiirakari 
-            <span class="Apple-converted-space"></span>
-            0.20 
-            <span class="Apple-converted-space"></span>
-            40
-            <span class="Apple-converted-space"></span>
-            13 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            # 18 Ristikarenletto 
-            <span class="Apple-converted-space"></span>
-            0.07
-            <span class="Apple-converted-space"></span>
-            6 
-            <span class="Apple-converted-space"></span>
-            3 
-            <span class="Apple-converted-space"></span>
-            1
-        </span>
-    </p>
-    <h5 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 17.6px; font: 16.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">Two ways of coding a binomial in glm:</span>
-    </h5>
-    <h5 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 17.6px; font: 16.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">1) proportion (events/trials) as outcome and weights = trials,</span>
-    </h5>
-    <h5 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 17.6px; font: 16.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">2) cbind( events, trials &#8211; events) as bivariate outcome and no need to include weights</span>
-    </h5>
-    <h5 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 17.6px; font: 16.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">See below</span>
-    </h5>
-    <p class="p3">
-        <span class="s1">krunnit$prop = krunnit$Extinct/krunnit$AtRisk</span>
-    </p>
-    <p class="p7">
-        <span class="s1"></span>
-        <br>
-    </p>
-    <p class="p3">
-        <span class="s1">###uses proportion as outcome with weight = number of trials (&#8220;AtRisk&#8221;); n=18 islands</span>
-    </p>
-    <p class="p3">
-        <span class="s1">fit1&lt;-glm(prop ~ group, family = binomial(), weights = AtRisk, data = krunnit)</span>
-    </p>
-    <p class="p7">
-        <span class="s1"></span>
-        <br>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            ###uses number of events (&#8220;Extinct&#8221;) and number of non-events (&#8220;AtRisk &#8211; Extinct&#8221;) as bivariate outcome (using cbind);
-            <span class="Apple-converted-space"></span>
-            n=18 islands
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">fit2&lt;-glm(cbind(Extinct, AtRisk &#8211; Extinct) ~ group, family = binomial(), data = krunnit)</span>
-    </p>
-    <h3 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 26.4px; font: 24.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">What about if we aggregate events across islands so that the data is summarized just by group?</span>
-    </h3>
-    <p class="p3">
-        <span class="s1">###aggregates events and non-events across islands</span>
-    </p>
-    <p class="p7">
-        <span class="s1"></span>
-        <br>
-    </p>
-    <p class="p3">
-        <span class="s1">aggkrunnit&lt;-krunnit %&gt;% select(AtRisk, Extinct, group) %&gt;% group_by(group)%&gt;%</span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            <span class="Apple-converted-space"></span>
-            summarise(totAtRisk=sum(AtRisk),
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            <span class="Apple-converted-space"></span>
+aggkrunnit&lt;-krunnit %&gt;% select(AtRisk, Extinct, group) %&gt;% group_by(group)%&gt;%
+  summarise(totAtRisk=sum(AtRisk),
             totExtinct = sum(Extinct))%&gt;%
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">
-            <span class="Apple-converted-space"></span>
             mutate(totprop = totExtinct/totAtRisk)
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">aggkrunnit</span>
-    </p>
-    <p class="p5">
-        <span class="s1">## # A tibble: 2 × 4</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            group totAtRisk totExtinct totprop
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            &lt;dbl&gt; 
-            <span class="Apple-converted-space"></span>
-            &lt;int&gt;
-            <span class="Apple-converted-space"></span>
-            &lt;int&gt; 
-            <span class="Apple-converted-space"></span>
-            &lt;dbl&gt;
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 1 
-            <span class="Apple-converted-space"></span>
-            0 
-            <span class="Apple-converted-space"></span>
-            208 
-            <span class="Apple-converted-space"></span>
-            18
-            <span class="Apple-converted-space"></span>
-            0.0865
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 2 
-            <span class="Apple-converted-space"></span>
-            1 
-            <span class="Apple-converted-space"></span>
-            424 
-            <span class="Apple-converted-space"></span>
-            90
-            <span class="Apple-converted-space"></span>
-            0.212
-        </span>
-    </p>
-    <p class="p3">
-        <span class="s1">###uses aggregated data and proportion as outcome with weight = number of trials (&#8220;AtRisk&#8221;) n=2 groups</span>
-    </p>
-    <p class="p3">
-        <span class="s1">fit3&lt;-glm(totprop ~ group, family = binomial(), weights = totAtRisk, data = aggkrunnit)</span>
-    </p>
-    <p class="p7">
-        <span class="s1"></span>
-        <br>
-    </p>
-    <p class="p3">
-        <span class="s1">###uses aggregated data number of events (&#8220;Extinct&#8221;) and number of non-events (&#8220;AtRisk &#8211; Extinct&#8221;) as outcome n=2 groups</span>
-    </p>
-    <p class="p3">
-        <span class="s1">fit4&lt;-glm(cbind(totExtinct, totAtRisk-totExtinct) ~ group, family = binomial(), data = aggkrunnit)</span>
-    </p>
-    <p class="p7">
-        <span class="s1"></span>
-        <br>
-    </p>
-    <p class="p7">
-        <span class="s1"></span>
-        <br>
-    </p>
-    <p class="p3">
-        <span class="s1">summary(fit1)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Call:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## glm(formula = prop ~ group, family = binomial(), data = krunnit,
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            weights = AtRisk)
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Coefficients:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Estimate Std. Error z value Pr(&gt;|z|) 
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## (Intercept)
-            <span class="Apple-converted-space"></span>
-            -2.3567 
-            <span class="Apple-converted-space"></span>
-            0.2466
-            <span class="Apple-converted-space"></span>
-            -9.556
-            <span class="Apple-converted-space"></span>
-            &lt; 2e-16 ***
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## group 
-            <span class="Apple-converted-space"></span>
-            1.0453 
-            <span class="Apple-converted-space"></span>
-            0.2737 
-            <span class="Apple-converted-space"></span>
-            3.819 0.000134 ***
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## &#8212;</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Signif. codes:
-            <span class="Apple-converted-space"></span>
-            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## (Dispersion parameter for binomial family taken to be 1)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Null deviance: 45.338
-            <span class="Apple-converted-space"></span>
-            on 17
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Residual deviance: 28.185
-            <span class="Apple-converted-space"></span>
-            on 16
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## AIC: 91.517</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Number of Fisher Scoring iterations: 4</span>
-    </p>
-    <p class="p3">
-        <span class="s1">summary(fit2)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Call:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## glm(formula = cbind(Extinct, AtRisk &#8211; Extinct) ~ group, family = binomial(),
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            data = krunnit)
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Coefficients:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Estimate Std. Error z value Pr(&gt;|z|) 
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## (Intercept)
-            <span class="Apple-converted-space"></span>
-            -2.3567 
-            <span class="Apple-converted-space"></span>
-            0.2466
-            <span class="Apple-converted-space"></span>
-            -9.556
-            <span class="Apple-converted-space"></span>
-            &lt; 2e-16 ***
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## group 
-            <span class="Apple-converted-space"></span>
-            1.0453 
-            <span class="Apple-converted-space"></span>
-            0.2737 
-            <span class="Apple-converted-space"></span>
-            3.819 0.000134 ***
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## &#8212;</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Signif. codes:
-            <span class="Apple-converted-space"></span>
-            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## (Dispersion parameter for binomial family taken to be 1)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Null deviance: 45.338
-            <span class="Apple-converted-space"></span>
-            on 17
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Residual deviance: 28.185
-            <span class="Apple-converted-space"></span>
-            on 16
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## AIC: 91.517</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Number of Fisher Scoring iterations: 4</span>
-    </p>
-    <p class="p3">
-        <span class="s1">summary(fit3)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Call:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## glm(formula = totprop ~ group, family = binomial(), data = aggkrunnit,
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            weights = totAtRisk)
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Coefficients:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Estimate Std. Error z value Pr(&gt;|z|) 
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## (Intercept)
-            <span class="Apple-converted-space"></span>
-            -2.3567 
-            <span class="Apple-converted-space"></span>
-            0.2466
-            <span class="Apple-converted-space"></span>
-            -9.556
-            <span class="Apple-converted-space"></span>
-            &lt; 2e-16 ***
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## group 
-            <span class="Apple-converted-space"></span>
-            1.0453 
-            <span class="Apple-converted-space"></span>
-            0.2737 
-            <span class="Apple-converted-space"></span>
-            3.819 0.000134 ***
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## &#8212;</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Signif. codes:
-            <span class="Apple-converted-space"></span>
-            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## (Dispersion parameter for binomial family taken to be 1)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Null deviance:
-            <span class="Apple-converted-space"></span>
-            1.7153e+01
-            <span class="Apple-converted-space"></span>
-            on 1
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Residual deviance: -2.6201e-14
-            <span class="Apple-converted-space"></span>
-            on 0
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## AIC: 14.748</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Number of Fisher Scoring iterations: 3</span>
-    </p>
-    <p class="p3">
-        <span class="s1">summary(fit4)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Call:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## glm(formula = cbind(totExtinct, totAtRisk &#8211; totExtinct) ~ group,
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            family = binomial(), data = aggkrunnit)
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Coefficients:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Estimate Std. Error z value Pr(&gt;|z|) 
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## (Intercept)
-            <span class="Apple-converted-space"></span>
-            -2.3567 
-            <span class="Apple-converted-space"></span>
-            0.2466
-            <span class="Apple-converted-space"></span>
-            -9.556
-            <span class="Apple-converted-space"></span>
-            &lt; 2e-16 ***
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## group 
-            <span class="Apple-converted-space"></span>
-            1.0453 
-            <span class="Apple-converted-space"></span>
-            0.2737 
-            <span class="Apple-converted-space"></span>
-            3.819 0.000134 ***
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## &#8212;</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Signif. codes:
-            <span class="Apple-converted-space"></span>
-            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## (Dispersion parameter for binomial family taken to be 1)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Null deviance:
-            <span class="Apple-converted-space"></span>
-            1.7153e+01
-            <span class="Apple-converted-space"></span>
-            on 1
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Residual deviance: -2.6201e-14
-            <span class="Apple-converted-space"></span>
-            on 0
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## AIC: 14.748</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Number of Fisher Scoring iterations: 3</span>
-    </p>
-    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">Note that the results from all 4 ways of modeling above (fit1, fit2, fit3, fit4) give the EXACT same coefficients and EXACT same standard error for group. That is, it doesn’t matter whether we use the coding method with “prop” or the “cbind(event,trial-event)” as outcome. And, more importantly and interestingly, it doesn’t make a difference whether we use all 18 sets of counts (1 for each island) separately (like in fit1 and fit2) or else include only the aggregated data across islands by group (n=2) (like in fit3 and fit4).</span>
-    </h4>
-    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">The fact that the standard errors are the same whether we aggregate or not pointed to something important about what the binomial model is assuming. The reason the disaggregated and aggregated are the same is that the binomial model has only 1 parameter (i.e. the probability of an event) and the regression model is actually assuming all the trials are independent across all islands. The model doesn’t care/notice that the data come from different islands. It is focused on just modeling the probability of an event out of all the possible trials aggregating across big and small islands.</span>
-    </h4>
-    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">But, </span>
-        <span class="s5">this is a problem</span>
-        <span class="s1">
-             because we know the species at risk are clustered within islands and so there is another variability which should probably be considered which is island-island variability. This extra variability due to clustering in binomial data (and also in Poisson data) is often called “overdispersion”. There are multiple ways to incorporate it (See this paper 
-            <a href="https://journals.sagepub.com/doi/pdf/10.1177/0962280215588569">
-                <span class="s6">https://journals.sagepub.com/doi/pdf/10.1177/0962280215588569</span>
-            </a>
-            ), but the simplest is to adjust the standard errors by a scale factor either using the Pearson or the Deviance residuals which quantifies how much the variabilty in the residuals deviates from that expected if all islands had the same exact true probability of an event (after accounting for covariates).
-        </span>
-    </h4>
-    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">
-            Notice in the binomial output it says “(Dispersion parameter for binomial family taken to be 1)”. We can change that by using 
-            <b>family = quasibinomial()</b>
-             as below:
-        </span>
-    </h4>
-    <p class="p3">
-        <span class="s1">##### Using quasibinomial() to account for island to island variability in proportions</span>
-    </p>
-    <p class="p7">
-        <span class="s1"></span>
-        <br>
-    </p>
-    <p class="p3">
-        <span class="s1">fit1disp&lt;-glm(prop ~ group, family = quasibinomial(), weights = AtRisk, data = krunnit)</span>
-    </p>
-    <p class="p3">
-        <span class="s1">fit2disp&lt;-glm(cbind(Extinct, AtRisk-Extinct) ~ group, family = quasibinomial(), data = krunnit)</span>
-    </p>
-    <p class="p7">
-        <span class="s1"></span>
-        <br>
-    </p>
-    <p class="p3">
-        <span class="s1">summary(fit1disp)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Call:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## glm(formula = prop ~ group, family = quasibinomial(), data = krunnit,
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            weights = AtRisk)
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Coefficients:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Estimate Std. Error t value Pr(&gt;|t|) 
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## (Intercept)
-            <span class="Apple-converted-space"></span>
-            -2.3567 
-            <span class="Apple-converted-space"></span>
-            0.3324
-            <span class="Apple-converted-space"></span>
-            -7.091 2.56e-06 ***
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## group 
-            <span class="Apple-converted-space"></span>
-            1.0453 
-            <span class="Apple-converted-space"></span>
-            0.3689 
-            <span class="Apple-converted-space"></span>
-            2.834
-            <span class="Apple-converted-space"></span>
-            0.012 * 
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## &#8212;</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Signif. codes:
-            <span class="Apple-converted-space"></span>
-            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## (Dispersion parameter for quasibinomial family taken to be 1.816271)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Null deviance: 45.338
-            <span class="Apple-converted-space"></span>
-            on 17
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Residual deviance: 28.185
-            <span class="Apple-converted-space"></span>
-            on 16
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## AIC: NA</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Number of Fisher Scoring iterations: 4</span>
-    </p>
-    <p class="p3">
-        <span class="s1">summary(fit2disp)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Call:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## glm(formula = cbind(Extinct, AtRisk &#8211; Extinct) ~ group, family = quasibinomial(),
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            data = krunnit)
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Coefficients:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Estimate Std. Error t value Pr(&gt;|t|) 
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## (Intercept)
-            <span class="Apple-converted-space"></span>
-            -2.3567 
-            <span class="Apple-converted-space"></span>
-            0.3324
-            <span class="Apple-converted-space"></span>
-            -7.091 2.56e-06 ***
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## group 
-            <span class="Apple-converted-space"></span>
-            1.0453 
-            <span class="Apple-converted-space"></span>
-            0.3689 
-            <span class="Apple-converted-space"></span>
-            2.834
-            <span class="Apple-converted-space"></span>
-            0.012 * 
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## &#8212;</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Signif. codes:
-            <span class="Apple-converted-space"></span>
-            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## (Dispersion parameter for quasibinomial family taken to be 1.816271)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Null deviance: 45.338
-            <span class="Apple-converted-space"></span>
-            on 17
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Residual deviance: 28.185
-            <span class="Apple-converted-space"></span>
-            on 16
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## AIC: NA</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Number of Fisher Scoring iterations: 4</span>
-    </p>
-    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">The dispersion parameter is 1.816271 above. Note that the coefficient estimates for the effects for group are the same as when we just used family = binomial earlier, but now with the family = quasibinomial, the STANDARD ERRORS and consequently P-VALUES are different (bigger). Specifically, the group coefficient (SE) = 0.3689 now whereas before it was 0.2737 without overdispersion. We can see that: 0.3689 = sqrt(1.816271)*.2737. That is, the standard errors are now inflated by sqrt of the overdispersion parameter. </span>
-        <span class="s5">CONCLUSION, If we want to test the group effect on the probability of a species going extinct, it is more accurate to account for the fact that species are clustered within islands and not all islands have the same probability of bird species going extinct, hence it is better to adjust/inflate the standard errors for “overdispersion”.</span>
-    </h4>
-    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
-        <span class="s1">And, if we try (below) to use quasibinomial with the aggregated data, as expected it will not work because there is not any residuals that can be used to get the estimate for the overdispersion, i.e. there is no way to check if there is any variabilty at the level island level when we collapse across islands</span>
-    </h4>
-    <p class="p3">
-        <span class="s1">fit3disp&lt;-glm(totprop ~ group, family = quasibinomial(), weights = totAtRisk, data = aggkrunnit)</span>
-    </p>
-    <p class="p3">
-        <span class="s1">summary(fit3disp)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Call:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## glm(formula = totprop ~ group, family = quasibinomial(), data = aggkrunnit,
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            weights = totAtRisk)
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Coefficients:</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Estimate Std. Error t value Pr(&gt;|t|)
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## (Intercept) 
-            <span class="Apple-converted-space"></span>
-            -2.357
-            <span class="Apple-converted-space"></span>
-            NaN 
-            <span class="Apple-converted-space"></span>
-            NaN
-            <span class="Apple-converted-space"></span>
-            NaN
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## group
-            <span class="Apple-converted-space"></span>
-            1.045
-            <span class="Apple-converted-space"></span>
-            NaN 
-            <span class="Apple-converted-space"></span>
-            NaN
-            <span class="Apple-converted-space"></span>
-            NaN
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## (Dispersion parameter for quasibinomial family taken to be NaN)</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## 
-            <span class="Apple-converted-space"></span>
-            Null deviance:
-            <span class="Apple-converted-space"></span>
-            1.7153e+01
-            <span class="Apple-converted-space"></span>
-            on 1
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ## Residual deviance: -2.6201e-14
-            <span class="Apple-converted-space"></span>
-            on 0
-            <span class="Apple-converted-space"></span>
-            degrees of freedom
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## AIC: NA</span>
-    </p>
-    <p class="p5">
-        <span class="s1">
-            ##
-            <span class="Apple-converted-space"></span>
-        </span>
-    </p>
-    <p class="p5">
-        <span class="s1">## Number of Fisher Scoring iterations: 3</span>
-    </p>
+aggkrunnit</code></pre>
+<pre><code>## # A tibble: 2 × 4
+##   group totAtRisk totExtinct totprop
+##   &lt;dbl&gt;     &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
+## 1     0       208         18  0.0865
+## 2     1       424         90  0.212</code></pre>
+<pre class="r"><code>###uses aggregated data and proportion as outcome with weight = number of trials ("AtRisk") n=2 groups
+fit3&lt;-glm(totprop ~ group, family = binomial(), weights = totAtRisk, data = aggkrunnit)
+
+###uses aggregated data number of events ("Extinct") and number of non-events ("AtRisk - Extinct") as outcome n=2 groups
+fit4&lt;-glm(cbind(totExtinct, totAtRisk-totExtinct) ~ group, family = binomial(), data = aggkrunnit)
 
 
+summary(fit1)</code></pre>
+<pre><code>##
+## Call:
+## glm(formula = prop ~ group, family = binomial(), data = krunnit,
+##     weights = AtRisk)
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)  -2.3567     0.2466  -9.556  &lt; 2e-16 ***
+## group         1.0453     0.2737   3.819 0.000134 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance: 45.338  on 17  degrees of freedom
+## Residual deviance: 28.185  on 16  degrees of freedom
+## AIC: 91.517
+##
+## Number of Fisher Scoring iterations: 4</code></pre>
+<pre class="r"><code>summary(fit2)</code></pre>
+<pre><code>##
+## Call:
+## glm(formula = cbind(Extinct, AtRisk - Extinct) ~ group, family = binomial(),
+##     data = krunnit)
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)  -2.3567     0.2466  -9.556  &lt; 2e-16 ***
+## group         1.0453     0.2737   3.819 0.000134 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance: 45.338  on 17  degrees of freedom
+## Residual deviance: 28.185  on 16  degrees of freedom
+## AIC: 91.517
+##
+## Number of Fisher Scoring iterations: 4</code></pre>
+<pre class="r"><code>summary(fit3)</code></pre>
+<pre><code>##
+## Call:
+## glm(formula = totprop ~ group, family = binomial(), data = aggkrunnit,
+##     weights = totAtRisk)
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)  -2.3567     0.2466  -9.556  &lt; 2e-16 ***
+## group         1.0453     0.2737   3.819 0.000134 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance:  1.7153e+01  on 1  degrees of freedom
+## Residual deviance: -2.6201e-14  on 0  degrees of freedom
+## AIC: 14.748
+##
+## Number of Fisher Scoring iterations: 3</code></pre>
+<pre class="r"><code>summary(fit4)</code></pre>
+<pre><code>##
+## Call:
+## glm(formula = cbind(totExtinct, totAtRisk - totExtinct) ~ group,
+##     family = binomial(), data = aggkrunnit)
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)  -2.3567     0.2466  -9.556  &lt; 2e-16 ***
+## group         1.0453     0.2737   3.819 0.000134 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance:  1.7153e+01  on 1  degrees of freedom
+## Residual deviance: -2.6201e-14  on 0  degrees of freedom
+## AIC: 14.748
+##
+## Number of Fisher Scoring iterations: 3</code></pre>
+<p>Note that the results from all 4 ways of modeling above
+(<code>fit1</code>, <code>fit2</code>, <code>fit3</code>,
+<code>fit4</code>) give the EXACT same coefficients and EXACT same
+standard error for <code>group</code>. That is, it doesn’t matter
+whether we use the coding method with <code>prop</code> or
+<code>cbind(event, trial - event)</code> as the outcome. And, more
+importantly and interestingly, it doesn’t make a difference whether we
+use all 18 sets of counts (1 for each island) separately (like in
+<code>fit1</code> and <code>fit2</code>) or else include only the
+aggregated data across islands by group (n=2) (like in <code>fit3</code>
+and <code>fit4</code>).</p>
+<h2 id="why-the-standard-errors-dont-change">Why the standard errors
+don’t change</h2>
+<p>The fact that the standard errors are the same whether we aggregate
+or not pointed to something important about what the binomial model is
+assuming. The reason the disaggregated and aggregated are the same is
+that the binomial model has only 1 parameter (i.e. the probability of an
+event) and the regression model is actually assuming all the trials are
+independent across all islands. The model doesn’t care/notice that the
+data come from different islands. It is focused on just modeling the
+probability of an event out of all the possible trials aggregating
+across big and small islands.</p>
+<p>But this is a problem because we know the species at risk are
+clustered within islands and so there is another variability which
+should probably be considered which is island-island variability. This
+extra variability due to clustering in binomial data (and also in
+Poisson data) is often called “overdispersion”. There are multiple ways
+to incorporate it (<a href="https://journals.sagepub.com/doi/pdf/10.1177/0962280215588569">see
+this paper</a>), but the simplest is to adjust the standard errors by a
+scale factor either using the Pearson or the Deviance residuals which
+quantifies how much the variability in the residuals deviates from that
+expected if all islands had the same exact true probability of an event
+(after accounting for covariates).</p>
+<h2 id="accounting-for-overdispersion-with-quasibinomial">Accounting for
+overdispersion with <code>quasibinomial()</code></h2>
+<p>Notice in the binomial output it says “(Dispersion parameter for
+binomial family taken to be 1)”. We can change that by using
+<code>family = quasibinomial()</code>, as below:</p>
+<pre class="r"><code>##### Using quasibinomial() to account for island to island variability in proportions
 
+fit1disp&lt;-glm(prop ~ group, family = quasibinomial(), weights = AtRisk, data = krunnit)
+fit2disp&lt;-glm(cbind(Extinct, AtRisk-Extinct) ~ group, family = quasibinomial(), data = krunnit)
 
-
-<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-official sd-sharing">
-<h3 class="sd-title">Share this:</h3>
-<div class="sd-content"><ul>
-<li class="share-twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url=".//2023/06/24/examining-binomial-regression-of-events-trials-and-overdispersion/" data-text="Examining binomial regression of events/trials and overdispersion">Tweet</a></li>
-<li class="share-facebook"><div class="fb-share-button" data-href=".//2023/06/24/examining-binomial-regression-of-events-trials-and-overdispersion/" data-layout="button_count"></div></li>
-<li class="share-end">
-</ul></div>
-</div></div>
-<div id="jp-relatedposts" class="jp-relatedposts">
-	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
-</div>											</div>
+summary(fit1disp)</code></pre>
+<pre><code>##
+## Call:
+## glm(formula = prop ~ group, family = quasibinomial(), data = krunnit,
+##     weights = AtRisk)
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  -2.3567     0.3324  -7.091 2.56e-06 ***
+## group         1.0453     0.3689   2.834    0.012 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for quasibinomial family taken to be 1.816271)
+##
+##     Null deviance: 45.338  on 17  degrees of freedom
+## Residual deviance: 28.185  on 16  degrees of freedom
+## AIC: NA
+##
+## Number of Fisher Scoring iterations: 4</code></pre>
+<pre class="r"><code>summary(fit2disp)</code></pre>
+<pre><code>##
+## Call:
+## glm(formula = cbind(Extinct, AtRisk - Extinct) ~ group, family = quasibinomial(),
+##     data = krunnit)
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  -2.3567     0.3324  -7.091 2.56e-06 ***
+## group         1.0453     0.3689   2.834    0.012 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for quasibinomial family taken to be 1.816271)
+##
+##     Null deviance: 45.338  on 17  degrees of freedom
+## Residual deviance: 28.185  on 16  degrees of freedom
+## AIC: NA
+##
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>The dispersion parameter is 1.816271 above. Note that the coefficient
+estimates for the effects for <code>group</code> are the same as when we
+just used <code>family = binomial</code> earlier, but now with
+<code>family = quasibinomial</code>, the STANDARD ERRORS and
+consequently P-VALUES are different (bigger). Specifically, the group
+coefficient (SE) = 0.3689 now whereas before it was 0.2737 without
+overdispersion. We can see that 0.3689 = sqrt(1.816271) × 0.2737. That
+is, the standard errors are now inflated by sqrt of the overdispersion
+parameter. <strong>Conclusion:</strong> if we want to test the group
+effect on the probability of a species going extinct, it is more
+accurate to account for the fact that species are clustered within
+islands and not all islands have the same probability of bird species
+going extinct, hence it is better to adjust/inflate the standard errors
+for “overdispersion”.</p>
+<p>And if we try (below) to use quasibinomial with the aggregated data,
+as expected it will not work, because there are no residuals that can be
+used to estimate the overdispersion, i.e. there is no way to check
+whether there is any variability at the island level when we collapse
+across islands.</p>
+<pre class="r"><code>fit3disp&lt;-glm(totprop ~ group, family = quasibinomial(), weights = totAtRisk, data = aggkrunnit)
+summary(fit3disp)</code></pre>
+<pre><code>##
+## Call:
+## glm(formula = totprop ~ group, family = quasibinomial(), data = aggkrunnit,
+##     weights = totAtRisk)
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)   -2.357        NaN     NaN      NaN
+## group          1.045        NaN     NaN      NaN
+##
+## (Dispersion parameter for quasibinomial family taken to be NaN)
+##
+##     Null deviance:  1.7153e+01  on 1  degrees of freedom
+## Residual deviance: -2.6201e-14  on 0  degrees of freedom
+## AIC: NA
+##
+## Number of Fisher Scoring iterations: 3</code></pre>
+</div>
 <!-- .entry-content -->
 
-		
-						<div class="entry-utility">
-							This entry was posted in <a href="./../../../../category/uncategorized/index.html" rel="category tag">Uncategorized</a>. Bookmark the <a href="./index.html" title="Permalink to Examining binomial regression of events/trials and overdispersion" rel="bookmark">permalink</a>.													</div>
 <!-- .entry-utility -->
-					</div>
+</div>
 <!-- #post-426 -->
-
-					<div id="nav-below" class="navigation">
-						<div class="nav-previous"><a href="./../../../../2021/05/29/data-scientists-myself-included-need-regular-reminders-about-problems-of-interpreting-odds-ratios-from-logistic-regression/index.html" rel="prev"><span class="meta-nav">&larr;</span> Data scientists, myself included, need regular reminders about problems of interpreting odds ratios from logistic regression</a></div>
-						<div class="nav-next"></div>
-					</div>
+<div class="navigation" id="nav-below">
+<div class="nav-previous"><a href="./../../../../2021/05/29/data-scientists-myself-included-need-regular-reminders-about-problems-of-interpreting-odds-ratios-from-logistic-regression/index.html" rel="prev"><span class="meta-nav">←</span> Data scientists, myself included, need regular reminders about problems of interpreting odds ratios from logistic regression</a></div>
+<div class="nav-next"></div>
+</div>
 <!-- #nav-below -->
 
-					
-			<div id="comments">
-
-
-
-
-		<div id="respond" class="comment-respond">
-			<h3 id="reply-title" class="comment-reply-title">Enter your comment here...<small><a rel="nofollow" id="cancel-comment-reply-link" href="./index.html#respond" style="display:none;">Cancel reply</a></small>
-</h3>			<form id="commentform" class="comment-form">
-				<iframe title="Comment Form" src="https://jetpack.wordpress.com/jetpack-comment/?blogid=140901308&#038;postid=426&#038;comment_registration=0&#038;require_name_email=0&#038;stc_enabled=1&#038;stb_enabled=1&#038;show_avatars=1&#038;avatar_default=mystery&#038;greeting=Enter+your+comment+here...&#038;jetpack_comments_nonce=d9026e0799&#038;greeting_reply=Leave+a+Reply+to+%25s&#038;color_scheme=light&#038;lang=en_US&#038;jetpack_version=13.8&#038;show_cookie_consent=10&#038;has_cookie_consent=0&#038;is_current_user_subscribed=0&#038;token_key=%3Bnormal%3B&#038;sig=4607f5de7a2fcf4dfb2c208c89583a778dbd4f89#parent=.%2F%2F2023%2F06%2F24%2Fexamining-binomial-regression-of-events-trials-and-overdispersion%2F%3Fsimply_static_page%3D143" name="jetpack_remote_comment" style="width:100%; height: 430px; border:0;" class="jetpack_remote_comment" id="jetpack_remote_comment" sandbox="allow-same-origin allow-top-navigation allow-scripts allow-forms allow-popups">
-									</iframe>
-									<!--[if !IE]><!-->
-					<script>document.addEventListener('DOMContentLoaded', function () {
-							var commentForms = document.getElementsByClassName('jetpack_remote_comment');
-							for (var i = 0; i < commentForms.length; i++) {
-								commentForms[i].allowTransparency = false;
-								commentForms[i].scrolling = 'no';
-							}
-						});</script>
-					<!--<![endif]-->
-							</form>
-		</div>
-
-		
-		<input type="hidden" name="comment_parent" id="comment_parent" value="">
-
-		
-</div>
 <!-- #comments -->
-
-	
-			</div>
+</div>
 <!-- #content -->
-		</div>
+</div>
 <!-- #container -->
+<div class="widget-area" id="primary" role="complementary">
+<ul class="xoxo">
 
-
-		<div id="primary" class="widget-area" role="complementary">
-			<ul class="xoxo">
-
-<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" class="searchform" action=".//">
-				<div>
-					<label class="screen-reader-text" for="s">Search for:</label>
-					<input type="text" value="" name="s" id="s">
-					<input type="submit" id="searchsubmit" value="Search">
-				</div>
-			</form></li>
-<li id="archives-2" class="widget-container widget_archive">
+<li class="widget-container widget_archive" id="archives-2">
 <h3 class="widget-title">Archives</h3>
-			<ul>
-					<li><a href="./../../index.html">June 2023</a></li>
-	<li><a href="./../../../../2021/05/index.html">May 2021</a></li>
-	<li><a href="./../../../../2021/04/index.html">April 2021</a></li>
-	<li><a href="./../../../../2021/01/index.html">January 2021</a></li>
-	<li><a href="./../../../../2020/06/index.html">June 2020</a></li>
-	<li><a href="./../../../../2020/03/index.html">March 2020</a></li>
-	<li><a href="./../../../../2019/12/index.html">December 2019</a></li>
-	<li><a href="./../../../../2019/10/index.html">October 2019</a></li>
-	<li><a href="./../../../../2019/06/index.html">June 2019</a></li>
-	<li><a href="./../../../../2019/03/index.html">March 2019</a></li>
-	<li><a href="./../../../../2018/08/index.html">August 2018</a></li>
-	<li><a href="./../../../../2018/06/index.html">June 2018</a></li>
-	<li><a href="./../../../../2018/04/index.html">April 2018</a></li>
-	<li><a href="./../../../../2018/03/index.html">March 2018</a></li>
-	<li><a href="./../../../../2018/02/index.html">February 2018</a></li>
-	<li><a href="./../../../../2018/01/index.html">January 2018</a></li>
-			</ul>
-
-			</li>
-<li id="categories-2" class="widget-container widget_categories">
-<h3 class="widget-title">Categories</h3>
-			<ul>
-					<li class="cat-item cat-item-1">
-<a href="./../../../../category/uncategorized/index.html">Uncategorized</a>
+<ul>
+<li><a href="./../../index.html">June 2023</a></li>
+<li><a href="./../../../../2021/05/index.html">May 2021</a></li>
+<li><a href="./../../../../2021/04/index.html">April 2021</a></li>
+<li><a href="./../../../../2021/01/index.html">January 2021</a></li>
+<li><a href="./../../../../2020/06/index.html">June 2020</a></li>
+<li><a href="./../../../../2020/03/index.html">March 2020</a></li>
+<li><a href="./../../../../2019/12/index.html">December 2019</a></li>
+<li><a href="./../../../../2019/10/index.html">October 2019</a></li>
+<li><a href="./../../../../2019/06/index.html">June 2019</a></li>
+<li><a href="./../../../../2019/03/index.html">March 2019</a></li>
+<li><a href="./../../../../2018/08/index.html">August 2018</a></li>
+<li><a href="./../../../../2018/06/index.html">June 2018</a></li>
+<li><a href="./../../../../2018/04/index.html">April 2018</a></li>
+<li><a href="./../../../../2018/03/index.html">March 2018</a></li>
+<li><a href="./../../../../2018/02/index.html">February 2018</a></li>
+<li><a href="./../../../../2018/01/index.html">January 2018</a></li>
+</ul>
 </li>
-			</ul>
 
-			</li>
-<li id="meta-2" class="widget-container widget_meta">
-<h3 class="widget-title">Meta</h3>
-		<ul>
-						<li><a href="./../../../../wp-login.php">Log in</a></li>
-			<li><a href="./../../../../feed/index.html">Entries feed</a></li>
-			<li><a href="./../../../../comments/feed/index.html">Comments feed</a></li>
-
-			<li><a href="https://wordpress.org/">WordPress.org</a></li>
-		</ul>
-
-		</li>			</ul>
-		</div>
+ </ul>
+</div>
 <!-- #primary .widget-area -->
-
-	</div>
+</div>
 <!-- #main -->
-
-	<div id="footer" role="contentinfo">
-		<div id="colophon">
-
-
-
-			<div id="site-info">
-				<a href="./../../../../index.html" rel="home">
+<div id="footer" role="contentinfo">
+<div id="colophon">
+<div id="site-info">
+<a href="./../../../../index.html" rel="home">
 					Mental Health Data Science with Melanie Wall				</a>
-							</div>
+</div>
 <!-- #site-info -->
 
-			<div id="site-generator">
-								<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
-					Proudly powered by WordPress.				</a>
-			</div>
 <!-- #site-generator -->
-
-		</div>
+</div>
 <!-- #colophon -->
-	</div>
+</div>
 <!-- #footer -->
-
 </div>
 <!-- #wrapper -->
 
-			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-						<div id="fb-root"></div>
-			<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&appId=249643311490&version=v2.3'; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
-			<script>document.body.addEventListener( 'is.post-load', function() {
+
+
+<script>document.body.addEventListener( 'is.post-load', function() {
 				if ( 'undefined' !== typeof FB ) {
 					FB.XFBML.parse();
 				}
 			} );</script>
-			<script type="text/javascript" src="./../../../../wp-includes/js/comment-reply.min.js?ver=6.6.1" id="comment-reply-js" async="async" data-wp-strategy="async"></script>
-<script type="text/javascript" src="./../../../../wp-content/plugins/embed-any-document/js/pdfobject.min.js?ver=2.7.4" id="awsm-ead-pdf-object-js"></script>
-<script type="text/javascript" id="awsm-ead-public-js-extra">
+
+<script id="awsm-ead-pdf-object-js" src="./../../../../wp-content/plugins/embed-any-document/js/pdfobject.min.js?ver=2.7.4" type="text/javascript"></script>
+<script id="awsm-ead-public-js-extra" type="text/javascript">
 /* <![CDATA[ */
 var eadPublic = [];
 /* ]]> */
 </script>
-<script type="text/javascript" src="./../../../../wp-content/plugins/embed-any-document/js/embed-public.min.js?ver=2.7.4" id="awsm-ead-public-js"></script>
-<script type="text/javascript" src="https://stats.wp.com/e-202436.js" id="jetpack-stats-js" data-wp-strategy="defer"></script>
-<script type="text/javascript" id="jetpack-stats-js-after">
-/* <![CDATA[ */
-_stq = window._stq || [];
-_stq.push([ "view", JSON.parse("{\"v\":\"ext\",\"blog\":\"140901308\",\"post\":\"426\",\"tz\":\"0\",\"srv\":\"melaniemwall.com\",\"j\":\"1:13.8\"}") ]);
-_stq.push([ "clickTrackerInit", "140901308", "426" ]);
-/* ]]> */
-</script>
-<script type="text/javascript" id="sharing-js-js-extra">
-/* <![CDATA[ */
-var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
-/* ]]> */
-</script>
-<script type="text/javascript" src="./../../../../wp-content/plugins/jetpack/_inc/build/sharedaddy/sharing.min.js?ver=13.8" id="sharing-js-js"></script>
-<script type="text/javascript" id="sharing-js-js-after">
+<script id="awsm-ead-public-js" src="./../../../../wp-content/plugins/embed-any-document/js/embed-public.min.js?ver=2.7.4" type="text/javascript"></script>
+
+
+
+
+<script id="sharing-js-js-after" type="text/javascript">
 /* <![CDATA[ */
 var windowOpen;
 			( function () {
@@ -1967,50 +569,6 @@ var windowOpen;
 			} )();
 /* ]]> */
 </script>
-		<script type="text/javascript">(function () {
-				const iframe = document.getElementById( 'jetpack_remote_comment' );
-								const watchReply = function() {
-					// Check addComment._Jetpack_moveForm to make sure we don't monkey-patch twice.
-					if ( 'undefined' !== typeof addComment && ! addComment._Jetpack_moveForm ) {
-						// Cache the Core function.
-						addComment._Jetpack_moveForm = addComment.moveForm;
-						const commentParent = document.getElementById( 'comment_parent' );
-						const cancel = document.getElementById( 'cancel-comment-reply-link' );
 
-						function tellFrameNewParent ( commentParentValue ) {
-							const url = new URL( iframe.src );
-							if ( commentParentValue ) {
-								url.searchParams.set( 'replytocom', commentParentValue )
-							} else {
-								url.searchParams.delete( 'replytocom' );
-							}
-							if( iframe.src !== url.href ) {
-								iframe.src = url.href;
-							}
-						};
-
-						cancel.addEventListener( 'click', function () {
-							tellFrameNewParent( false );
-						} );
-
-						addComment.moveForm = function ( _, parentId ) {
-							tellFrameNewParent( parentId );
-							return addComment._Jetpack_moveForm.apply( null, arguments );
-						};
-					}
-				}
-				document.addEventListener( 'DOMContentLoaded', watchReply );
-				// In WP 6.4+, the script is loaded asynchronously, so we need to wait for it to load before we monkey-patch the functions it introduces.
-				document.querySelector('#comment-reply-js')?.addEventListener( 'load', watchReply );
-
-				
-				window.addEventListener( 'message', function ( event ) {
-					if ( event.origin !== 'https://jetpack.wordpress.com' ) {
-						return;
-					}
-					iframe.style.height = event.data + 'px';
-				});
-			})();</script>
-		
 </body>
 </html>
