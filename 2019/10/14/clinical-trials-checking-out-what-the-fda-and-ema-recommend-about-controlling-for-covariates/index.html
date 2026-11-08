@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>
+Clinical Trials: Checking out what the FDA and EMA recommend about controlling for covariates | Mental Health Data Science with Melanie Wall	</title>
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<link rel="stylesheet" type="text/css" media="all" href="./../../../../wp-content/themes/twentyten/style.css?ver=20240716">
+<link rel="pingback" href="./../../../../xmlrpc.php">
+<meta name="robots" content="max-image-preview:large">
+<link rel="dns-prefetch" href="//secure.gravatar.com">
+<link rel="dns-prefetch" href="//stats.wp.com">
+<link rel="dns-prefetch" href="//v0.wordpress.com">
+<link rel="dns-prefetch" href="//i0.wp.com">
+<link rel="dns-prefetch" href="//jetpack.wordpress.com">
+<link rel="dns-prefetch" href="//s0.wp.com">
+<link rel="dns-prefetch" href="//public-api.wordpress.com">
+<link rel="dns-prefetch" href="//0.gravatar.com">
+<link rel="dns-prefetch" href="//1.gravatar.com">
+<link rel="dns-prefetch" href="//2.gravatar.com">
+<link rel="alternate" type="application/rss+xml" title="Mental Health Data Science with Melanie Wall &raquo; Feed" href="./../../../../feed/index.html">
+<link rel="alternate" type="application/rss+xml" title="Mental Health Data Science with Melanie Wall &raquo; Comments Feed" href="./../../../../comments/feed/index.html">
+<link rel="alternate" type="application/rss+xml" title="Mental Health Data Science with Melanie Wall &raquo; Clinical Trials: Checking out what the FDA and EMA recommend about controlling for covariates Comments Feed" href="./feed/index.html">
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"concatemoji":".\/\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.6.1"}};
+/*! This file is auto-generated */
+!function(i,n){var o,s,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),r=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===r[t]})}function u(e,t,n){switch(t){case"flag":return n(e,"🏳️‍⚧️","🏳️​⚧️")?!1:!n(e,"🇺🇳","🇺​🇳")&&!n(e,"🏴󠁧󠁢󠁥󠁮󠁧󠁿","🏴​󠁧​󠁢​󠁥​󠁮​󠁧​󠁿");case"emoji":return!n(e,"🐦‍⬛","🐦​⬛")}return!1}function f(e,t,n){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):i.createElement("canvas"),a=r.getContext("2d",{willReadFrequently:!0}),o=(a.textBaseline="top",a.font="600 32px Arial",{});return e.forEach(function(e){o[e]=t(a,e,n)}),o}function t(e){var t=i.createElement("script");t.src=e,t.defer=!0,i.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",s=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){i.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"}),a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=function(e){c(n=e.data),a.terminate(),t(n)})}catch(e){}c(n=f(s,u,p))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+/* ]]> */
+</script>
+<style id="wp-emoji-styles-inline-css" type="text/css">img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}</style>
+<link rel="stylesheet" id="wp-block-library-css" href="./../../../../wp-includes/css/dist/block-library/style.min.css?ver=6.6.1" type="text/css" media="all">
+<style id="wp-block-library-theme-inline-css" type="text/css">.wp-block-audio :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio :where(figcaption){color:#ffffffa6}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed :where(figcaption){color:#ffffffa6}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:#ffffffa6}:root :where(.wp-block-image figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme :root :where(.wp-block-image figcaption){color:#ffffffa6}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-bottom:4px solid;border-top:4px solid;color:currentColor;margin-bottom:1.75em}.wp-block-pullquote cite,.wp-block-pullquote footer,.wp-block-pullquote__citation{color:currentColor;font-size:.8125em;font-style:normal;text-transform:uppercase}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;font-style:normal;position:relative}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote.is-style-plain{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table :where(figcaption){color:#ffffffa6}.wp-block-video :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video :where(figcaption){color:#ffffffa6}.wp-block-video{margin:0 0 1em}:root :where(.wp-block-template-part.has-background){margin-bottom:0;margin-top:0;padding:1.25em 2.375em}</style>
+<link rel="stylesheet" id="mediaelement-css" href="./../../../../wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.17" type="text/css" media="all">
+<link rel="stylesheet" id="wp-mediaelement-css" href="./../../../../wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=6.6.1" type="text/css" media="all">
+<style id="jetpack-sharing-buttons-style-inline-css" type="text/css">.jetpack-sharing-buttons__services-list{display:flex;flex-direction:row;flex-wrap:wrap;gap:0;list-style-type:none;margin:5px;padding:0}.jetpack-sharing-buttons__services-list.has-small-icon-size{font-size:12px}.jetpack-sharing-buttons__services-list.has-normal-icon-size{font-size:16px}.jetpack-sharing-buttons__services-list.has-large-icon-size{font-size:24px}.jetpack-sharing-buttons__services-list.has-huge-icon-size{font-size:36px}@media print{.jetpack-sharing-buttons__services-list{display:none!important}}.editor-styles-wrapper .wp-block-jetpack-sharing-buttons{gap:0;padding-inline-start:0}ul.jetpack-sharing-buttons__services-list.has-background{padding:1.25em 2.375em}</style>
+<link rel="stylesheet" id="awsm-ead-public-css" href="./../../../../wp-content/plugins/embed-any-document/css/embed-public.min.css?ver=2.7.4" type="text/css" media="all">
+<link rel="stylesheet" id="nfd-wonder-blocks-utilities-css" href="./../../../../wp-content/plugins/bluehost-wordpress-plugin/vendor/newfold-labs/wp-module-patterns/assets/build/utilities.css?ver=2.4.1" type="text/css" media="all">
+<link rel="stylesheet" id="gdm-gutenberg-block-backend-js-css" href="./../../../../wp-content/plugins/google-drive-embedder/css/gdm-blocks.css?ver=6.6.1" type="text/css" media="all">
+<style id="classic-theme-styles-inline-css" type="text/css">/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}</style>
+<style id="global-styles-inline-css" type="text/css">:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #fff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--blue: #0066cc;--wp--preset--color--medium-gray: #666;--wp--preset--color--light-gray: #f1f1f1;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}</style>
+<link rel="stylesheet" id="twentyten-block-style-css" href="./../../../../wp-content/themes/twentyten/blocks.css?ver=20230627" type="text/css" media="all">
+<link rel="stylesheet" id="social-logos-css" href="./../../../../wp-content/plugins/jetpack/_inc/social-logos/social-logos.min.css?ver=13.8" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack_css-css" href="./../../../../wp-content/plugins/jetpack/css/jetpack.css?ver=13.8" type="text/css" media="all">
+<script type="text/javascript" id="jetpack_related-posts-js-extra">
+/* <![CDATA[ */
+var related_posts_js_options = {"post_heading":"h4"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./../../../../wp-content/plugins/jetpack/_inc/build/related-posts/related-posts.min.js?ver=20240116" id="jetpack_related-posts-js"></script>
+<script type="text/javascript" src="./../../../../wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="./../../../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" src="./../../../../wp-content/plugins/bluehost-wordpress-plugin/vendor/newfold-labs/wp-module-patterns/assets/build/utilities.js?ver=2.4.1" id="nfd-wonder-blocks-utilities-js"></script>
+<link rel="https://api.w.org/" href="./../../../../wp-json/index.html">
+<link rel="alternate" title="JSON" type="application/json" href="./../../../../wp-json/wp/v2/posts/216/index.html">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="./../../../../xmlrpc.php?rsd">
+<meta name="generator" content="WordPress 6.6.1">
+<link rel="canonical" href="./index.html">
+<link rel="shortlink" href="./../../../../index.html?p=216">
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="./../../../../wp-json/oembed/1.0/embed/index.html?url=https%3A%2F%2F%2F2019%2F10%2F14%2Fclinical-trials-checking-out-what-the-fda-and-ema-recommend-about-controlling-for-covariates%2F">
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="./../../../../wp-json/oembed/1.0/embed/index.html?url=https%3A%2F%2F%2F2019%2F10%2F14%2Fclinical-trials-checking-out-what-the-fda-and-ema-recommend-about-controlling-for-covariates%2F#038;format=xml">
+	<style>img#wpstats{display:none}</style>
+		
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clinical Trials: Checking out what the FDA and EMA recommend about controlling for covariates">
+<meta property="og:url" content="./index.html">
+<meta property="og:description" content="At work I recently finalized analyses for a clinical trial that had 4 arms (double blind with 3 dose levels and a placebo) testing a nutritional supplement which may be helpful for cognition.  Ther…">
+<meta property="article:published_time" content="2019-10-14T04:40:16+00:00">
+<meta property="article:modified_time" content="2019-10-14T04:40:16+00:00">
+<meta property="og:site_name" content="Mental Health Data Science with Melanie Wall">
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg">
+<meta property="og:image:alt">
+<meta property="og:locale" content="en_US">
+
+<!-- End Jetpack Open Graph Tags -->
+<style id="wpforms-css-vars-root">:root {
+					--wpforms-field-border-radius: 3px;
+--wpforms-field-border-style: solid;
+--wpforms-field-border-size: 1px;
+--wpforms-field-background-color: #ffffff;
+--wpforms-field-border-color: rgba( 0, 0, 0, 0.25 );
+--wpforms-field-border-color-spare: rgba( 0, 0, 0, 0.25 );
+--wpforms-field-text-color: rgba( 0, 0, 0, 0.7 );
+--wpforms-field-menu-color: #ffffff;
+--wpforms-label-color: rgba( 0, 0, 0, 0.85 );
+--wpforms-label-sublabel-color: rgba( 0, 0, 0, 0.55 );
+--wpforms-label-error-color: #d63637;
+--wpforms-button-border-radius: 3px;
+--wpforms-button-border-style: none;
+--wpforms-button-border-size: 1px;
+--wpforms-button-background-color: #066aab;
+--wpforms-button-border-color: #066aab;
+--wpforms-button-text-color: #ffffff;
+--wpforms-page-break-color: #066aab;
+--wpforms-background-image: none;
+--wpforms-background-position: center center;
+--wpforms-background-repeat: no-repeat;
+--wpforms-background-size: cover;
+--wpforms-background-width: 100px;
+--wpforms-background-height: 100px;
+--wpforms-background-color: rgba( 0, 0, 0, 0 );
+--wpforms-background-url: none;
+--wpforms-container-padding: 0px;
+--wpforms-container-border-style: none;
+--wpforms-container-border-width: 1px;
+--wpforms-container-border-color: #000000;
+--wpforms-container-border-radius: 3px;
+--wpforms-field-size-input-height: 43px;
+--wpforms-field-size-input-spacing: 15px;
+--wpforms-field-size-font-size: 16px;
+--wpforms-field-size-line-height: 19px;
+--wpforms-field-size-padding-h: 14px;
+--wpforms-field-size-checkbox-size: 16px;
+--wpforms-field-size-sublabel-spacing: 5px;
+--wpforms-field-size-icon-size: 1;
+--wpforms-label-size-font-size: 16px;
+--wpforms-label-size-line-height: 19px;
+--wpforms-label-size-sublabel-font-size: 14px;
+--wpforms-label-size-sublabel-line-height: 17px;
+--wpforms-button-size-font-size: 17px;
+--wpforms-button-size-height: 41px;
+--wpforms-button-size-padding-h: 15px;
+--wpforms-button-size-margin-top: 10px;
+--wpforms-container-shadow-size-box-shadow: none;
+
+				}</style>
+</head>
+
+<body class="post-template-default single single-post postid-216 single-format-standard">
+<div id="wrapper" class="hfeed">
+	<div id="header">
+		<div id="masthead">
+			<div id="branding" role="banner">
+								<div id="site-title">
+					<span>
+						<a href="./../../../../index.html" rel="home">Mental Health Data Science with Melanie Wall</a>
+					</span>
+				</div>
+				<div id="site-description">I am a biostatistician who has worked on applied research questions in psychosocial and behavioral public health and psychiatry my whole career. Here is a place to post ideas, helpful hints, and maybe start discussions about this exciting work especially as we enter a new era of Data Science</div>
+
+				<img src="./../../../../wp-content/uploads/2021/01/cropped-logo-2021-wider2-scaled-1.jpg" width="940" height="" alt="Mental Health Data Science with Melanie Wall" decoding="async">			</div>
+<!-- #branding -->
+
+			<div id="access" role="navigation">
+								<div class="skip-link screen-reader-text"><a href="#content">Skip to content</a></div>
+				<div class="menu"><ul>
+<li><a href="./../../../../index.html">Home</a></li>
+<li class="page_item page-item-25"><a href="./../../../../about-me/index.html">About me</a></li>
+</ul></div>
+			</div>
+<!-- #access -->
+		</div>
+<!-- #masthead -->
+	</div>
+<!-- #header -->
+
+	<div id="main">
+
+		<div id="container">
+			<div id="content" role="main">
+
+			
+
+				<div id="nav-above" class="navigation">
+					<div class="nav-previous"><a href="./../../../06/29/confidence-intervals-for-a-ratio-when-you-only-have-summary-estimates-and-standard-errors/index.html" rel="prev"><span class="meta-nav">&larr;</span> Confidence intervals for a ratio when you only have summary estimates and standard errors</a></div>
+					<div class="nav-next"><a href="./../../../12/05/survival-analysis-always-makes-me-nervous/index.html" rel="next">Survival analysis always makes me nervous <span class="meta-nav">&rarr;</span></a></div>
+				</div>
+<!-- #nav-above -->
+
+				<div id="post-216" class="post-216 post type-post status-publish format-standard hentry category-uncategorized">
+					<h1 class="entry-title">Clinical Trials: Checking out what the FDA and EMA recommend about controlling for covariates</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted on</span> <a href="./index.html" title="4:40 am" rel="bookmark"><span class="entry-date">October 14, 2019</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="./../../../../author/admin/index.html" title="View all posts by melanie">melanie</a></span>					</div>
+<!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>At work I recently finalized analyses for a clinical trial that had 4 arms (double blind with 3 dose levels and a placebo) testing a nutritional supplement which may be helpful for cognition.  There were measurements at baseline (before randomization) and 3 followup times with the 2nd followup being the primary endpoint of interest.  I recommended, and we performed, a mixed effects model of change scores from baseline also controlling for the baseline outcome (as in ANCOVA), and also controlling for gender, age, and education all known to be predictors of the primary cognition outcome.</p>
+<p>I don&#8217;t analyze nearly as many clinical trials as I do observational studies.  I was curious whether the analyses I&#8217;ve done (in particular the control or not for baseline outcomes and other covariates) would pass the check boxes for an FDA or EMA submission, so I looked it up.</p>
+<p>Apparently just this past April 2019, <strong>FDA put out <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adjusting-covariates-randomized-clinical-trials-drugs-and-biologics-continuous-outcomes-guidance">guidance</a></strong> for how to deal with covariates in clinical trials.  This guidance document is still open for public feedback and apparently is not meant to be the legally enforceable rules but just the general principles. It included just 5 points, much shorter than I expected. Here are there 5 points and <strong>my reactions (in bold)</strong>:</p>
+<div class="page" title="Page 5">
+<div class="layoutArea">
+<div class="column">
+<ol>
+<li>Sponsors can use ANCOVA to adjust for differences between treatment groups in relevant baseline variables to improve the power of significance tests and the precision of estimates of treatment effect. <strong>(looks like controlling for baseline factors is basically recommended but without specific guidelines how to choose them.  I would say include ones that are predictive of outcomes- because they will help with precision- and include ones that show non-trivial imbalance at baseline- since they will help with bias).</strong>
+</li>
+<li>Sponsors should not use ANCOVA to adjust for variables that might be affected by treatment. (<strong>Basically do not control for anything you collect AFTER randomization)</strong>
+</li>
+<li><span style="color: var(--color-text);">The sponsor should prospectively specify the covariates and the mathematical form of the model in the protocol or statistical analysis plan. When these specifications are unambiguous, FDA will not generally be concerned about the sensitivity of results to the choice of covariates because differences between adjusted estimators and unadjusted estimators of the same parameter, or between adjusted estimators using different models, are random. <strong>(Saying they are unconcerned is a bit strange, but I guess they mean as long as they are prespecified since they are assuming randomization will take care of everything being balanced, this has not always been my experience especially in smaller &lt;50 per arm studies)</strong></span></li>
+<li><span style="color: var(--color-text);">Interaction of the treatment with covariates is important, but the presence of an interaction does not invalidate ANCOVA as a method of estimating and testing for an overall treatment effect, even if the interaction is not accounted for in the model. The prespecified primary model can include interaction terms if appropriate. However, interaction means that the treatment effect is different for different subjects, and this fact could be relevant to prescribers, patients, and other stakeholders. Therefore, even though a primary analysis showing an overall treatment effect remains valid, differential effects in subgroups can also be important. <strong>(Green light to look at subgroup analysis &#8211; but remember ATE average treatment effect is still meaningful)</strong></span></li>
+<li>
+<span style="color: var(--color-text);">Many clinical trials use a change from baseline as the primary outcome measure. Even when the outcome is measured as a change from baseline, the baseline value can still be used advantageously as a covariates. <strong>(These 3 things need to be </strong></span><strong>said &#8211; and learned &#8211; over and over again, 1) ANCOVA with change score as the outcome gives the exact same test for treatment as ANCOVA with post-test as the outcome 2) Analyzing the change score as the outcome without controlling for the baseline gives a different treatment effect estimate than ANCOVA whenever there is any imbalance in the baseline outcome by treatment (i.e. whenever the treatment assignment is correlated by chance with baseline outcome) 3) Many articles recommend always using ANCOVA in clinical trials as it is most likely to reduce bias due to imbalance and also will have more precision)</strong>
+</li>
+</ol>
+<p>&nbsp;</p>
+<p>The <strong><a href="https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-adjustment-baseline-covariates-clinical-trials_en.pdf">EMA also has guidelines</a></strong> <strong>from 2015</strong> and in my opinion they are much better, perhaps because they are finalized and are not still in the open public feedback stage, although I was surprised FDA didn&#8217;t already have something like this.  EMA has 15 guidelines following a very reasonable preamble.  <strong>My comments in bold:</strong></p>
+<div class="page" title="Page 3">
+<div class="layoutArea">
+<div class="column">
+<p>Preamble from the EMA: Baseline covariates impact the outcome in many clinical trials. Although baseline adjustment is not always necessary, in case of a strong or moderate association between a baseline covariate(s) and the primary outcome measure, adjustment for such covariate(s) generally improves the efficiency of the analysis and avoids conditional bias from chance covariate imbalance.</p>
+<div class="page" title="Page 3">
+<div class="layoutArea">
+<div class="column">
+<p>Baseline covariates may be accounted for at the design stage of a clinical trial and/or in the statistical analysis. When dealing with baseline covariates the following recommendations are made:</p>
+<ol>
+<li>Stratification may be used to ensure balance of treatments across covariates; it may also be used for administrative reasons (e.g. block in the case of block randomisation). The factors that are the basis of stratification should normally be included as covariates or stratification variables in the primary outcome model, except where stratification was done purely for an administrative reason. <strong>(Recognizing the stratification variables are covariates is very sensible)</strong>
+</li>
+<li>Variables known a priori to be strongly, or at least moderately, associated with the primary outcome and/or variables for which there is a strong clinical rationale for such an association should also be considered as covariates in the primary analysis. The variables selected on this basis should be pre-specified in the protocol. <strong>(Same point made in the FDA list)</strong>
+</li>
+<li>Baseline imbalance observed post hoc should not be considered an appropriate reason for including a variable as a covariate in the primary analysis. However, conducting exploratory analyses including such variables when large baseline imbalances are observed might be helpful to assess the robustness of the primary analysis. <strong>(If there is a large imbalance on a baseline variable and it is also a strong predictor of the outcome, it seems to me it must be included as a covariate to avoid bias.  However, I guess if it is a strong predictor of the outcome you should have already known that and included it in #2)</strong>
+</li>
+<li>Variables measured after randomisation and so potentially affected by the treatment should not be included as covariates in the primary analysis. (<strong>Same point made in the FDA list)</strong>
+</li>
+<li>If a baseline value of a continuous primary outcome measure is available, then this should usually be included as a covariate. This applies whether the primary outcome variable is defined as the ‘raw outcome’ or as the ‘change from baseline’. <strong>(Yes, they are saying&#8230;use ANCOVA)</strong>
+</li>
+<li>Covariates to be included in the primary analysis must be pre-specified in the protocol. <strong>(This is the same thing they said above in #2)</strong>
+</li>
+<li>Only a few covariates should be included in a primary analysis. Although larger data sets may support more covariates than smaller ones, justification for including each of the covariates should be provided. <strong>(It would be helpful if this had more specifics&#8230;what does &#8216;a few&#8217; mean and perhaps some comment about whether there are any concerns about misspecification)</strong>
+</li>
+<li>In the absence of prior knowledge, a simple functional form (usually either linearity or categorising a continuous scale) should be assumed for the relationship between a continuous covariate and the outcome variable. <strong>(good point)</strong>
+</li>
+<li>The validity of model assumptions must be checked when assessing the results. This is particularly important for generalised linear or non-linear models where mis-specification could lead to incorrect estimates of the treatment effect. Even under ordinary linear models, some attention should be paid to the possible influence of extreme outlying values. <strong>(Check for outliers, always)</strong>
+</li>
+<li>Whenever adjusted analyses are presented, results of the treatment effect in subgroups formed by the covariates (appropriately categorised, if relevant) should be presented to enable an assessment of the model assumptions. <strong>(I have never done this but I think it is a very useful idea and worth trying though may need to be careful with smaller sample sizes or groups)</strong>
+</li>
+<li>Sensitivity analyses should be pre-planned and presented to investigate the robustness of the primary analysis. Discrepancies should be discussed and explained. In the presence of important differences that cannot be logically explained – for example, between the results of adjusted and unadjusted analyses – the interpretation of the trial could be seriously affected. <strong>(I like the emphasis on looking at the data in different ways.)</strong>
+</li>
+<li>The primary model should not include treatment by covariate interactions. If substantial interactions are expected a priori, the trial should be designed to allow separate estimates of the treatment effects in specific subgroups <strong>(In contrast to the FDA, this is encouraging researchers to stay away from subgroup analyses, remember treatment by covariate interactions is how we test for treatment effects in subgroups)</strong>
+</li>
+<li>Exploratory analyses may be carried out to improve the understanding of covariates not included in the primary analysis, and to help the sponsor with the ongoing development of the drug. <strong>(Keep learning from the data)</strong>
+</li>
+<li>In case of missing values in baseline covariates the principles for dealing with missing values as outlined e.g. in the Guideline on missing data in confirmatory clinical trials (EMA/CPMP/EWP/1776/99 Rev. 1) applies. (<strong>Need to go read this and put up a blog post for it)</strong>
+</li>
+<li>A primary analysis, unambiguously pre-specified in the protocol, correctly carried out and interpreted, should support the conclusions which are drawn from the trial. Since there may be a number of alternative valid analyses, results based on pre-specified analyses will carry most credibility. (<strong>Lay out your plan beforehand thoughtfully and follow it is a good recipe for credible and reproducible science) </strong>
+<div class="page" title="Page 4">
+<div class="layoutArea">
+<div class="column"></div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="page" title="Page 6">
+<div class="layoutArea"></div>
+</div>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-official sd-sharing">
+<h3 class="sd-title">Share this:</h3>
+<div class="sd-content"><ul>
+<li class="share-twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url=".//2019/10/14/clinical-trials-checking-out-what-the-fda-and-ema-recommend-about-controlling-for-covariates/" data-text="Clinical Trials: Checking out what the FDA and EMA recommend about controlling for covariates">Tweet</a></li>
+<li class="share-facebook"><div class="fb-share-button" data-href=".//2019/10/14/clinical-trials-checking-out-what-the-fda-and-ema-recommend-about-controlling-for-covariates/" data-layout="button_count"></div></li>
+<li class="share-end">
+</ul></div>
+</div></div>
+<div id="jp-relatedposts" class="jp-relatedposts">
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div>											</div>
+<!-- .entry-content -->
+
+		
+						<div class="entry-utility">
+							This entry was posted in <a href="./../../../../category/uncategorized/index.html" rel="category tag">Uncategorized</a>. Bookmark the <a href="./index.html" title="Permalink to Clinical Trials: Checking out what the FDA and EMA recommend about controlling for covariates" rel="bookmark">permalink</a>.													</div>
+<!-- .entry-utility -->
+					</div>
+<!-- #post-216 -->
+
+					<div id="nav-below" class="navigation">
+						<div class="nav-previous"><a href="./../../../06/29/confidence-intervals-for-a-ratio-when-you-only-have-summary-estimates-and-standard-errors/index.html" rel="prev"><span class="meta-nav">&larr;</span> Confidence intervals for a ratio when you only have summary estimates and standard errors</a></div>
+						<div class="nav-next"><a href="./../../../12/05/survival-analysis-always-makes-me-nervous/index.html" rel="next">Survival analysis always makes me nervous <span class="meta-nav">&rarr;</span></a></div>
+					</div>
+<!-- #nav-below -->
+
+					
+			<div id="comments">
+
+
+			<h3 id="comments-title">
+			One Response to <em>Clinical Trials: Checking out what the FDA and EMA recommend about controlling for covariates</em>			</h3>
+
+	
+			<ol class="commentlist">
+						<li class="comment even thread-even depth-1" id="li-comment-9">
+		<div id="comment-9">
+			<div class="comment-author vcard">
+				<img alt="" src="https://secure.gravatar.com/avatar/05aa3de7f1ceaaa4c2741da9681b5151?s=40&#038;d=mm&#038;r=g" srcset="https://secure.gravatar.com/avatar/05aa3de7f1ceaaa4c2741da9681b5151?s=80&#038;d=mm&#038;r=g 2x" class="avatar avatar-40 photo" height="40" width="40" decoding="async">				<cite class="fn"><a href="https://www.technobridge.in/clinical-research-course.html" class="url" rel="ugc external nofollow">Avantika</a></cite> <span class="says">says:</span>			</div>
+<!-- .comment-author .vcard -->
+
+				
+				
+			<div class="comment-meta commentmetadata">
+<a href="./index.html#comment-9">
+				February 18, 2020 at 11:28 am					</a>
+									</div>
+<!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body">
+<p>An informative ream. I gained more knowledge on this topic. Thanks for sharing</p>
+</div>
+
+				<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="./index.html?replytocom=9#respond" data-commentid="9" data-postid="216" data-belowelement="comment-9" data-respondelement="respond" data-replyto="Reply to Avantika" aria-label="Reply to Avantika">Reply</a>				</div>
+<!-- .reply -->
+			</div>
+<!-- #comment-##  -->
+
+				</li>
+<!-- #comment-## -->
+			</ol>
+
+	
+	
+
+
+		<div id="respond" class="comment-respond">
+			<h3 id="reply-title" class="comment-reply-title">Enter your comment here...<small><a rel="nofollow" id="cancel-comment-reply-link" href="./index.html#respond" style="display:none;">Cancel reply</a></small>
+</h3>			<form id="commentform" class="comment-form">
+				<iframe title="Comment Form" src="https://jetpack.wordpress.com/jetpack-comment/?blogid=140901308&#038;postid=216&#038;comment_registration=0&#038;require_name_email=0&#038;stc_enabled=1&#038;stb_enabled=1&#038;show_avatars=1&#038;avatar_default=mystery&#038;greeting=Enter+your+comment+here...&#038;jetpack_comments_nonce=b685f9c4cb&#038;greeting_reply=Leave+a+Reply+to+%25s&#038;color_scheme=light&#038;lang=en_US&#038;jetpack_version=13.8&#038;show_cookie_consent=10&#038;has_cookie_consent=0&#038;is_current_user_subscribed=0&#038;token_key=%3Bnormal%3B&#038;sig=6e4930a4909c78fe5e69f77846e233fe213afccd#parent=.%2F%2F2019%2F10%2F14%2Fclinical-trials-checking-out-what-the-fda-and-ema-recommend-about-controlling-for-covariates%2F%3Fsimply_static_page%3D153" name="jetpack_remote_comment" style="width:100%; height: 430px; border:0;" class="jetpack_remote_comment" id="jetpack_remote_comment" sandbox="allow-same-origin allow-top-navigation allow-scripts allow-forms allow-popups">
+									</iframe>
+									<!--[if !IE]><!-->
+					<script>document.addEventListener('DOMContentLoaded', function () {
+							var commentForms = document.getElementsByClassName('jetpack_remote_comment');
+							for (var i = 0; i < commentForms.length; i++) {
+								commentForms[i].allowTransparency = false;
+								commentForms[i].scrolling = 'no';
+							}
+						});</script>
+					<!--<![endif]-->
+							</form>
+		</div>
+
+		
+		<input type="hidden" name="comment_parent" id="comment_parent" value="">
+
+		
+</div>
+<!-- #comments -->
+
+	
+			</div>
+<!-- #content -->
+		</div>
+<!-- #container -->
+
+
+		<div id="primary" class="widget-area" role="complementary">
+			<ul class="xoxo">
+
+<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" class="searchform" action=".//">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s">
+					<input type="submit" id="searchsubmit" value="Search">
+				</div>
+			</form></li>
+<li id="archives-2" class="widget-container widget_archive">
+<h3 class="widget-title">Archives</h3>
+			<ul>
+					<li><a href="./../../../../2023/06/index.html">June 2023</a></li>
+	<li><a href="./../../../../2021/05/index.html">May 2021</a></li>
+	<li><a href="./../../../../2021/04/index.html">April 2021</a></li>
+	<li><a href="./../../../../2021/01/index.html">January 2021</a></li>
+	<li><a href="./../../../../2020/06/index.html">June 2020</a></li>
+	<li><a href="./../../../../2020/03/index.html">March 2020</a></li>
+	<li><a href="./../../../12/index.html">December 2019</a></li>
+	<li><a href="./../../index.html">October 2019</a></li>
+	<li><a href="./../../../06/index.html">June 2019</a></li>
+	<li><a href="./../../../03/index.html">March 2019</a></li>
+	<li><a href="./../../../../2018/08/index.html">August 2018</a></li>
+	<li><a href="./../../../../2018/06/index.html">June 2018</a></li>
+	<li><a href="./../../../../2018/04/index.html">April 2018</a></li>
+	<li><a href="./../../../../2018/03/index.html">March 2018</a></li>
+	<li><a href="./../../../../2018/02/index.html">February 2018</a></li>
+	<li><a href="./../../../../2018/01/index.html">January 2018</a></li>
+			</ul>
+
+			</li>
+<li id="categories-2" class="widget-container widget_categories">
+<h3 class="widget-title">Categories</h3>
+			<ul>
+					<li class="cat-item cat-item-1">
+<a href="./../../../../category/uncategorized/index.html">Uncategorized</a>
+</li>
+			</ul>
+
+			</li>
+<li id="meta-2" class="widget-container widget_meta">
+<h3 class="widget-title">Meta</h3>
+		<ul>
+						<li><a href="./../../../../wp-login.php">Log in</a></li>
+			<li><a href="./../../../../feed/index.html">Entries feed</a></li>
+			<li><a href="./../../../../comments/feed/index.html">Comments feed</a></li>
+
+			<li><a href="https://wordpress.org/">WordPress.org</a></li>
+		</ul>
+
+		</li>			</ul>
+		</div>
+<!-- #primary .widget-area -->
+
+	</div>
+<!-- #main -->
+
+	<div id="footer" role="contentinfo">
+		<div id="colophon">
+
+
+
+			<div id="site-info">
+				<a href="./../../../../index.html" rel="home">
+					Mental Health Data Science with Melanie Wall				</a>
+							</div>
+<!-- #site-info -->
+
+			<div id="site-generator">
+								<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
+					Proudly powered by WordPress.				</a>
+			</div>
+<!-- #site-generator -->
+
+		</div>
+<!-- #colophon -->
+	</div>
+<!-- #footer -->
+
+</div>
+<!-- #wrapper -->
+
+	<div style="display:none">
+			<div class="grofile-hash-map-05aa3de7f1ceaaa4c2741da9681b5151">
+		</div>
+		</div>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+						<div id="fb-root"></div>
+			<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&appId=249643311490&version=v2.3'; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+			<script>document.body.addEventListener( 'is.post-load', function() {
+				if ( 'undefined' !== typeof FB ) {
+					FB.XFBML.parse();
+				}
+			} );</script>
+			<script type="text/javascript" src="./../../../../wp-includes/js/comment-reply.min.js?ver=6.6.1" id="comment-reply-js" async="async" data-wp-strategy="async"></script>
+<script type="text/javascript" src="./../../../../wp-content/plugins/embed-any-document/js/pdfobject.min.js?ver=2.7.4" id="awsm-ead-pdf-object-js"></script>
+<script type="text/javascript" id="awsm-ead-public-js-extra">
+/* <![CDATA[ */
+var eadPublic = [];
+/* ]]> */
+</script>
+<script type="text/javascript" src="./../../../../wp-content/plugins/embed-any-document/js/embed-public.min.js?ver=2.7.4" id="awsm-ead-public-js"></script>
+<script type="text/javascript" src="https://secure.gravatar.com/js/gprofiles.js?ver=202436" id="grofiles-cards-js"></script>
+<script type="text/javascript" id="wpgroho-js-extra">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./../../../../wp-content/plugins/jetpack/modules/wpgroho.js?ver=13.8" id="wpgroho-js"></script>
+<script type="text/javascript" src="https://stats.wp.com/e-202436.js" id="jetpack-stats-js" data-wp-strategy="defer"></script>
+<script type="text/javascript" id="jetpack-stats-js-after">
+/* <![CDATA[ */
+_stq = window._stq || [];
+_stq.push([ "view", JSON.parse("{\"v\":\"ext\",\"blog\":\"140901308\",\"post\":\"216\",\"tz\":\"0\",\"srv\":\"melaniemwall.com\",\"j\":\"1:13.8\"}") ]);
+_stq.push([ "clickTrackerInit", "140901308", "216" ]);
+/* ]]> */
+</script>
+<script type="text/javascript" id="sharing-js-js-extra">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./../../../../wp-content/plugins/jetpack/_inc/build/sharedaddy/sharing.min.js?ver=13.8" id="sharing-js-js"></script>
+<script type="text/javascript" id="sharing-js-js-after">
+/* <![CDATA[ */
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+/* ]]> */
+</script>
+		<script type="text/javascript">(function () {
+				const iframe = document.getElementById( 'jetpack_remote_comment' );
+								const watchReply = function() {
+					// Check addComment._Jetpack_moveForm to make sure we don't monkey-patch twice.
+					if ( 'undefined' !== typeof addComment && ! addComment._Jetpack_moveForm ) {
+						// Cache the Core function.
+						addComment._Jetpack_moveForm = addComment.moveForm;
+						const commentParent = document.getElementById( 'comment_parent' );
+						const cancel = document.getElementById( 'cancel-comment-reply-link' );
+
+						function tellFrameNewParent ( commentParentValue ) {
+							const url = new URL( iframe.src );
+							if ( commentParentValue ) {
+								url.searchParams.set( 'replytocom', commentParentValue )
+							} else {
+								url.searchParams.delete( 'replytocom' );
+							}
+							if( iframe.src !== url.href ) {
+								iframe.src = url.href;
+							}
+						};
+
+						cancel.addEventListener( 'click', function () {
+							tellFrameNewParent( false );
+						} );
+
+						addComment.moveForm = function ( _, parentId ) {
+							tellFrameNewParent( parentId );
+							return addComment._Jetpack_moveForm.apply( null, arguments );
+						};
+					}
+				}
+				document.addEventListener( 'DOMContentLoaded', watchReply );
+				// In WP 6.4+, the script is loaded asynchronously, so we need to wait for it to load before we monkey-patch the functions it introduces.
+				document.querySelector('#comment-reply-js')?.addEventListener( 'load', watchReply );
+
+				
+				window.addEventListener( 'message', function ( event ) {
+					if ( event.origin !== 'https://jetpack.wordpress.com' ) {
+						return;
+					}
+					iframe.style.height = event.data + 'px';
+				});
+			})();</script>
+		</body>
+</html>
