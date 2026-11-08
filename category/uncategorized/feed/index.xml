@@ -1,0 +1,2112 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>Uncategorized &#8211; Mental Health Data Science with Melanie Wall</title>
+	<atom:link href="./index.html" rel="self" type="application/rss+xml" />
+	<link>./../../../index.html</link>
+	<description>I am a biostatistician who has worked on applied research questions in psychosocial and behavioral public health and psychiatry my whole career. Here is a place to post ideas, helpful hints, and maybe start discussions about this exciting work especially as we enter a new era of Data Science</description>
+	<lastBuildDate>Sat, 24 Jun 2023 21:22:57 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.6.1</generator>
+<site xmlns="com-wordpress:feed-additions:1">140901308</site>	<item>
+		<title>Examining binomial regression of events/trials and overdispersion</title>
+		<link>./../../../2023/06/24/examining-binomial-regression-of-events-trials-and-overdispersion/index.html</link>
+					<comments>./../../../2023/06/24/examining-binomial-regression-of-events-trials-and-overdispersion/index.html#respond</comments>
+		
+		<dc:creator><![CDATA[melanie]]></dc:creator>
+		<pubDate>Sat, 24 Jun 2023 21:22:54 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">./../../../index.html?p=426</guid>
+
+					<description><![CDATA[Melanie Wall 2023-06-24 knitr::opts_chunk$set(echo = TRUE) This document shows different ways to code/model binomial count (event/trials) data in r glm() packange and also demonstrates the results when we aggregate data across units and also when we account for overdispersion across &#8230; <a href="./../../../2023/06/24/examining-binomial-regression-of-events-trials-and-overdispersion/index.html">Continue reading <span class="meta-nav">&#8594;</span></a>]]></description>
+										<content:encoded><![CDATA[
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <title></title>
+    <meta name="Generator" content="Cocoa HTML Writer">
+    <meta name="CocoaVersion" content="2299">
+    <style type="text/css">
+    p.p3 {
+        margin: 0.0px 0.0px 0.0px 0.0px;
+        line-height: 18.6px;
+        font: 13.0px Courier;
+        color: #262626;
+        -webkit-text-stroke: #262626;
+        background-color: #f2f2f2
+    }
+
+    p.p5 {
+        margin: 0.0px 0.0px 0.0px 0.0px;
+        line-height: 18.6px;
+        font: 13.0px Courier;
+        color: #262626;
+        -webkit-text-stroke: #262626;
+        background-color: #ffffff
+    }
+
+    p.p6 {
+        margin: 0.0px 0.0px 0.0px 0.0px;
+        line-height: 18.6px;
+        font: 13.0px Menlo;
+        color: #262626;
+        -webkit-text-stroke: #262626;
+        background-color: #ffffff
+    }
+
+    p.p7 {
+        margin: 0.0px 0.0px 0.0px 0.0px;
+        line-height: 18.6px;
+        font: 13.0px Courier;
+        color: #262626;
+        -webkit-text-stroke: #262626;
+        background-color: #f2f2f2;
+        min-height: 16.0px
+    }
+
+    span.s1 {
+        font-kerning: none
+    }
+
+    span.s2 {
+        font: 13.0px Menlo;
+        font-kerning: none
+    }
+
+    span.s3 {
+        font: 13.0px Courier;
+        font-kerning: none
+    }
+
+    span.s4 {
+        font: 13.0px 'Apple Symbols';
+        font-kerning: none
+    }
+
+    span.s5 {
+        text-decoration: underline;
+        font-kerning: none
+    }
+
+    span.s6 {
+        font: 18.0px 'Helvetica Neue';
+        font-kerning: none;
+        color: #2965a8;
+        -webkit-text-stroke: 0px #2965a8
+    }
+    </style>
+</head>
+<body>
+    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">Melanie Wall</span>
+    </h4>
+    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">2023-06-24</span>
+    </h4>
+    <p class="p3">
+        <span class="s1">knitr::opts_chunk$set(echo = TRUE)</span>
+    </p>
+    <h3 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 26.4px; font: 24.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">This document shows different ways to code/model binomial count (event/trials) data in r glm() packange and also demonstrates the results when we aggregate data across units and also when we account for overdispersion across units.</span>
+    </h3>
+    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">The data for demonstration are about Bird Extinctions from the R package Sleuth3. To get it: install.packages(“Sleuth3”). Data (shown below) are from 18 islands (Krunnit Islands in Finland) and are counts of how many different bird species there are, i.e. “trials” (AtRisk) and how many species went extinct, i.e. “events” (Extinct)</span>
+    </h4>
+    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">For illustration, I created a dichotomous predictor variable called group which is 0 for big islands and 1 for small islands</span>
+    </h4>
+    <p class="p3">
+        <span class="s1">library(Sleuth3)</span>
+    </p>
+    <p class="p3">
+        <span class="s1">library(tidyverse)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">## </span>
+        <span class="s2">──</span>
+        <span class="s1"> Attaching core tidyverse packages </span>
+        <span class="s2">────────────────────────</span>
+        <span class="s1"> tidyverse 2.0.0 </span>
+        <span class="s2">──</span>
+    </p>
+    <p class="p5">
+        <span class="s1">## </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1">
+             dplyr 
+            <span class="Apple-converted-space"></span>
+            1.1.2 
+            <span class="Apple-converted-space"></span>
+        </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1">
+             readr 
+            <span class="Apple-converted-space"></span>
+            2.1.4
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1">
+             forcats 
+            <span class="Apple-converted-space"></span>
+            1.0.0 
+            <span class="Apple-converted-space"></span>
+        </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1">
+             stringr 
+            <span class="Apple-converted-space"></span>
+            1.5.0
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1">
+             ggplot2 
+            <span class="Apple-converted-space"></span>
+            3.4.2 
+            <span class="Apple-converted-space"></span>
+        </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1">
+             tibble
+            <span class="Apple-converted-space"></span>
+            3.2.1
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1">
+             lubridate 1.9.2 
+            <span class="Apple-converted-space"></span>
+        </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1">
+             tidyr 
+            <span class="Apple-converted-space"></span>
+            1.3.0
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1">
+             purrr 
+            <span class="Apple-converted-space"></span>
+            1.0.1
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p6">
+        <span class="s3">## </span>
+        <span class="s1">──</span>
+        <span class="s3"> Conflicts </span>
+        <span class="s1">──────────────────────────────────────────</span>
+        <span class="s3"> tidyverse_conflicts() </span>
+        <span class="s1">──</span>
+    </p>
+    <p class="p5">
+        <span class="s1">## </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2716.png" alt="✖" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1"> dplyr::filter() masks stats::filter()</span>
+    </p>
+    <p class="p5">
+        <span class="s1">## </span>
+        <span class="s2"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2716.png" alt="✖" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1">
+             dplyr::lag()
+            <span class="Apple-converted-space"></span>
+            masks stats::lag()
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## </span>
+        <span class="s4"><img src="https://s.w.org/images/core/emoji/15.0.3/72x72/2139.png" alt="ℹ" class="wp-smiley" style="height: 1em; max-height: 1em;" /></span>
+        <span class="s1"> Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span>
+    </p>
+    <p class="p3">
+        <span class="s1">krunnit &lt;- case2101</span>
+    </p>
+    <p class="p7">
+        <span class="s1"></span>
+        <br>
+    </p>
+    <p class="p3">
+        <span class="s1">####create a grouping variable for demonstration</span>
+    </p>
+    <p class="p3">
+        <span class="s1">krunnit$group = if_else(krunnit$Area &lt; 10,1,0)</span>
+    </p>
+    <p class="p7">
+        <span class="s1"></span>
+        <br>
+    </p>
+    <p class="p3">
+        <span class="s1"># &gt; krunnit</span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 
+            <span class="Apple-converted-space"></span>
+            Island 
+            <span class="Apple-converted-space"></span>
+            Area AtRisk Extinct group
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 1 
+            <span class="Apple-converted-space"></span>
+            Ulkokrunni 185.80 
+            <span class="Apple-converted-space"></span>
+            75 
+            <span class="Apple-converted-space"></span>
+            5 
+            <span class="Apple-converted-space"></span>
+            0
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 2
+            <span class="Apple-converted-space"></span>
+            Maakrunni 105.80 
+            <span class="Apple-converted-space"></span>
+            67 
+            <span class="Apple-converted-space"></span>
+            3 
+            <span class="Apple-converted-space"></span>
+            0
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 3
+            <span class="Apple-converted-space"></span>
+            Ristikari
+            <span class="Apple-converted-space"></span>
+            30.70 
+            <span class="Apple-converted-space"></span>
+            66
+            <span class="Apple-converted-space"></span>
+            10 
+            <span class="Apple-converted-space"></span>
+            0
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 4 
+            <span class="Apple-converted-space"></span>
+            Isonkivenletto 
+            <span class="Apple-converted-space"></span>
+            8.50 
+            <span class="Apple-converted-space"></span>
+            51 
+            <span class="Apple-converted-space"></span>
+            6 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 5 
+            <span class="Apple-converted-space"></span>
+            Hietakraasukka 
+            <span class="Apple-converted-space"></span>
+            4.80 
+            <span class="Apple-converted-space"></span>
+            28 
+            <span class="Apple-converted-space"></span>
+            3 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 6
+            <span class="Apple-converted-space"></span>
+            Kraasukka 
+            <span class="Apple-converted-space"></span>
+            4.50 
+            <span class="Apple-converted-space"></span>
+            20 
+            <span class="Apple-converted-space"></span>
+            4 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 7 
+            <span class="Apple-converted-space"></span>
+            Lansiletto 
+            <span class="Apple-converted-space"></span>
+            4.30 
+            <span class="Apple-converted-space"></span>
+            43 
+            <span class="Apple-converted-space"></span>
+            8 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 8
+            <span class="Apple-converted-space"></span>
+            Pihlajakari 
+            <span class="Apple-converted-space"></span>
+            3.60 
+            <span class="Apple-converted-space"></span>
+            31 
+            <span class="Apple-converted-space"></span>
+            3 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 9 
+            <span class="Apple-converted-space"></span>
+            Tyni 
+            <span class="Apple-converted-space"></span>
+            2.60 
+            <span class="Apple-converted-space"></span>
+            28 
+            <span class="Apple-converted-space"></span>
+            5 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 10
+            <span class="Apple-converted-space"></span>
+            Tasasenletto 
+            <span class="Apple-converted-space"></span>
+            1.70 
+            <span class="Apple-converted-space"></span>
+            32 
+            <span class="Apple-converted-space"></span>
+            6 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 11
+            <span class="Apple-converted-space"></span>
+            Raiska 
+            <span class="Apple-converted-space"></span>
+            1.20 
+            <span class="Apple-converted-space"></span>
+            30 
+            <span class="Apple-converted-space"></span>
+            8 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 12 
+            <span class="Apple-converted-space"></span>
+            Pohjanletto 
+            <span class="Apple-converted-space"></span>
+            0.70 
+            <span class="Apple-converted-space"></span>
+            20 
+            <span class="Apple-converted-space"></span>
+            2 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 13
+            <span class="Apple-converted-space"></span>
+            Toro 
+            <span class="Apple-converted-space"></span>
+            0.70 
+            <span class="Apple-converted-space"></span>
+            31 
+            <span class="Apple-converted-space"></span>
+            9 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 14
+            <span class="Apple-converted-space"></span>
+            Luusiletto 
+            <span class="Apple-converted-space"></span>
+            0.60 
+            <span class="Apple-converted-space"></span>
+            16 
+            <span class="Apple-converted-space"></span>
+            5 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 15 
+            <span class="Apple-converted-space"></span>
+            Vatunginletto 
+            <span class="Apple-converted-space"></span>
+            0.40 
+            <span class="Apple-converted-space"></span>
+            15 
+            <span class="Apple-converted-space"></span>
+            7 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 16 
+            <span class="Apple-converted-space"></span>
+            Vatunginnokka 
+            <span class="Apple-converted-space"></span>
+            0.30 
+            <span class="Apple-converted-space"></span>
+            33 
+            <span class="Apple-converted-space"></span>
+            8 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 17 
+            <span class="Apple-converted-space"></span>
+            Tiirakari 
+            <span class="Apple-converted-space"></span>
+            0.20 
+            <span class="Apple-converted-space"></span>
+            40
+            <span class="Apple-converted-space"></span>
+            13 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            # 18 Ristikarenletto 
+            <span class="Apple-converted-space"></span>
+            0.07
+            <span class="Apple-converted-space"></span>
+            6 
+            <span class="Apple-converted-space"></span>
+            3 
+            <span class="Apple-converted-space"></span>
+            1
+        </span>
+    </p>
+    <h5 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 17.6px; font: 16.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">Two ways of coding a binomial in glm:</span>
+    </h5>
+    <h5 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 17.6px; font: 16.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">1) proportion (events/trials) as outcome and weights = trials,</span>
+    </h5>
+    <h5 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 17.6px; font: 16.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">2) cbind( events, trials &#8211; events) as bivariate outcome and no need to include weights</span>
+    </h5>
+    <h5 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 17.6px; font: 16.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">See below</span>
+    </h5>
+    <p class="p3">
+        <span class="s1">krunnit$prop = krunnit$Extinct/krunnit$AtRisk</span>
+    </p>
+    <p class="p7">
+        <span class="s1"></span>
+        <br>
+    </p>
+    <p class="p3">
+        <span class="s1">###uses proportion as outcome with weight = number of trials (&#8220;AtRisk&#8221;); n=18 islands</span>
+    </p>
+    <p class="p3">
+        <span class="s1">fit1&lt;-glm(prop ~ group, family = binomial(), weights = AtRisk, data = krunnit)</span>
+    </p>
+    <p class="p7">
+        <span class="s1"></span>
+        <br>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            ###uses number of events (&#8220;Extinct&#8221;) and number of non-events (&#8220;AtRisk &#8211; Extinct&#8221;) as bivariate outcome (using cbind);
+            <span class="Apple-converted-space"></span>
+            n=18 islands
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">fit2&lt;-glm(cbind(Extinct, AtRisk &#8211; Extinct) ~ group, family = binomial(), data = krunnit)</span>
+    </p>
+    <h3 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 26.4px; font: 24.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">What about if we aggregate events across islands so that the data is summarized just by group?</span>
+    </h3>
+    <p class="p3">
+        <span class="s1">###aggregates events and non-events across islands</span>
+    </p>
+    <p class="p7">
+        <span class="s1"></span>
+        <br>
+    </p>
+    <p class="p3">
+        <span class="s1">aggkrunnit&lt;-krunnit %&gt;% select(AtRisk, Extinct, group) %&gt;% group_by(group)%&gt;%</span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            <span class="Apple-converted-space"></span>
+            summarise(totAtRisk=sum(AtRisk),
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            <span class="Apple-converted-space"></span>
+            totExtinct = sum(Extinct))%&gt;%
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">
+            <span class="Apple-converted-space"></span>
+            mutate(totprop = totExtinct/totAtRisk)
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">aggkrunnit</span>
+    </p>
+    <p class="p5">
+        <span class="s1">## # A tibble: 2 × 4</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            group totAtRisk totExtinct totprop
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            &lt;dbl&gt; 
+            <span class="Apple-converted-space"></span>
+            &lt;int&gt;
+            <span class="Apple-converted-space"></span>
+            &lt;int&gt; 
+            <span class="Apple-converted-space"></span>
+            &lt;dbl&gt;
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 1 
+            <span class="Apple-converted-space"></span>
+            0 
+            <span class="Apple-converted-space"></span>
+            208 
+            <span class="Apple-converted-space"></span>
+            18
+            <span class="Apple-converted-space"></span>
+            0.0865
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 2 
+            <span class="Apple-converted-space"></span>
+            1 
+            <span class="Apple-converted-space"></span>
+            424 
+            <span class="Apple-converted-space"></span>
+            90
+            <span class="Apple-converted-space"></span>
+            0.212
+        </span>
+    </p>
+    <p class="p3">
+        <span class="s1">###uses aggregated data and proportion as outcome with weight = number of trials (&#8220;AtRisk&#8221;) n=2 groups</span>
+    </p>
+    <p class="p3">
+        <span class="s1">fit3&lt;-glm(totprop ~ group, family = binomial(), weights = totAtRisk, data = aggkrunnit)</span>
+    </p>
+    <p class="p7">
+        <span class="s1"></span>
+        <br>
+    </p>
+    <p class="p3">
+        <span class="s1">###uses aggregated data number of events (&#8220;Extinct&#8221;) and number of non-events (&#8220;AtRisk &#8211; Extinct&#8221;) as outcome n=2 groups</span>
+    </p>
+    <p class="p3">
+        <span class="s1">fit4&lt;-glm(cbind(totExtinct, totAtRisk-totExtinct) ~ group, family = binomial(), data = aggkrunnit)</span>
+    </p>
+    <p class="p7">
+        <span class="s1"></span>
+        <br>
+    </p>
+    <p class="p7">
+        <span class="s1"></span>
+        <br>
+    </p>
+    <p class="p3">
+        <span class="s1">summary(fit1)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Call:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## glm(formula = prop ~ group, family = binomial(), data = krunnit,
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            weights = AtRisk)
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Coefficients:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Estimate Std. Error z value Pr(&gt;|z|) 
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## (Intercept)
+            <span class="Apple-converted-space"></span>
+            -2.3567 
+            <span class="Apple-converted-space"></span>
+            0.2466
+            <span class="Apple-converted-space"></span>
+            -9.556
+            <span class="Apple-converted-space"></span>
+            &lt; 2e-16 ***
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## group 
+            <span class="Apple-converted-space"></span>
+            1.0453 
+            <span class="Apple-converted-space"></span>
+            0.2737 
+            <span class="Apple-converted-space"></span>
+            3.819 0.000134 ***
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## &#8212;</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Signif. codes:
+            <span class="Apple-converted-space"></span>
+            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## (Dispersion parameter for binomial family taken to be 1)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Null deviance: 45.338
+            <span class="Apple-converted-space"></span>
+            on 17
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Residual deviance: 28.185
+            <span class="Apple-converted-space"></span>
+            on 16
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## AIC: 91.517</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Number of Fisher Scoring iterations: 4</span>
+    </p>
+    <p class="p3">
+        <span class="s1">summary(fit2)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Call:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## glm(formula = cbind(Extinct, AtRisk &#8211; Extinct) ~ group, family = binomial(),
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            data = krunnit)
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Coefficients:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Estimate Std. Error z value Pr(&gt;|z|) 
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## (Intercept)
+            <span class="Apple-converted-space"></span>
+            -2.3567 
+            <span class="Apple-converted-space"></span>
+            0.2466
+            <span class="Apple-converted-space"></span>
+            -9.556
+            <span class="Apple-converted-space"></span>
+            &lt; 2e-16 ***
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## group 
+            <span class="Apple-converted-space"></span>
+            1.0453 
+            <span class="Apple-converted-space"></span>
+            0.2737 
+            <span class="Apple-converted-space"></span>
+            3.819 0.000134 ***
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## &#8212;</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Signif. codes:
+            <span class="Apple-converted-space"></span>
+            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## (Dispersion parameter for binomial family taken to be 1)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Null deviance: 45.338
+            <span class="Apple-converted-space"></span>
+            on 17
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Residual deviance: 28.185
+            <span class="Apple-converted-space"></span>
+            on 16
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## AIC: 91.517</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Number of Fisher Scoring iterations: 4</span>
+    </p>
+    <p class="p3">
+        <span class="s1">summary(fit3)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Call:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## glm(formula = totprop ~ group, family = binomial(), data = aggkrunnit,
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            weights = totAtRisk)
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Coefficients:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Estimate Std. Error z value Pr(&gt;|z|) 
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## (Intercept)
+            <span class="Apple-converted-space"></span>
+            -2.3567 
+            <span class="Apple-converted-space"></span>
+            0.2466
+            <span class="Apple-converted-space"></span>
+            -9.556
+            <span class="Apple-converted-space"></span>
+            &lt; 2e-16 ***
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## group 
+            <span class="Apple-converted-space"></span>
+            1.0453 
+            <span class="Apple-converted-space"></span>
+            0.2737 
+            <span class="Apple-converted-space"></span>
+            3.819 0.000134 ***
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## &#8212;</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Signif. codes:
+            <span class="Apple-converted-space"></span>
+            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## (Dispersion parameter for binomial family taken to be 1)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Null deviance:
+            <span class="Apple-converted-space"></span>
+            1.7153e+01
+            <span class="Apple-converted-space"></span>
+            on 1
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Residual deviance: -2.6201e-14
+            <span class="Apple-converted-space"></span>
+            on 0
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## AIC: 14.748</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Number of Fisher Scoring iterations: 3</span>
+    </p>
+    <p class="p3">
+        <span class="s1">summary(fit4)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Call:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## glm(formula = cbind(totExtinct, totAtRisk &#8211; totExtinct) ~ group,
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            family = binomial(), data = aggkrunnit)
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Coefficients:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Estimate Std. Error z value Pr(&gt;|z|) 
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## (Intercept)
+            <span class="Apple-converted-space"></span>
+            -2.3567 
+            <span class="Apple-converted-space"></span>
+            0.2466
+            <span class="Apple-converted-space"></span>
+            -9.556
+            <span class="Apple-converted-space"></span>
+            &lt; 2e-16 ***
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## group 
+            <span class="Apple-converted-space"></span>
+            1.0453 
+            <span class="Apple-converted-space"></span>
+            0.2737 
+            <span class="Apple-converted-space"></span>
+            3.819 0.000134 ***
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## &#8212;</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Signif. codes:
+            <span class="Apple-converted-space"></span>
+            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## (Dispersion parameter for binomial family taken to be 1)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Null deviance:
+            <span class="Apple-converted-space"></span>
+            1.7153e+01
+            <span class="Apple-converted-space"></span>
+            on 1
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Residual deviance: -2.6201e-14
+            <span class="Apple-converted-space"></span>
+            on 0
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## AIC: 14.748</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Number of Fisher Scoring iterations: 3</span>
+    </p>
+    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">Note that the results from all 4 ways of modeling above (fit1, fit2, fit3, fit4) give the EXACT same coefficients and EXACT same standard error for group. That is, it doesn’t matter whether we use the coding method with “prop” or the “cbind(event,trial-event)” as outcome. And, more importantly and interestingly, it doesn’t make a difference whether we use all 18 sets of counts (1 for each island) separately (like in fit1 and fit2) or else include only the aggregated data across islands by group (n=2) (like in fit3 and fit4).</span>
+    </h4>
+    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">The fact that the standard errors are the same whether we aggregate or not pointed to something important about what the binomial model is assuming. The reason the disaggregated and aggregated are the same is that the binomial model has only 1 parameter (i.e. the probability of an event) and the regression model is actually assuming all the trials are independent across all islands. The model doesn’t care/notice that the data come from different islands. It is focused on just modeling the probability of an event out of all the possible trials aggregating across big and small islands.</span>
+    </h4>
+    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">But, </span>
+        <span class="s5">this is a problem</span>
+        <span class="s1">
+             because we know the species at risk are clustered within islands and so there is another variability which should probably be considered which is island-island variability. This extra variability due to clustering in binomial data (and also in Poisson data) is often called “overdispersion”. There are multiple ways to incorporate it (See this paper 
+            <a href="https://journals.sagepub.com/doi/pdf/10.1177/0962280215588569">
+                <span class="s6">https://journals.sagepub.com/doi/pdf/10.1177/0962280215588569</span>
+            </a>
+            ), but the simplest is to adjust the standard errors by a scale factor either using the Pearson or the Deviance residuals which quantifies how much the variabilty in the residuals deviates from that expected if all islands had the same exact true probability of an event (after accounting for covariates).
+        </span>
+    </h4>
+    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">
+            Notice in the binomial output it says “(Dispersion parameter for binomial family taken to be 1)”. We can change that by using 
+            <b>family = quasibinomial()</b>
+             as below:
+        </span>
+    </h4>
+    <p class="p3">
+        <span class="s1">##### Using quasibinomial() to account for island to island variability in proportions</span>
+    </p>
+    <p class="p7">
+        <span class="s1"></span>
+        <br>
+    </p>
+    <p class="p3">
+        <span class="s1">fit1disp&lt;-glm(prop ~ group, family = quasibinomial(), weights = AtRisk, data = krunnit)</span>
+    </p>
+    <p class="p3">
+        <span class="s1">fit2disp&lt;-glm(cbind(Extinct, AtRisk-Extinct) ~ group, family = quasibinomial(), data = krunnit)</span>
+    </p>
+    <p class="p7">
+        <span class="s1"></span>
+        <br>
+    </p>
+    <p class="p3">
+        <span class="s1">summary(fit1disp)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Call:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## glm(formula = prop ~ group, family = quasibinomial(), data = krunnit,
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            weights = AtRisk)
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Coefficients:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Estimate Std. Error t value Pr(&gt;|t|) 
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## (Intercept)
+            <span class="Apple-converted-space"></span>
+            -2.3567 
+            <span class="Apple-converted-space"></span>
+            0.3324
+            <span class="Apple-converted-space"></span>
+            -7.091 2.56e-06 ***
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## group 
+            <span class="Apple-converted-space"></span>
+            1.0453 
+            <span class="Apple-converted-space"></span>
+            0.3689 
+            <span class="Apple-converted-space"></span>
+            2.834
+            <span class="Apple-converted-space"></span>
+            0.012 * 
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## &#8212;</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Signif. codes:
+            <span class="Apple-converted-space"></span>
+            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## (Dispersion parameter for quasibinomial family taken to be 1.816271)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Null deviance: 45.338
+            <span class="Apple-converted-space"></span>
+            on 17
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Residual deviance: 28.185
+            <span class="Apple-converted-space"></span>
+            on 16
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## AIC: NA</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Number of Fisher Scoring iterations: 4</span>
+    </p>
+    <p class="p3">
+        <span class="s1">summary(fit2disp)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Call:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## glm(formula = cbind(Extinct, AtRisk &#8211; Extinct) ~ group, family = quasibinomial(),
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            data = krunnit)
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Coefficients:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Estimate Std. Error t value Pr(&gt;|t|) 
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## (Intercept)
+            <span class="Apple-converted-space"></span>
+            -2.3567 
+            <span class="Apple-converted-space"></span>
+            0.3324
+            <span class="Apple-converted-space"></span>
+            -7.091 2.56e-06 ***
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## group 
+            <span class="Apple-converted-space"></span>
+            1.0453 
+            <span class="Apple-converted-space"></span>
+            0.3689 
+            <span class="Apple-converted-space"></span>
+            2.834
+            <span class="Apple-converted-space"></span>
+            0.012 * 
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## &#8212;</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Signif. codes:
+            <span class="Apple-converted-space"></span>
+            0 &#8216;***&#8217; 0.001 &#8216;**&#8217; 0.01 &#8216;*&#8217; 0.05 &#8216;.&#8217; 0.1 &#8216; &#8216; 1
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## (Dispersion parameter for quasibinomial family taken to be 1.816271)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Null deviance: 45.338
+            <span class="Apple-converted-space"></span>
+            on 17
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Residual deviance: 28.185
+            <span class="Apple-converted-space"></span>
+            on 16
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## AIC: NA</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Number of Fisher Scoring iterations: 4</span>
+    </p>
+    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">The dispersion parameter is 1.816271 above. Note that the coefficient estimates for the effects for group are the same as when we just used family = binomial earlier, but now with the family = quasibinomial, the STANDARD ERRORS and consequently P-VALUES are different (bigger). Specifically, the group coefficient (SE) = 0.3689 now whereas before it was 0.2737 without overdispersion. We can see that: 0.3689 = sqrt(1.816271)*.2737. That is, the standard errors are now inflated by sqrt of the overdispersion parameter. </span>
+        <span class="s5">CONCLUSION, If we want to test the group effect on the probability of a species going extinct, it is more accurate to account for the fact that species are clustered within islands and not all islands have the same probability of bird species going extinct, hence it is better to adjust/inflate the standard errors for “overdispersion”.</span>
+    </h4>
+    <h4 style="margin: 0.0px 0.0px 10.0px 0.0px; line-height: 19.8px; font: 18.0px 'Helvetica Neue'; color: #262626; -webkit-text-stroke: #262626">
+        <span class="s1">And, if we try (below) to use quasibinomial with the aggregated data, as expected it will not work because there is not any residuals that can be used to get the estimate for the overdispersion, i.e. there is no way to check if there is any variabilty at the level island level when we collapse across islands</span>
+    </h4>
+    <p class="p3">
+        <span class="s1">fit3disp&lt;-glm(totprop ~ group, family = quasibinomial(), weights = totAtRisk, data = aggkrunnit)</span>
+    </p>
+    <p class="p3">
+        <span class="s1">summary(fit3disp)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Call:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## glm(formula = totprop ~ group, family = quasibinomial(), data = aggkrunnit,
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            weights = totAtRisk)
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Coefficients:</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Estimate Std. Error t value Pr(&gt;|t|)
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## (Intercept) 
+            <span class="Apple-converted-space"></span>
+            -2.357
+            <span class="Apple-converted-space"></span>
+            NaN 
+            <span class="Apple-converted-space"></span>
+            NaN
+            <span class="Apple-converted-space"></span>
+            NaN
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## group
+            <span class="Apple-converted-space"></span>
+            1.045
+            <span class="Apple-converted-space"></span>
+            NaN 
+            <span class="Apple-converted-space"></span>
+            NaN
+            <span class="Apple-converted-space"></span>
+            NaN
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## (Dispersion parameter for quasibinomial family taken to be NaN)</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## 
+            <span class="Apple-converted-space"></span>
+            Null deviance:
+            <span class="Apple-converted-space"></span>
+            1.7153e+01
+            <span class="Apple-converted-space"></span>
+            on 1
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ## Residual deviance: -2.6201e-14
+            <span class="Apple-converted-space"></span>
+            on 0
+            <span class="Apple-converted-space"></span>
+            degrees of freedom
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## AIC: NA</span>
+    </p>
+    <p class="p5">
+        <span class="s1">
+            ##
+            <span class="Apple-converted-space"></span>
+        </span>
+    </p>
+    <p class="p5">
+        <span class="s1">## Number of Fisher Scoring iterations: 3</span>
+    </p>
+</body>
+</html>
+
+
+
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2023/06/24/examining-binomial-regression-of-events-trials-and-overdispersion/feed/index.html</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">426</post-id>	</item>
+		<item>
+		<title>Data scientists, myself included, need regular reminders about problems of interpreting odds ratios from logistic regression</title>
+		<link>./../../../2021/05/29/data-scientists-myself-included-need-regular-reminders-about-problems-of-interpreting-odds-ratios-from-logistic-regression/index.html</link>
+					<comments>./../../../2021/05/29/data-scientists-myself-included-need-regular-reminders-about-problems-of-interpreting-odds-ratios-from-logistic-regression/index.html#respond</comments>
+		
+		<dc:creator><![CDATA[melanie]]></dc:creator>
+		<pubDate>Sat, 29 May 2021 13:09:55 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">./../../../index.html?p=352</guid>
+
+					<description><![CDATA[I had a collaborative paper reviewed this week that had in it odds ratios (OR) from logistic regressions (used to examine whether one way of measuring norms was a stronger predictor of a dichotomous behavior than another measure of the &#8230; <a href="./../../../2021/05/29/data-scientists-myself-included-need-regular-reminders-about-problems-of-interpreting-odds-ratios-from-logistic-regression/index.html">Continue reading <span class="meta-nav">&#8594;</span></a>]]></description>
+										<content:encoded><![CDATA[
+<p>I had a collaborative paper reviewed this week that had in it odds ratios (OR) from logistic regressions (used to examine whether one way of measuring norms was a stronger predictor of a dichotomous behavior than another measure of the norm).  A reviewer said &#8220;<em>The comparison of odds ratios across logistics regression models has been criticized as this approach might be subject to an unobserved heterogeneity bias (C Mood 2010, European Sociological Review). In order to solve this issue, the authors may want to consider the use of Average Marginal Effects as it is suggested in the study by Mood 2010.&#8221;</em>   The review is right, and I should have caught this before signing-off on the analyses in the paper.  That pesky non-linear logistic function (the s-shape curve for the probabilities) creates problems of interpretation of coefficients from logistic regression, especially when we want to compare them to one another (e.g. when looking for interactions, when looking at sequential models like in mediation, or when simply comparing strengths of association between predictors as in the collaborative paper mentioned above).   The interpretational problem emphasized by the Mood paper is the following: that <strong>in logistic regression the OR for one variable (X1) can change when we control for another variable (X2) <em>even when X1 and X2 are not correlated</em>.  </strong>The same is not true in linear regression.  In linear regression if X1 and X2 are uncorrelated then the beta for Y regressed on X1 will be the same whether we control for X2 or not.  This phenomena in logistic regression (due to so-called &#8216;unobserved heterogeneity bias&#8217;) can create problems when you are trying to interpret differences in coefficients (i.e differences in ORs).</p>
+<p>One straightforward way to avoid (or at least limit) these problems with using OR from logistic regression is to switch to using the Average Marginal Effects which <strong>transform back to the probability (rather than the log odds) scale and aggregate (i.e. marginalize) the effect estimates on the probability scale</strong>.  You still fit a logistic (or log link) model but you don&#8217;t use the coefficients directly as effect estimates (i.e. you don&#8217;t use exp(beta) = OR), instead you use expected contrasts formed back on the probability scale.  This can be done by the MARGINS command in commonly used software (<a href="https://www.stata.com/features/overview/marginal-analysis/">in Stata</a>, or <a href="http://support.sas.com/kb/63/038.html">SAS has a macro</a>, or <a href="https://cran.r-project.org/web/packages/margins/vignettes/Introduction.html">R package). </a></p>
+<p>Another way to avoid these problem with using OR from logistic regression is to <strong>just  use linear regression with the 0-1 outcome</strong>.  I know, I know, if you have any experience doing data analysis (especially if you have a quantitative degree and took statistics classes) you may be saying, &#8220;enough is enough, a 0-1 variable *can&#8217;t* be fit with a linear regression model, it is clearly not continuous,  it is clearly not normally distributed, the predictions will be outside the parameter space (0,1),  and the relationship can&#8217;t be a straight line &#8211; all the assumptions of linear regression are wrong&#8221;.   By using linear regression you are modeling the probabilities of Y=1 directly.  The advantage of the linear regression is that it avoids the problem of the unobserved heterogeneity bias that creeps into logistic regression and we can interpret the effect estimates as the average risk difference in the outcome for a one unit change in the predictor.  Recall that linear regression is modeling the E(Y) (i.e. expected or mean value of Y).  When Y is a 0-1 variable then E(Y)  is just the probability of Y=1.  Indeed, the beta from the linear regression of a 0-1 outcome is a consistent (i.e. asymptotically unbiased) estimator of the Average Marginal Effect.  Standard errors need a little care since the typical ones from linear regression rely on the normality assumption, but you can use robust standard errors or else use a linear binomial model.   Economists have been using linear regression for 0-1 outcomes for a long time, see <a href="https://statisticalhorizons.com/linear-vs-logistic.">https://statisticalhorizons.com/linear-vs-logistic.</a></p>
+<p>Finally,  if you are a regular user of logistic regression, I want to give a strong recommendation to read the paper by Carina Mood &#8220;Logistic Regression: Why We Cannot Do What We Think We Can Do, and What We Can Do About It&#8221; <em> European Sociological Review</em> , FEBRUARY 2010, Vol. 26, No. 1 , pp. 67-82.  She wrote a terrifically clear close look into the problem and describes the solutions that I mention above.  At the time she wrote the paper in 2010, there were not yet software options in STATA, SAS, and R for calculating the Average Marginal Effects (i.e. MARGINS commands), but now that there is, it seems to me that we should really start using them more than the OR in order to produce results with better interpretability.  I know I will.</p>
+<p> </p>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2021/05/29/data-scientists-myself-included-need-regular-reminders-about-problems-of-interpreting-odds-ratios-from-logistic-regression/feed/index.html</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">352</post-id>	</item>
+		<item>
+		<title>Towards empirical methods for studying intersectionality</title>
+		<link>./../../../2021/04/09/towards-empirical-methods-for-studying-intersectionality/index.html</link>
+					<comments>./../../../2021/04/09/towards-empirical-methods-for-studying-intersectionality/index.html#respond</comments>
+		
+		<dc:creator><![CDATA[melanie]]></dc:creator>
+		<pubDate>Fri, 09 Apr 2021 11:45:26 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">./../../../index.html?p=342</guid>
+
+					<description><![CDATA[Towards empirical methods for studying intersectionality in research The link above contains slides I put together in Jan-March 2021 for a talk before two audiences of Research fellows at Columbia University (the Psychiatric Epidemiology training program and the LGBT health &#8230; <a href="./../../../2021/04/09/towards-empirical-methods-for-studying-intersectionality/index.html">Continue reading <span class="meta-nav">&#8594;</span></a>]]></description>
+										<content:encoded><![CDATA[
+
+
+<p><a href="https://drive.google.com/file/d/1dXO9qRG4GO-bqPCD64MvgHOu2ZfTuSSu/view?usp=sharing">Towards empirical methods for studying intersectionality in research</a></p>
+<p>The link above contains slides I put together in Jan-March 2021 for a talk before two audiences of Research fellows at Columbia University (the Psychiatric Epidemiology training program and the LGBT health training program).   </p>
+<p>This topic is a work in progress.  Please feel free to share any comments with me mmwall@columbia.edu.</p>
+<p> </p>
+
+
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2021/04/09/towards-empirical-methods-for-studying-intersectionality/feed/index.html</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">342</post-id>	</item>
+		<item>
+		<title>Data science methods for better understanding intersectionality</title>
+		<link>./../../../2021/01/03/data-science-methods-for-better-understanding-intersectionality/index.html</link>
+					<comments>./../../../2021/01/03/data-science-methods-for-better-understanding-intersectionality/index.html#respond</comments>
+		
+		<dc:creator><![CDATA[melanie]]></dc:creator>
+		<pubDate>Sun, 03 Jan 2021 16:24:47 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">./../../../index.html?p=320</guid>
+
+					<description><![CDATA[In addition to reconsidering how we operationalize racialized categories in our statistical models, to move towards a more anti-racist research agenda we must also consider intersectionality (ethnicity, gender, age, sexual orientation, social economic class, disability).   I am grateful for &#8230; <a href="./../../../2021/01/03/data-science-methods-for-better-understanding-intersectionality/index.html">Continue reading <span class="meta-nav">&#8594;</span></a>]]></description>
+										<content:encoded><![CDATA[
+<p>In addition to reconsidering how we operationalize racialized categories in our statistical models, to move towards a more anti-racist research agenda we must also consider intersectionality (ethnicity, gender, age, sexual orientation, social economic class, disability).   I am grateful for this terrifically written article by <a href="https://www.schulich.uwo.ca/epibio/people/core_faculty/dr_greta_bauer.html">Greta Bauer</a> from 2014 that I only wish I would have found sooner&#8230;<strong><span class="title-text">Incorporating intersectionality theory into population health research methodology: Challenges and the potential to advance health equity </span></strong>that clearly describes both theory and methods. <a href="https://www.sciencedirect.com/science/article/pii/S0277953614001919">https://www.sciencedirect.com/science/article/pii/S0277953614001919</a></p>
+<p>Of high relevance to data scientists doing the modeling work  <strong>see section</strong> &#8220;4.5 Understanding differences between types of regression models for intersectional applications&#8221; Dr. Bauer reviews why we should be estimating interaction on the &#8220;additive-scale&#8221; rather than the &#8220;multiplicative-scale&#8221; and encourages researchers to use related measures like RERI, or the synergy index.  Data scientists who are participating in meaningful health research should become aware and stop just testing cross-product terms in logistic regression when trying to test if &#8220;risks interact&#8221;! <a href="http://www.columbia.edu/~mmw2177/Testing%20for%20additive%20interactions%2029Feb2012.pdf">Link to a presentation on testing interactions</a></p>
+
+
+
+
+
+
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2021/01/03/data-science-methods-for-better-understanding-intersectionality/feed/index.html</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">320</post-id>	</item>
+		<item>
+		<title>Refocusing what we mean by race as a variable used in statistical analysis</title>
+		<link>./../../../2020/06/18/refocusing-what-we-mean-by-race-as-a-variable-used-in-statistical-analysis/index.html</link>
+					<comments>./../../../2020/06/18/refocusing-what-we-mean-by-race-as-a-variable-used-in-statistical-analysis/index.html#comments</comments>
+		
+		<dc:creator><![CDATA[melanie]]></dc:creator>
+		<pubDate>Thu, 18 Jun 2020 15:44:52 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">./../../../index.html?p=272</guid>
+
+					<description><![CDATA[In meeting today a colleague said “It’s interesting that there was a time in the not too distant past when data analysis of outcomes by race was discourage and if it were to be done needed to have a strong &#8230; <a href="./../../../2020/06/18/refocusing-what-we-mean-by-race-as-a-variable-used-in-statistical-analysis/index.html">Continue reading <span class="meta-nav">&#8594;</span></a>]]></description>
+										<content:encoded><![CDATA[<div class="">In meeting today a colleague said “It’s interesting that there was a time in the not too distant past when data analysis of outcomes by race was discourage and if it were to be done needed to have a strong justification for why that was necessary, and now it seems like we have done a 180 and want to emphasize it”</div>
+<div></div>
+<p><P></p>
+<div class="">With the growing discourse/reckoning that is happening thanks to the Black Lives Matter movement and the urgent need for white people in the U.S. to embrace anti-racist actions, I as a statistician have some areas close to home I can start focusing on.  <span style="color: var(--color-text); font-size: 1rem;">I have analyzed LOTS of data about human public and mental health in my career. Race/ethnicity almost always is included as a covariate and sometimes as an effect modifier (interaction by race).</span></div>
+<div></div>
+<p><P></p>
+<div class="">The issue of importance about race as a variable for study in statistical analysis is about <b class="">what we mean by racial categories</b>.  Those who have in the past tried to caution against looking at race are (probably) worried about us slipping into our eugenics past when race was thought of as a biological characteristic of someone.    But what we need to do is to clarify that race is not only an individual level characteristic (and certainly not a biological characteristic) of a person but instead a characteristic of a person’s level of exposure to a racist and white-supremest society and environment.  The way we use race in analysis should not be thought of as a variable that describes the individual themself, but instead describes their collective experience of being identified and treated by the society in a certain way.</div>
+<div></div>
+<p><P></p>
+<div class="">When we use race without careful explanation in our statistical analysis, readers are left to think of it in any way they choose, which may allow for the perpetuation of racist interpretations (e.g. for example black-white differences being attributed to individual or cultural level inadequacies).  I think it is our job as communicators of data and interpreters of findings to help lead the reader to interpret race from its institutionalized lens as a measure of the racist context a person lives within.  One simple suggestion is to to start adding footnotes to race variable whenever it is included in a statistical table.  Perhaps the footnote would say: &#8220;Race/ethnicity categories delineate differences of experiences in the person&#8217;s lifelong exposure to a racist society/institution&#8221;. Something like that, suggestions/improvements welcome.</div>
+<div></div>
+<p><P></p>
+<div>We must do better.</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2020/06/18/refocusing-what-we-mean-by-race-as-a-variable-used-in-statistical-analysis/feed/index.html</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">272</post-id>	</item>
+		<item>
+		<title>From colleagues at New York State Office of *Mental Health*</title>
+		<link>./../../../2020/03/18/from-colleagues-at-new-york-state-office-of-mental-health/index.html</link>
+					<comments>./../../../2020/03/18/from-colleagues-at-new-york-state-office-of-mental-health/index.html#respond</comments>
+		
+		<dc:creator><![CDATA[melanie]]></dc:creator>
+		<pubDate>Wed, 18 Mar 2020 11:46:09 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">./../../../index.html?p=253</guid>
+
+					<description><![CDATA[The outbreak of COVID-19 around the world has led to the spread of fear and panic for individuals and communities. In addition to following physical precautions guidelines, individuals should be taking care of their psychological well-being. This guide includes tips &#8230; <a href="./../../../2020/03/18/from-colleagues-at-new-york-state-office-of-mental-health/index.html">Continue reading <span class="meta-nav">&#8594;</span></a>]]></description>
+										<content:encoded><![CDATA[<p>The outbreak of COVID-19 around the world has led to the spread of fear and panic for individuals and communities. In addition to following physical precautions guidelines, individuals should be taking care of their psychological well-being.</p>
+<p>This guide includes tips for the following populations:</p>
+<ul>
+<li>For Everyone</li>
+<li>For Individuals Receiving Mental Health Services</li>
+<li>For Parents, Including Parents of Children with Pre-Existing Anxiety Disorders</li>
+<li>For Caregivers of Elderly Individuals</li>
+<li>For Mental Health Providers</li>
+</ul>
+<p><strong>For Everyone:</strong><strong> </strong></p>
+<ul>
+<li>Reduce anxiety by reducing risk. Ways to reduce risk include practicing good hygiene (e.g. sneezing and coughing into your elbow, sneezing into a tissue and immediately throwing the tissue away, wash hands regularly with soap and water for at least 20 seconds, etc.). In addition, create a plan in case your regular routine is disrupted, such as setting up remote work and alternative childcare arrangements. Setting out a plan can help reduce anxiety by taking charge of the things you can control.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Manage your information flow by choosing reliable sources and establish boundaries on checking for updates. Getting regular, factual information is important. However, continuously scrolling through social media or constantly refreshing the news is likely to lead to increased anxiety. Pick a few trusted news outlets – such as the <a href="https://urldefense.proofpoint.com/v2/url?u=https-3A__www.health.ny.gov_diseases_communicable_coronavirus_&amp;d=DwMGaQ&amp;c=G2MiLlal7SXE3PeSnG8W6_JBU6FcdVjSsBSbw6gcR0U&amp;r=vHgVWvtNhU5TeQbAfia2FD06yGBJCyO1KSt9bYLfPKU&amp;m=X_eYwxGFO-feBajIGfk3jB5R6fgmnvWXCSYj6OXl_CQ&amp;s=N8NlXxz4LzRzbzrppOC8SQ7NQqEifJiCpTJgLRoCgME&amp;e=">state and local health authorities</a>, <a href="https://urldefense.proofpoint.com/v2/url?u=https-3A__www.cdc.gov_coronavirus_2019-2Dncov_about_index.html&amp;d=DwMGaQ&amp;c=G2MiLlal7SXE3PeSnG8W6_JBU6FcdVjSsBSbw6gcR0U&amp;r=vHgVWvtNhU5TeQbAfia2FD06yGBJCyO1KSt9bYLfPKU&amp;m=X_eYwxGFO-feBajIGfk3jB5R6fgmnvWXCSYj6OXl_CQ&amp;s=OaCkfLaXVMAql5iI79PrHve79cospGNlHkpJL9rgTSQ&amp;e=">Centers for Disease Control and Prevention</a>, or <a href="https://urldefense.proofpoint.com/v2/url?u=https-3A__www.who.int_westernpacific_emergencies_covid-2D19&amp;d=DwMGaQ&amp;c=G2MiLlal7SXE3PeSnG8W6_JBU6FcdVjSsBSbw6gcR0U&amp;r=vHgVWvtNhU5TeQbAfia2FD06yGBJCyO1KSt9bYLfPKU&amp;m=X_eYwxGFO-feBajIGfk3jB5R6fgmnvWXCSYj6OXl_CQ&amp;s=v7VO7uDfArUICqpFivSrqJ66o98LezO-XOg6AbC3HNA&amp;e=">World Health Organization</a> – and commit to checking once or twice a day for updates.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Monitor your anxiety levels. Anxiety is a normal response to a stressful situation and can provide adaptive benefits in many situations. However, when faced with mounting uncertainty, your brain can go into an anxiety spiral that is no longer helpful. Knowing the difference between typical and atypical stress is important. Monitoring your stress level will let you know when you need to seek additional help.
+<ul>
+<li>A typical stress reaction may include: temporary difficulty concentrating; irritability and anger; fatigue; stomachache; and, difficulty sleeping.</li>
+<li>An atypical stress reaction may include a persistent and/or excessive worry that doesn’t lift and keeps you from carrying out your daily tasks. If you experience significant changes in your energy level, eating patterns, or sleeping patterns, difficulty concentrating on normal tasks, prolonged and overwhelming worry and hopelessness, or thoughts of self-injury or suicide, seek out <a href="https://urldefense.proofpoint.com/v2/url?u=https-3A__omh.ny.gov_omhweb_bootstrap_crisis.html&amp;d=DwMGaQ&amp;c=G2MiLlal7SXE3PeSnG8W6_JBU6FcdVjSsBSbw6gcR0U&amp;r=vHgVWvtNhU5TeQbAfia2FD06yGBJCyO1KSt9bYLfPKU&amp;m=X_eYwxGFO-feBajIGfk3jB5R6fgmnvWXCSYj6OXl_CQ&amp;s=DSexumT-eD0Ap83_DTQZJDw1ljZ-giqPRC1YKyO8SRA&amp;e=">immediate help</a> at <strong>1-800-273-TALK (8255)</strong><strong> </strong>or text <strong>Got5</strong><strong> </strong>to <strong>741741</strong>.</li>
+</ul>
+</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Practice good self-care, including exercise, eating healthy foods, and sleeping an adequate amount at night. If possible, spend some time outside. Avoid staying up late to monitor the news.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Virtually reach out to different types of support networks, such as family, friends, colleagues, faith-based communities, and social organizations to strengthen your overall feeling of connection. Isolation and loneliness feeds anxiety.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Find meaningful tasks and roles within your support network to channel your anxiety, such as coordinating deliveries of groceries to those unable to leave home, curating kids’ activity ideas for parents working from home, or video calling or calling those who might feel socially isolated. Supporting others is beneficial to the supporter as well.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Find or create spaces that are not focused on COVID-19. Start a social media thread about other topics, ask friends to discuss other topics, or watch your favorite TV or movie.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Savor small positive moments, amplify positive stories, and stay optimistic. Try to cultivate a mental wellness practice, such as writing in a gratitude journal, or talking nightly with your family about moments during the day that were fun or enjoyable.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Take an opportunity to practice mindfulness when managing anxiety. Mindfulness tools like grounding exercises, sensory modulation, and deep breathing may be helpful.</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>For Individuals Receiving Mental Health Services:</strong><strong> </strong></p>
+<ul>
+<li>As soon as possible, work with your mental health provider on a coping plan. Think about helpful coping skills you can practice daily and be mindful to those coping skills that you may turn to that are otherwise harmful to your safety and well-being. For example, if you know that music, walking outside, reframing your thoughts, and connecting with others are helpful, think about ways you can incorporate those into your daily life. If you know that you might struggle with ruminating, self-injury, substance use, or other strategies that might be harmful to your safety and well-being, identify alternative coping methods with your provider. Write out a plan to help prepare you for heightened anxiety.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Work with your mental health providers on specifically managing anxiety and ask them to help you come up with practical skills that you can rehearse.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Work with your mental health providers on alternative options if your routine services are disrupted. These might include using<a href="https://urldefense.proofpoint.com/v2/url?u=https-3A__omh.ny.gov_omhweb_clinic-5Frestructuring_telepsychiatry.html&amp;d=DwMGaQ&amp;c=G2MiLlal7SXE3PeSnG8W6_JBU6FcdVjSsBSbw6gcR0U&amp;r=vHgVWvtNhU5TeQbAfia2FD06yGBJCyO1KSt9bYLfPKU&amp;m=X_eYwxGFO-feBajIGfk3jB5R6fgmnvWXCSYj6OXl_CQ&amp;s=FvrGmAmPw0qPJTMNpTfdSE3qMJ9M-RUAAIX6gnJ66K0&amp;e=">telemental health services</a>, getting prescription medication, or engaging in supplemental mental wellness activities.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Seek positive peer support. Connect yourself to others who understand your experiences and can assist in problem-solving. If social distancing increases feelings of isolation, look into online peer supports or peer hotlines.</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>For Parents, Including Parents of Children with Pre-Existing Anxiety Disorders:</strong><strong> </strong></p>
+<ul>
+<li>Think about and rehearse scripts for talking with your kids about COVID-19. Kids take cues from caregivers about how anxious they need to be about a topic. Seek out <a href="https://urldefense.proofpoint.com/v2/url?u=https-3A__www.aacap.org_App-5FThemes_AACAP_Docs_latest-5Fnews_2020_Coronavirus-5FCOVID19-5F-5FChildren.pdf&amp;d=DwMGaQ&amp;c=G2MiLlal7SXE3PeSnG8W6_JBU6FcdVjSsBSbw6gcR0U&amp;r=vHgVWvtNhU5TeQbAfia2FD06yGBJCyO1KSt9bYLfPKU&amp;m=X_eYwxGFO-feBajIGfk3jB5R6fgmnvWXCSYj6OXl_CQ&amp;s=Refy8H9qKiu4LPOUUbPenF6vk_L5VnDmh-qmoUrs8uE&amp;e=">resources</a> and media to assist in your preparation.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Talk about the situation openly. Most kids elementary-aged and up have heard about COVID-19 or coronavirus. Avoiding the topic or providing blanket reassurances is more likely to feed anxiety. If kids bring up the topic, let them know you are glad they brought it up. This increased the likelihood that they will come to you with further anxieties or questions.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Don’t give more information than is requested. Part of a developmentally appropriate approach is to answer the question your child asks, but not necessarily more than that. Check to make sure they understood your response by asking them to repeat back what they heard, and let them know you are open to more questions. Reassure your child that it is normal to feel scared or anxious.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Help your school-aged child and adolescent set boundaries on their information flow in the same way you are setting your own boundaries. Help them identify factual sources of information and set appropriate intervals to check in. Encourage them to use their media literacy skills to question the messages they are getting from various information channels. Consider limiting media exposure or consuming media with your child so that you can be available to interpret and explain information.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Keep as many routines intact as possible. For kids who may be out of school and/or have extra-curricular activities cancelled, it is helpful to keep other routines, like mealtimes and bedtimes. To the extent possible, for kids who are at home for longer periods of time, set up a structure. Collaborate with your child to come up with a loose schedule, such as an outdoor activity and lunch prep in the morning, and a movie and homework time in the afternoon.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Find fun ways to maintain contact with individuals your child is separated from, such as elderly grandparents or classmates at school. Set up opportunities to maintain and even grow connections, such as reading a book to grandparents on video call or sending postcards to friends.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Encourage physical activity and time outside, where possible. Both staying active and having opportunities to be in nature are helpful with mitigating anxiety and building resilience.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Use this as an opportunity to teach distress tolerance skills that will be helpful to your kids in any situation. This is a great time to learn about purposeful breathing, guided imagery, distraction, and other skills.</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>For Caregivers of Elderly Individuals:</strong><strong> </strong></p>
+<ul>
+<li>Facilitate ways for the individual to maintain social connections. As the elderly have been told to isolate as much as possible, it is likely that social isolation and loneliness may take a toll on physical and mental health. Set up and provide technological assistance for family and friends to stay connected to the individual. Consider coordinating a group of people to check in on a rotation so that the individual feels the support of a network.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Encourage the individual to stay as active as possible, for both their physical and psychological well-being.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Help the individual find ways where they can help others, such as calling others to check in on them or entertaining grandchildren on FaceTime. Having a purpose and role can reduce anxiety.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Consider practical ways you can relieve an individual’s anxiety, such as volunteering to order their groceries online or offering to walk the individual’s dog(s).</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>In a time of high anxiety, it may be hard for the individual to select reliable sources to get information and updates on COVID-19. Curate a list of reputable media and write them down for the individual.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Practice self-care and be compassionate to yourself. While caregiving is a demanding and rewarding role at the best of times, being a caregiver during a time of heightened concerned is particularly stressful. If possible, find a way to take small breaks, rotate responsibilities with others, and practice your own mental health strategies.</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>For Mental Health Providers:</strong><strong> </strong></p>
+<ul>
+<li>Place a priority on self-care, including getting adequate rest and exercise, eating healthy food, maintaining social connections, and taking time away from service provision as possible.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Prepare for heightened anxiety in the individuals in your care and prepare your own toolkit on skills and scripts that might be helpful.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Work with your colleagues to prepare back-up plans for crisis management, such as <a href="https://urldefense.proofpoint.com/v2/url?u=https-3A__omh.ny.gov_omhweb_clinic-5Frestructuring_telepsychiatry.html&amp;d=DwMGaQ&amp;c=G2MiLlal7SXE3PeSnG8W6_JBU6FcdVjSsBSbw6gcR0U&amp;r=vHgVWvtNhU5TeQbAfia2FD06yGBJCyO1KSt9bYLfPKU&amp;m=X_eYwxGFO-feBajIGfk3jB5R6fgmnvWXCSYj6OXl_CQ&amp;s=FvrGmAmPw0qPJTMNpTfdSE3qMJ9M-RUAAIX6gnJ66K0&amp;e=">telemental health</a> or alternate therapeutic arrangements, so that you are prepared if there is a disruption in services. Work with your supervisor and colleagues to rotate functions and cross-train as much as possible</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Set up peer supports, such as peer supervision and consultation, to connect with others who are in a similar situation. Setting up spaces to discuss the toll of vicarious trauma and anxiety is an important part of self-care.</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Seek out professional help as needed. Remember that provision of mental health care during a crisis is challenging and it is critical that you address your own stress and anxiety.</li>
+</ul>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2020/03/18/from-colleagues-at-new-york-state-office-of-mental-health/feed/index.html</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">253</post-id>	</item>
+		<item>
+		<title>For the Columbia Biostatistics department newsletter&#8230;</title>
+		<link>./../../../2020/03/08/for-the-columbia-biostatistics-department-newsletter/index.html</link>
+					<comments>./../../../2020/03/08/for-the-columbia-biostatistics-department-newsletter/index.html#respond</comments>
+		
+		<dc:creator><![CDATA[melanie]]></dc:creator>
+		<pubDate>Sun, 08 Mar 2020 21:01:01 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">./../../../index.html?p=251</guid>
+
+					<description><![CDATA[Mailman School of Public Health at Columbia University asked to &#8220;interview&#8221; me for a profile about biostatistics faculty.  Here&#8217;s what I said&#8230; Tell us about yourself, your background:  I am originally from St. Louis and a first-generation college student.  My dad was &#8230; <a href="./../../../2020/03/08/for-the-columbia-biostatistics-department-newsletter/index.html">Continue reading <span class="meta-nav">&#8594;</span></a>]]></description>
+										<content:encoded><![CDATA[<p><strong>Mailman School of Public Health at Columbia University asked to &#8220;interview&#8221; me for a profile about biostatistics faculty.  Here&#8217;s what I said&#8230;</strong></p>
+<p><strong>Tell us about yourself, your background:  </strong>I am originally from St. Louis and a first-generation college student.  My dad was an apartment building maintenance man and my mom stayed at home to take care of my two siblings and me while working part-time telephone marketing jobs.  I went to a public school in a blue collar suburb that was part of the desegregation intervention of the 1980’s to mix black children from the city into predominantly white schools in the suburbs.  I mention this because I think it left an important imprint on me about the many values of diversity in education and in society more broadly.   A high school guidance counselor encouraged and helped me to apply for scholarships and a Pell grant for college. With that, and also with part time jobs at McDonald&#8217;s and a paper factory, I paid my way through college at Truman State University in Kirksville Missouri to get a BS in mathematics with a minor in physics.  My college advisor encouraged me to go to graduate school, suggesting I go into math at Iowa State University.</p>
+<p>I was accepted into the math program at Iowa State with a teaching assistantship, but after my first semester I realized I was much more interested in statistics.  I transferred to the statistics department, where I was the sole instructor for an undergrad statistics class each semester for the next 4 years.  I finished my PhD in 1998 with a dissertation titled “On nonlinear structural equation modeling” working with Yasuo Amemiya.</p>
+<p>I then took a position as an assistant professor of biostatistics in the school of public health at the University of Minnesota.  There I found the fast-paced world of NIH research grants and collaborations with epidemiologist, health policy researchers, and medical doctors to be very stimulating.  I collaborated on research projects examining predictors of obesity and substance abuse using surveys and administrative databases.  I was the statistical reviewer on many NIH review panels and also started a graduate course on latent variable and structural equation modeling for health sciences which was new for the department of biostatistics.  I was eventually promoted to full professor with tenure.</p>
+<p><strong>When did you come to Columbia?  </strong>In 2010 I joined to the Columbia University psychiatry department and the New York State Psychiatric Institute (NYSPI) which has a very large and active research portfolio with its own dedicated biostatistics group.  Given my expertise in latent variable models and psychometrics and my enthusiasm for applied collaborations, it was a very good fit.  In 2012, I was appointed the director of the biostatistics division in the Department of Psychiatry/NYSPI and over the last 7 years, I have grown the division to include 14 full-time biostatisticians.</p>
+<p><strong>What are the some of the research areas in psychiatry you collaborate on?  </strong> The division of biostatistics in psychiatry participates in extensive statistical collaborations with over 50 psychiatry researchers in any given year, providing statistical expertise and analysis to projects, including: biomarkers from brain imaging and neurocognitive tasks for mood and anxiety disorders and psychosis; clinical trials of new pharmacotherapies and psychotherapies for psychiatric and neurological disorders, including building treatment decision rules; implementation studies of support service programs for mental health treatment and prevention; measurement studies for improving psychometrics of diagnosis instruments in substance use disorders, depression, and biological aging; cohort studies of child-adolescent development of psychiatric and substance use disorders; causal analysis of prescribing practices monitored from medical claims records; momentary assessment studies of cardiovascular response to emotions and stress markers related to suicide; and much more.</p>
+<p><strong>Why change the name of the division to Mental Health Data Science?  </strong>In 2018, I decided to rename the biostatistics group in psychiatry to be called the division of Mental Health Data Science (<a href="https://www.columbiapsychiatry.org/mental-health-data-science">https://www.columbiapsychiatry.org/mental-health-data-science</a>).  Our new name really represented a “re-branding” which was meant to exemplify our mission to embrace new and emerging data collection and processing technologies (e.g. multimodal neuroimaging, wearable devices, and electronic health systems) and to reflect our expertise in providing and developing analytic tools for making sense of these complex data domains.</p>
+<p><strong>What do you enjoy doing in your time outside work? </strong>I have a 10 year old kid and as much as possible we try to explore the city, go to plays, events, and be outside in the parks including taking trips to the ocean.  Having spent all of my life before 2010 in the Midwest, I enjoy taking opportunities to go to the ocean which is now just a car ride away.</p>
+<p><strong> </strong></p>
+<p><strong> </strong></p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2020/03/08/for-the-columbia-biostatistics-department-newsletter/feed/index.html</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">251</post-id>	</item>
+		<item>
+		<title>Survival analysis always makes me nervous</title>
+		<link>./../../../2019/12/05/survival-analysis-always-makes-me-nervous/index.html</link>
+					<comments>./../../../2019/12/05/survival-analysis-always-makes-me-nervous/index.html#comments</comments>
+		
+		<dc:creator><![CDATA[melanie]]></dc:creator>
+		<pubDate>Thu, 05 Dec 2019 14:33:49 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">./../../../index.html?p=227</guid>
+
+					<description><![CDATA[This post is heavy on questions, and not too many answers.  Whenever I&#8217;m faced with a data analysis that seems to warrant using a survival analysis model, I get a bit nervous.   There is something about modeling time-to-event data &#8230; <a href="./../../../2019/12/05/survival-analysis-always-makes-me-nervous/index.html">Continue reading <span class="meta-nav">&#8594;</span></a>]]></description>
+										<content:encoded><![CDATA[<p>This post is heavy on questions, and not too many answers.  Whenever I&#8217;m faced with a data analysis that seems to warrant using a survival analysis model, I get a bit nervous.   There is something about modeling time-to-event data that feels prone to mistakes and it is probably because each modeling question seems to beget other fundamental questions.  Maybe because I have less experience with performing survival analysis than other types of  modeling problems, I have not built up a strong intuition regarding the relative importance of the different questions.  Here is a list of things I worry about:</p>
+<ol>
+<li>How should we deal with censoring? What do we even mean by censoring &#8211; is it left or right or interval? Is the censoring informative?  If so, how to deal with that?</li>
+<li>How should we deal with time? What do we even mean by time &#8211; is it time-on-study, time since birth? What if the predictors are changing over time too, does that change how we should think of time?</li>
+<li>How should we deal with the event of interest itself? What do we mean by the event itself &#8211; sometimes other events get in the way of our event, are they worse? irrelevant? important? how to deal with these so-called &#8220;competing risks&#8221;?</li>
+<li>Should we worry about modeling assumptions like proportional hazards or does it not really matter?</li>
+</ol>
+<p>All of these questions have come up for me, and might inspire future posts, but today I want to talk about #2.  While working on two recent analyses of observational studies  looking at predictors of  mortality, the question #2 came up.  Both studies are cohort studies with wide age ranges at baseline.  Should we control for age or should we treat age as the event time?  Turns out this does not have a clear answer.</p>
+<p>I found this 2009 paper in Statistics in Medicine by Chalis, Chicken, and McGee that examines this &#8220;<span style="color: var(--color-text);">Time Scales in Epidemiological Analysis. An Empirical Comparison&#8221; </span>https://pdfs.semanticscholar.org/8f6e/77a32653bd82b355311a47ccde43c1360d66.pdf.  They compare three models: 1) time on study 2) age as time scale and 3) left truncated age time scale and <span style="color: var(--color-text);">showed that the time-on-study time scale and the age time scale models can result in significantly different coefficients.  This paper does not provide guidance on whether one is more &#8220;right&#8221; than the other.  They say in the conclusion: &#8220;</span></p>
+<div class="page" title="Page 12">
+<div class="layoutArea">
+<div class="column">
+<p>&#8220;The selection of the time scale in the proportional hazards model and the measurement of its appropriateness is not straightforward. Moreover, we note that the definition of a “good time scale” is obscure. One possible definition for a “good time scale” could be one that preserves most of the useful information contained in the available measure and captures the nature of the data that is being modeled. Therefore, there is still a need of further investigation to find out adequate time scale that can best explain the disease-risk association.&#8221;</p>
+<p>This paper is from 2009 so my investigation will continue&#8230;maybe there is is clarity somewhere in the literature in the 10 years since then&#8230;if I figure it out, I&#8217;ll let you know.</p>
+</div>
+</div>
+</div>
+<div class="page" title="Page 1">
+<div class="layoutArea">
+<div class="column"></div>
+</div>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2019/12/05/survival-analysis-always-makes-me-nervous/feed/index.html</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">227</post-id>	</item>
+		<item>
+		<title>Clinical Trials: Checking out what the FDA and EMA recommend about controlling for covariates</title>
+		<link>./../../../2019/10/14/clinical-trials-checking-out-what-the-fda-and-ema-recommend-about-controlling-for-covariates/index.html</link>
+					<comments>./../../../2019/10/14/clinical-trials-checking-out-what-the-fda-and-ema-recommend-about-controlling-for-covariates/index.html#comments</comments>
+		
+		<dc:creator><![CDATA[melanie]]></dc:creator>
+		<pubDate>Mon, 14 Oct 2019 04:40:16 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">./../../../index.html?p=216</guid>
+
+					<description><![CDATA[At work I recently finalized analyses for a clinical trial that had 4 arms (double blind with 3 dose levels and a placebo) testing a nutritional supplement which may be helpful for cognition.  There were measurements at baseline (before randomization) &#8230; <a href="./../../../2019/10/14/clinical-trials-checking-out-what-the-fda-and-ema-recommend-about-controlling-for-covariates/index.html">Continue reading <span class="meta-nav">&#8594;</span></a>]]></description>
+										<content:encoded><![CDATA[<p>At work I recently finalized analyses for a clinical trial that had 4 arms (double blind with 3 dose levels and a placebo) testing a nutritional supplement which may be helpful for cognition.  There were measurements at baseline (before randomization) and 3 followup times with the 2nd followup being the primary endpoint of interest.  I recommended, and we performed, a mixed effects model of change scores from baseline also controlling for the baseline outcome (as in ANCOVA), and also controlling for gender, age, and education all known to be predictors of the primary cognition outcome.</p>
+<p>I don&#8217;t analyze nearly as many clinical trials as I do observational studies.  I was curious whether the analyses I&#8217;ve done (in particular the control or not for baseline outcomes and other covariates) would pass the check boxes for an FDA or EMA submission, so I looked it up.</p>
+<p>Apparently just this past April 2019, <strong>FDA put out <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adjusting-covariates-randomized-clinical-trials-drugs-and-biologics-continuous-outcomes-guidance">guidance</a></strong> for how to deal with covariates in clinical trials.  This guidance document is still open for public feedback and apparently is not meant to be the legally enforceable rules but just the general principles. It included just 5 points, much shorter than I expected. Here are there 5 points and <strong>my reactions (in bold)</strong>:</p>
+<div class="page" title="Page 5">
+<div class="layoutArea">
+<div class="column">
+<ol>
+<li>Sponsors can use ANCOVA to adjust for differences between treatment groups in relevant baseline variables to improve the power of significance tests and the precision of estimates of treatment effect. <strong>(looks like controlling for baseline factors is basically recommended but without specific guidelines how to choose them.  I would say include ones that are predictive of outcomes- because they will help with precision- and include ones that show non-trivial imbalance at baseline- since they will help with bias).</strong></li>
+<li>Sponsors should not use ANCOVA to adjust for variables that might be affected by treatment. (<strong>Basically do not control for anything you collect AFTER randomization)</strong></li>
+<li><span style="color: var(--color-text);">The sponsor should prospectively specify the covariates and the mathematical form of the model in the protocol or statistical analysis plan. When these specifications are unambiguous, FDA will not generally be concerned about the sensitivity of results to the choice of covariates because differences between adjusted estimators and unadjusted estimators of the same parameter, or between adjusted estimators using different models, are random. <strong>(Saying they are unconcerned is a bit strange, but I guess they mean as long as they are prespecified since they are assuming randomization will take care of everything being balanced, this has not always been my experience especially in smaller &lt;50 per arm studies)</strong></span></li>
+<li><span style="color: var(--color-text);">Interaction of the treatment with covariates is important, but the presence of an interaction does not invalidate ANCOVA as a method of estimating and testing for an overall treatment effect, even if the interaction is not accounted for in the model. The prespecified primary model can include interaction terms if appropriate. However, interaction means that the treatment effect is different for different subjects, and this fact could be relevant to prescribers, patients, and other stakeholders. Therefore, even though a primary analysis showing an overall treatment effect remains valid, differential effects in subgroups can also be important. <strong>(Green light to look at subgroup analysis &#8211; but remember ATE average treatment effect is still meaningful)</strong></span></li>
+<li><span style="color: var(--color-text);">Many clinical trials use a change from baseline as the primary outcome measure. Even when the outcome is measured as a change from baseline, the baseline value can still be used advantageously as a covariates. <strong>(These 3 things need to be </strong></span><strong>said &#8211; and learned &#8211; over and over again, 1) ANCOVA with change score as the outcome gives the exact same test for treatment as ANCOVA with post-test as the outcome 2) Analyzing the change score as the outcome without controlling for the baseline gives a different treatment effect estimate than ANCOVA whenever there is any imbalance in the baseline outcome by treatment (i.e. whenever the treatment assignment is correlated by chance with baseline outcome) 3) Many articles recommend always using ANCOVA in clinical trials as it is most likely to reduce bias due to imbalance and also will have more precision)</strong></li>
+</ol>
+<p>&nbsp;</p>
+<p>The <strong><a href="https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-adjustment-baseline-covariates-clinical-trials_en.pdf">EMA also has guidelines</a></strong> <strong>from 2015</strong> and in my opinion they are much better, perhaps because they are finalized and are not still in the open public feedback stage, although I was surprised FDA didn&#8217;t already have something like this.  EMA has 15 guidelines following a very reasonable preamble.  <strong>My comments in bold:</strong></p>
+<div class="page" title="Page 3">
+<div class="layoutArea">
+<div class="column">
+<p>Preamble from the EMA: Baseline covariates impact the outcome in many clinical trials. Although baseline adjustment is not always necessary, in case of a strong or moderate association between a baseline covariate(s) and the primary outcome measure, adjustment for such covariate(s) generally improves the efficiency of the analysis and avoids conditional bias from chance covariate imbalance.</p>
+<div class="page" title="Page 3">
+<div class="layoutArea">
+<div class="column">
+<p>Baseline covariates may be accounted for at the design stage of a clinical trial and/or in the statistical analysis. When dealing with baseline covariates the following recommendations are made:</p>
+<ol>
+<li>Stratification may be used to ensure balance of treatments across covariates; it may also be used for administrative reasons (e.g. block in the case of block randomisation). The factors that are the basis of stratification should normally be included as covariates or stratification variables in the primary outcome model, except where stratification was done purely for an administrative reason. <strong>(Recognizing the stratification variables are covariates is very sensible)</strong></li>
+<li>Variables known a priori to be strongly, or at least moderately, associated with the primary outcome and/or variables for which there is a strong clinical rationale for such an association should also be considered as covariates in the primary analysis. The variables selected on this basis should be pre-specified in the protocol. <strong>(Same point made in the FDA list)</strong></li>
+<li>Baseline imbalance observed post hoc should not be considered an appropriate reason for including a variable as a covariate in the primary analysis. However, conducting exploratory analyses including such variables when large baseline imbalances are observed might be helpful to assess the robustness of the primary analysis. <strong>(If there is a large imbalance on a baseline variable and it is also a strong predictor of the outcome, it seems to me it must be included as a covariate to avoid bias.  However, I guess if it is a strong predictor of the outcome you should have already known that and included it in #2)</strong></li>
+<li>Variables measured after randomisation and so potentially affected by the treatment should not be included as covariates in the primary analysis. (<strong>Same point made in the FDA list)</strong></li>
+<li>If a baseline value of a continuous primary outcome measure is available, then this should usually be included as a covariate. This applies whether the primary outcome variable is defined as the ‘raw outcome’ or as the ‘change from baseline’. <strong>(Yes, they are saying&#8230;use ANCOVA)</strong></li>
+<li>Covariates to be included in the primary analysis must be pre-specified in the protocol. <strong>(This is the same thing they said above in #2)</strong></li>
+<li>Only a few covariates should be included in a primary analysis. Although larger data sets may support more covariates than smaller ones, justification for including each of the covariates should be provided. <strong>(It would be helpful if this had more specifics&#8230;what does &#8216;a few&#8217; mean and perhaps some comment about whether there are any concerns about misspecification)</strong></li>
+<li>In the absence of prior knowledge, a simple functional form (usually either linearity or categorising a continuous scale) should be assumed for the relationship between a continuous covariate and the outcome variable. <strong>(good point)</strong></li>
+<li>The validity of model assumptions must be checked when assessing the results. This is particularly important for generalised linear or non-linear models where mis-specification could lead to incorrect estimates of the treatment effect. Even under ordinary linear models, some attention should be paid to the possible influence of extreme outlying values. <strong>(Check for outliers, always)</strong></li>
+<li>Whenever adjusted analyses are presented, results of the treatment effect in subgroups formed by the covariates (appropriately categorised, if relevant) should be presented to enable an assessment of the model assumptions. <strong>(I have never done this but I think it is a very useful idea and worth trying though may need to be careful with smaller sample sizes or groups)</strong></li>
+<li>Sensitivity analyses should be pre-planned and presented to investigate the robustness of the primary analysis. Discrepancies should be discussed and explained. In the presence of important differences that cannot be logically explained – for example, between the results of adjusted and unadjusted analyses – the interpretation of the trial could be seriously affected. <strong>(I like the emphasis on looking at the data in different ways.)</strong></li>
+<li>The primary model should not include treatment by covariate interactions. If substantial interactions are expected a priori, the trial should be designed to allow separate estimates of the treatment effects in specific subgroups <strong>(In contrast to the FDA, this is encouraging researchers to stay away from subgroup analyses, remember treatment by covariate interactions is how we test for treatment effects in subgroups)</strong></li>
+<li>Exploratory analyses may be carried out to improve the understanding of covariates not included in the primary analysis, and to help the sponsor with the ongoing development of the drug. <strong>(Keep learning from the data)</strong></li>
+<li>In case of missing values in baseline covariates the principles for dealing with missing values as outlined e.g. in the Guideline on missing data in confirmatory clinical trials (EMA/CPMP/EWP/1776/99 Rev. 1) applies. (<strong>Need to go read this and put up a blog post for it)</strong></li>
+<li>A primary analysis, unambiguously pre-specified in the protocol, correctly carried out and interpreted, should support the conclusions which are drawn from the trial. Since there may be a number of alternative valid analyses, results based on pre-specified analyses will carry most credibility. (<strong>Lay out your plan beforehand thoughtfully and follow it is a good recipe for credible and reproducible science) </strong>
+<div class="page" title="Page 4">
+<div class="layoutArea">
+<div class="column"></div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="page" title="Page 6">
+<div class="layoutArea"></div>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2019/10/14/clinical-trials-checking-out-what-the-fda-and-ema-recommend-about-controlling-for-covariates/feed/index.html</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">216</post-id>	</item>
+		<item>
+		<title>Confidence intervals for a ratio when you only have summary estimates and standard errors</title>
+		<link>./../../../2019/06/29/confidence-intervals-for-a-ratio-when-you-only-have-summary-estimates-and-standard-errors/index.html</link>
+					<comments>./../../../2019/06/29/confidence-intervals-for-a-ratio-when-you-only-have-summary-estimates-and-standard-errors/index.html#respond</comments>
+		
+		<dc:creator><![CDATA[melanie]]></dc:creator>
+		<pubDate>Sat, 29 Jun 2019 19:02:10 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">./../../../index.html?p=189</guid>
+
+					<description><![CDATA[This post shows how to calculate a confidence interval for a ratio A/B when you have estimates for A and B and also have their standard errors s.e.(A), and s.e.(B). &#160; This problem may arise if you have prevalence estimates &#8230; <a href="./../../../2019/06/29/confidence-intervals-for-a-ratio-when-you-only-have-summary-estimates-and-standard-errors/index.html">Continue reading <span class="meta-nav">&#8594;</span></a>]]></description>
+										<content:encoded><![CDATA[<p><!-- code folding --></p>
+<div class="container-fluid main-container">
+<div id="header" class="fluid-row"><strong><span style="color: var(--color-text);">This post shows how to calculate a confidence interval for a ratio A/B when you have estimates for A and B and also have their standard errors s.e.(A), and s.e.(B).</span></strong></div>
+<div id="this-document-shows-how-to-calculate-a-confidence-interval-for-a-ratio-ab-when-you-have-estimates-for-a-and-b-and-also-have-their-standard-errors-s.e.a-and-s.e.b." class="section level3">
+<p>&nbsp;</p>
+<p>This problem may arise if you have prevalence estimates and associated standard errors for some dichotomous outcome (e.g. cannabis use) in two exposure groups (e.g. people with and without a painful condition) and you want to get the confidence interval for the Relative Risk but you don’t have access to the raw data, only the summary estimates. Indeed, just such problem came up recently in a project I was working on.</p>
+<p>For example,</p>
+<h4><strong><span style="color: var(--color-text);">Prevalence of cannabis use for people with pain is a=5.15% with standard error, s.e.(a)= 0.39%</span></strong></h4>
+<h4><strong style="color: var(--color-text);">Prevalence of cannabis use for people without pain is b=3.74% with standard error, s.e.(b)= 0.14%</strong></h4>
+<h4><strong style="color: var(--color-text);">We want the 95% confidence interval for relative ratio RR = a/b = 5.15/3.74 = 1.377</strong></h4>
+<p>The method (formula) is attributed to Fieller, EC. (1940) “The biological standardisation of insulin”. Journal of the Royal Statistical Society (Supplement). 1:1–54. I took a look at the 1940 paper and there are many many formulas but after about 30 minutes I gave up trying to find which one is for the ratio and instead found a simple version of the specific formulation here <a class="uri" href="https://i.stack.imgur.com/vO8Ip.png">https://i.stack.imgur.com/vO8Ip.png</a></p>
+<p>Fieller&#8217;s method incorporates the value <strong>g</strong> below and can only be used when g&lt;1 which occurs when the s.e.(B) is smaller than half of B (i.e. the denominator of the ratio). The formula will yield non-symmetric confidence intervals.</p>
+<p>I checked the confidence interval estimates from my code below against estimates obtained from an online calculator at <a class="uri" href="https://www.graphpad.com/quickcalcs/errorProp1/?Format=SEM">https://www.graphpad.com/quickcalcs/errorProp1/?Format=SEM</a> and they are very very similar (to 3 decimal places)</p>
+</div>
+<div id="prevalence-of-cannabis-use-for-people-with-pain-a5.15-standard-error-sea-0.39" class="section level3"></div>
+<div id="we-want-the-95-confidence-interval-for-relative-ratio-rr-ab-5.153.74-1.377" class="section level3">
+<pre class="r"><code>a=c(5.15)   ###Prevlance of cannabis use for people with pain
+sea=c(.39)  ###standard error of prevalence
+
+b=c(3.74)   ###Prevalence of cannabis use for people without pain
+seb = c(.14) ####standard error of prevalence
+
+q = a/b
+
+### using simple delta method gives similar results in our case to the Fiellers method since seb is small compared to b
+### here is the formulat but I leave it commented out since we might as well use the Fiellers method which is expected
+### to be more accurate and can produce non-symmetric confidence intervals more appropriate for risk ratios
+#seqdelta = q*sqrt(sea^2/a^2 + seb^2/b^2)
+#q
+#q-1.96*seqdelta
+#q+1.96*seqdelta
+
+###Fieller's formula for the standard error
+### if g &gt; 1 then do not use this formula it is not a good approximation
+
+g=(1.96*seb/b)^2
+if (g&lt;1) {
+q = a/b
+serr = (q/(1-g))*sqrt((1-g)*sea^2/a^2 + seb^2/b^2)
+}</code></pre>
+</div>
+<div id="this-outputs-the-95-confidence-intervals-for-the-risk-ratio-1.377" class="section level3">
+<h3>This outputs the 95% confidence intervals for the risk ratio = 1.377</h3>
+</div>
+<div id="for-ab-risk-of-cannabis-use-in-the-pain-group-risk-of-cannabis-use-in-the-no-pain-group" class="section level3">
+<h3>for RR = A/B = prevalence of cannabis use in the pain group / prevalence of cannabis use in the no pain group</h3>
+<pre class="r"><code>a</code></pre>
+<pre><code>## [1] 5.15</code></pre>
+<pre class="r"><code>b</code></pre>
+<pre><code>## [1] 3.74</code></pre>
+<pre class="r"><code>###risk ratio
+q</code></pre>
+<pre><code>## [1] 1.377005</code></pre>
+<pre class="r"><code>###left side of 95% confidence interval
+q/(1-g) - 1.96*serr</code></pre>
+<pre><code>## [1] 1.155729</code></pre>
+<pre class="r"><code>###right side of 95% confidence interval
+q/(1-g) + 1.96*serr</code></pre>
+<pre><code>## [1] 1.613187</code></pre>
+</div>
+<div id="so-the-95-confidence-interval-for-rr1.377-using-fiellers-method-for-approximating-confidence-intervals-is-1.156-1.613" class="section level3">
+<h3>So the 95% confidence interval for RR=1.377 using Fieller’s method for approximating confidence intervals is (1.156, 1.613)</h3>
+</div>
+</div>
+<p><!-- dynamically load mathjax for compatibility with self-contained --></p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2019/06/29/confidence-intervals-for-a-ratio-when-you-only-have-summary-estimates-and-standard-errors/feed/index.html</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">189</post-id>	</item>
+	</channel>
+</rss>

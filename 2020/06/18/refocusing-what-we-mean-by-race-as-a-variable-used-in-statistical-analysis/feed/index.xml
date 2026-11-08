@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	
+	>
+<channel>
+	<title>
+	Comments on: Refocusing what we mean by race as a variable used in statistical analysis	</title>
+	<atom:link href="./index.html" rel="self" type="application/rss+xml" />
+	<link>./../index.html</link>
+	<description>I am a biostatistician who has worked on applied research questions in psychosocial and behavioral public health and psychiatry my whole career. Here is a place to post ideas, helpful hints, and maybe start discussions about this exciting work especially as we enter a new era of Data Science</description>
+	<lastBuildDate>Tue, 28 Jul 2020 21:27:03 +0000</lastBuildDate>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.6.1</generator>
+	<item>
+		<title>
+		By: Cynthia Davey		</title>
+		<link>./../index.html#comment-11</link>
+
+		<dc:creator><![CDATA[Cynthia Davey]]></dc:creator>
+		<pubDate>Tue, 28 Jul 2020 21:27:03 +0000</pubDate>
+		<guid isPermaLink="false">./../../../../../index.html?p=272#comment-11</guid>
+
+					<description><![CDATA[Hi Melanie,
+ Thanks for posting this. I&#039;ve been thinking about what I can do differently in my day-to-day work to address systemic racism and was feeling uneasy about the use of &#039;risk-factor&#039; to describe race effects in a statistical model. Thanks for articulating my discomfort around this so clearly and for suggesting an alternate explanation of race in statistical models. There is still much to learn, acknowledge, and do in dismantling the racist systems we live in. 
+Thanks for your contribution
+Cindy Davey]]></description>
+			<content:encoded><![CDATA[<p>Hi Melanie,<br />
+ Thanks for posting this. I&#8217;ve been thinking about what I can do differently in my day-to-day work to address systemic racism and was feeling uneasy about the use of &#8216;risk-factor&#8217; to describe race effects in a statistical model. Thanks for articulating my discomfort around this so clearly and for suggesting an alternate explanation of race in statistical models. There is still much to learn, acknowledge, and do in dismantling the racist systems we live in.<br />
+Thanks for your contribution<br />
+Cindy Davey</p>
+]]></content:encoded>
+		
+			</item>
+	</channel>
+</rss>
