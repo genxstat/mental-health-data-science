@@ -1,0 +1,9 @@
+---
+title: "Data science methods for better understanding intersectionality"
+date: 2021-01-03
+categories: ["Health equity", "Statistical methods"]
+---
+
+In addition to reconsidering how we operationalize racialized categories in our statistical models, to move towards a more anti-racist research agenda we must also consider intersectionality (ethnicity, gender, age, sexual orientation, social economic class, disability).   I am grateful for this terrifically written article by [Greta Bauer](https://www.schulich.uwo.ca/epibio/people/core_faculty/dr_greta_bauer.html) from 2014 that I only wish I would have found sooner...[**Incorporating intersectionality theory into population health research methodology: Challenges and the potential to advance health equity**](https://www.sciencedirect.com/science/article/pii/S0277953614001919), which clearly describes both theory and methods.
+
+Of high relevance to data scientists doing the modeling work, **see section** "4.5 Understanding differences between types of regression models for intersectional applications" Dr. Bauer reviews why we should be estimating interaction on the "additive-scale" rather than the "multiplicative-scale" and encourages researchers to use related measures like RERI, or the synergy index.  Data scientists who are participating in meaningful health research should become aware and stop just testing cross-product terms in logistic regression when trying to test if "risks interact"! [Link to a presentation on testing interactions](http://www.columbia.edu/~mmw2177/Testing%20for%20additive%20interactions%2029Feb2012.pdf)

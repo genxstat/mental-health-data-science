@@ -1,0 +1,20 @@
+---
+title: "Survival analysis always makes me nervous"
+date: 2019-12-05
+categories: ["Statistical methods"]
+---
+
+This post is heavy on questions, and not too many answers.  Whenever I'm faced with a data analysis that seems to warrant using a survival analysis model, I get a bit nervous.   There is something about modeling time-to-event data that feels prone to mistakes and it is probably because each modeling question seems to beget other fundamental questions.  Maybe because I have less experience with performing survival analysis than other types of  modeling problems, I have not built up a strong intuition regarding the relative importance of the different questions.  Here is a list of things I worry about:
+
+1.  How should we deal with censoring? What do we even mean by censoring -- is it left or right or interval? Is the censoring informative?  If so, how to deal with that?
+2.  How should we deal with time? What do we even mean by time -- is it time-on-study, time since birth? What if the predictors are changing over time too, does that change how we should think of time?
+3.  How should we deal with the event of interest itself? What do we mean by the event itself -- sometimes other events get in the way of our event, are they worse? irrelevant? important? how to deal with these so-called "competing risks"?
+4.  Should we worry about modeling assumptions like proportional hazards or does it not really matter?
+
+All of these questions have come up for me, and might inspire future posts, but today I want to talk about #2.  While working on two recent analyses of observational studies  looking at predictors of  mortality, the question #2 came up.  Both studies are cohort studies with wide age ranges at baseline.  Should we control for age or should we treat age as the event time?  Turns out this does not have a clear answer.
+
+I found this 2009 paper in Statistics in Medicine by Chalise, Chicken, and McGee that examines this: ["Time Scales in Epidemiological Analysis: An Empirical Comparison"](https://pdfs.semanticscholar.org/8f6e/77a32653bd82b355311a47ccde43c1360d66.pdf).  They compare three models: 1) time on study 2) age as time scale and 3) left truncated age time scale and showed that the time-on-study time scale and the age time scale models can result in significantly different coefficients.  This paper does not provide guidance on whether one is more "right" than the other.  They say in the conclusion:
+
+> "The selection of the time scale in the proportional hazards model and the measurement of its appropriateness is not straightforward. Moreover, we note that the definition of a "good time scale" is obscure. One possible definition for a "good time scale" could be one that preserves most of the useful information contained in the available measure and captures the nature of the data that is being modeled. Therefore, there is still a need of further investigation to find out adequate time scale that can best explain the disease-risk association."
+
+This paper is from 2009 so my investigation will continue...maybe there is clarity somewhere in the literature in the 10 years since then...if I figure it out, I'll let you know.

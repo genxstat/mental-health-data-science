@@ -1,0 +1,15 @@
+---
+title: "The misguided goal of figuring out if A causes B or the reverse"
+date: 2018-01-07
+categories: ["Statistical methods"]
+---
+
+Just read a review essay on Causality and Statistical Learning from 2011 in American Journal of Sociology by Andy Gelman (who btw encouraged me several years ago to start my own blog).  He reviewed 3 books on Causality by Morgan and Winship, by Pearl, and by Sloman.  I am thinking to make the review essay on the reading list for my course on Latent Variable and Structural Equation Modeling (SEM) for Health Science.  Andy's summary of the difficult problems of causal inference is very useful.  I agree with the way he lays out an ordering of views/attitudes on causal reasoning from conservative to permissive, with most traditional users of SEM being on the permissive side.  But, what I really liked was the following critique he made about Sloman's book which reminds me how important it is to keep asking my colleagues: why do we even care if A is a cause of B or which direction the cause is?  Of course, much of time there are good reasons to care (i.e. a different intervention or policy might be implemented if we knew something about the causal direction) but not always,  and so it is a good question to ask to hopefully steer the analytic goals in a different direction.
+
+> "The place where I think Sloman is misguided is in his formulation of scientific models in an either/or way, as if, in truth, social variables are linked in simple causal paths, with a scientific goal of figuring out if A causes B or the reverse. I don't know much about intelligence, beer consumption, and socioeconomic status, but I certainly don't see any simple relationships between income, religious attendance, party identification, and voting---and I don't see how a search for such a pattern will advance our understanding, at least given current techniques. I'd rather start with description and then go toward causality following the approach of economists and statisticians by thinking about potential interventions one at a time." (p. 963)
+
+**Reference:** Gelman, A. (2011). Review essay: Causality and statistical learning. *American Journal of Sociology*, 117, 955--966. The essay reviews:
+
+-   *Counterfactuals and Causal Inference: Methods and Principles for Social Research.* Stephen L. Morgan and Christopher Winship. Cambridge University Press, 2007.
+-   *Causality: Models, Reasoning, and Inference*, 2nd ed. Judea Pearl. Cambridge University Press, 2009.
+-   *Causal Models: How People Think About the World and Its Alternatives.* Steven A. Sloman. Oxford University Press, 2005.

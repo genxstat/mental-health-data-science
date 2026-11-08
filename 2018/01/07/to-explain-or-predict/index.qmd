@@ -1,0 +1,13 @@
+---
+title: "To explain or predict"
+date: 2018-01-07
+categories: ["Statistical methods"]
+---
+
+Just discovered the work "To explain or predict" of Galit Shmueli (<http://www.galitshmueli.com/content/explain-or-predict>). She excellently clarifies the concepts of "explanatory modeling" and "predictive modeling" which mean different things to statisticians, social scientists, computer scientists and other scientists.
+
+My own work as a biostatistician has mostly focused on explanatory modeling (i.e. trying to test whether some exposure affects some outcome and if so by how much, and in what contexts in order to explain the underlying mechanism).   The primary focus of machine learning methods has been predictive modeling or classification modeling (i.e. trying to determine whether a user will click on an advertisement or to determine whether a particular image is a cat or is it a human).
+
+When we also add in descriptive modeling, I think one useful way of describing Data Science is that it encompasses all the analytic tools (both quantitative as well as qualitative methods my colleague Rogerio Pinto would remind me) for describing, explaining, and predicting phenomena.
+
+"To explain or predict" talk: <https://www.youtube.com/watch?v=vWH_HNfQVRI>

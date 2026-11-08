@@ -1,0 +1,48 @@
+---
+title: "Data Science in biostatistics academic curriculums"
+date: 2018-01-10
+categories: ["Data science & machine learning", "Talks & teaching"]
+---
+
+In the Department of Biostatistics at Columbia University this 2017-18 school year my colleagues ([Jeff Goldsmith](http://jeffgoldsmith.com/DSI/) and [Yifei Sun)](https://www.mailman.columbia.edu/people/our-faculty/ys3072) have started a sequence on Data Science aimed at our Masters students. It has been very popular and I think this is terrific we are incorporating this sea shift.  I have encouraged biostatisticians who work in our team Mental Health Data Science to sit in the courses
+
+**COURSE DESCRIPTION -- Data Science 1**
+
+Contemporary biostatistics and data analysis depends on the **mastery of tools for computation, visualization, dissemination, and reproducibility** in addition to proficiency in traditional statistical techniques. The goal of this course is to provide training in the elements of a complete pipeline for data analysis. It is targeted to MS, MPH, and PhD students with some data analysis experience.
+
+Students who successfully complete this course will:
+
+-   Integrate the principles of data organization into their analyses;
+-   Easily produce static and interactive graphics;
+-   Implement analyses in a reproducible way;
+-   Use Github to publish and disseminate analyses;
+-   Develop usable software packages in R;
+-   Collect data from online sources using web-scraping.
+
+> **RECOMMENDED REFERENCES (note: there are no required texts for this course)**
+> The Internet (stackoverflow; google; blog posts; twitter)\
+> [*R for Data Science*](http://r4ds.had.co.nz/) by G. Grolemund and H. Wickham\
+> [*Exploratory Data Analysis with R*](https://leanpub.com/exdata) by R Peng\
+> [*R Programming for Data Science*](https://leanpub.com/rprogramming) by R Peng.\
+> [*R Packages*](http://r-pkgs.had.co.nz/r.html) by H. Wickham\
+> [*Advanced R*](http://adv-r.had.co.nz/) by H. Wickham
+
+**COURSE DESCRIPTION -- Data Science 2**
+
+With the explosion of "Big Data" problems, statistical learning has become a very hot field in many scientific areas. The goal of this course is to provide the training in practical statistical learning. It is targeted to MS students with some data analysis experience.
+
+Students who successfully complete this course will be able to:
+
+-   Understand basic concepts and methods in statistical learning
+-   Apply classification and regression techniques beyond linear regression
+-   Conduct exploratory data analysis using methods in unsupervised learning
+-   Implement various statistical learning methods using software package
+
+> **RECOMMENDED REFERENCES**
+> \[ISL\] [*An Introduction to Statistical Learning with Applications in R*](http://www.springer.com/us/book/9781461471370) (main reference) by G James et al.
+> \[EDA\] [*Exploratory Data Analysis with R*](https://leanpub.com/exdata) by R Peng
+> [*R Programming for Data Science*](https://leanpub.com/rprogramming) by R Peng
+
+I also found The American Statistical Association publication describing what they think should be being taught.
+
+[Curriculum Guidelines for Undergraduate programs in Data Science](https://www.amstat.org/asa/files/pdfs/EDU-DataScienceGuidelines.pdf)

@@ -1,0 +1,23 @@
+---
+title: "Refocusing what we mean by race as a variable used in statistical analysis"
+date: 2020-06-18
+categories: ["Health equity"]
+---
+
+In meeting today a colleague said "It's interesting that there was a time in the not too distant past when data analysis of outcomes by race was discouraged and if it were to be done needed to have a strong justification for why that was necessary, and now it seems like we have done a 180 and want to emphasize it"
+
+With the growing discourse/reckoning that is happening thanks to the Black Lives Matter movement and the urgent need for white people in the U.S. to embrace anti-racist actions, I as a statistician have some areas close to home I can start focusing on.  I have analyzed LOTS of data about human public and mental health in my career. Race/ethnicity almost always is included as a covariate and sometimes as an effect modifier (interaction by race).
+
+The issue of importance about race as a variable for study in statistical analysis is about **what we mean by racial categories**.  Those who have in the past tried to caution against looking at race are (probably) worried about us slipping into our eugenics past when race was thought of as a biological characteristic of someone.    But what we need to do is to clarify that race is not only an individual level characteristic (and certainly not a biological characteristic) of a person but instead a characteristic of a person's level of exposure to a racist and white-supremacist society and environment.  The way we use race in analysis should not be thought of as a variable that describes the individual themself, but instead describes their collective experience of being identified and treated by the society in a certain way.
+
+When we use race without careful explanation in our statistical analysis, readers are left to think of it in any way they choose, which may allow for the perpetuation of racist interpretations (e.g. for example black-white differences being attributed to individual or cultural level inadequacies).  I think it is our job as communicators of data and interpreters of findings to help lead the reader to interpret race from its institutionalized lens as a measure of the racist context a person lives within.  One simple suggestion is to start adding footnotes to race variable whenever it is included in a statistical table.  Perhaps the footnote would say: "Race/ethnicity categories delineate differences of experiences in the person's lifelong exposure to a racist society/institution". Something like that, suggestions/improvements welcome.
+
+We must do better.
+
+## Comments from the original blog
+
+::: {.archived-comment}
+**Cynthia Davey**, July 28, 2020
+
+Hi Melanie, Thanks for posting this. I've been thinking about what I can do differently in my day-to-day work to address systemic racism and was feeling uneasy about the use of 'risk-factor' to describe race effects in a statistical model. Thanks for articulating my discomfort around this so clearly and for suggesting an alternate explanation of race in statistical models. There is still much to learn, acknowledge, and do in dismantling the racist systems we live in. Thanks for your contribution, Cindy Davey
+:::

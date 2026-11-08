@@ -1,0 +1,15 @@
+---
+title: "Mental Health Data Science with Melanie Wall"
+subtitle: "I am a biostatistician who has worked on applied research questions in psychosocial and behavioral public health and psychiatry my whole career. Here is a place to post ideas, helpful hints, and maybe start discussions about this exciting work, especially as we enter a new era of Data Science."
+listing:
+  contents: "20*/**/index.qmd"
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: true
+  feed: true
+  date-format: "MMMM D, YYYY"
+page-layout: full
+title-block-banner: false
+---

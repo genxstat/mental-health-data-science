@@ -1,0 +1,15 @@
+---
+title: "Why Mental Health Data Science?"
+date: 2018-01-07
+categories: ["Data science & machine learning"]
+---
+
+My name is Melanie Wall.  I am currently the director of [Mental Health Data Science](http://www.columbia.edu/~mmw2177/Overview%20of%20Mental%20Health%20Data%20Science%20-%201-4-2018.pdf) in the New York State Psychiatric Institute (NYSPI) and Columbia University psychiatry department.   I have been a biostatistician for 20 years.  Just this January 2018, I changed the name of the group I lead from Division of Biostatistics in Psychiatry to Division of Mental Health Data Science.  Why?  Well it took a while...I had been rejecting the new term Data Science for several years because I was frustrated/reluctant to believe that it was anything other than a rebranding by *outsiders* of *my* field of biostatistics.  Much has been written about similar feelings by statisticians over the last 5 years, for example this piece by ASA president Marie Davidian...
+
+[Aren't We Data Science?](https://magazine.amstat.org/blog/2013/07/01/datascience/)
+
+Two of the keywords that go hand-in-hand with Data Science are *machine learning* (i.e. high-dimensional prediction modeling) and *Big Data* (i.e. driven by the digitization of our world with technologies for real-time and dynamic data collection).  Both of these (I had been telling myself) are just part of modern biostatistics, for example, two courses in statistical machine learning methods are required for a PhD in biostatistics at Columbia University.
+
+So, why change the name now? True story:  the director of NYSPI (a highly respected research psychiatrist who has collaborated with me for several years) recently came back from a large psychiatry conference where there was a session on "Big Data, Data Science, and Psychiatry" and asked me whether we have anyone doing data science at our institute.  My group (division of biostatistics in psychiatry) has 13 biostatisticians! Why did I change the name? I guess the best answer is, if you can't beat them, join them.  Here is the description for the change:
+
+> "The new name Division of Mental Health Data Science, exemplifies our mission to embrace new and emerging data collection and processing technologies--specifically with applications in mental health--and reflects our expertise in providing and developing analytic tools for making sense of these complex data domains while remaining grounded in the traditional, trusted, and highly effective core biostatistical tools that we have developed and implemented for years."

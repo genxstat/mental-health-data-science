@@ -1,0 +1,9 @@
+---
+title: "Machine learning for psychiatric research: Current reality and future prospects"
+date: 2019-03-07
+categories: ["Data science & machine learning", "Talks & teaching"]
+---
+
+The psychiatry department at Columbia University and the New York State Psychiatric Institute (which I am a part of) invited me to give a presentation associated with a new award set-up by Dr. Susan Essock for Mental Health Services Research. I put a lot of effort into trying to organize how I see the role of machine learning within scientific research in psychiatry. It's an exciting time to be a data scientist.
+
+{{< video https://www.youtube.com/embed/9sOgHBDMnzI >}}

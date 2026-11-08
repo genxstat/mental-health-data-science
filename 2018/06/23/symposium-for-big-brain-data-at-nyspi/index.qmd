@@ -1,0 +1,25 @@
+---
+title: "Symposium for Big Brain Data at NYSPI"
+date: 2018-06-23
+categories: ["Data science & machine learning", "Talks & teaching"]
+---
+
+NYSPI held the first Symposium on **Big Brain Data** on May 1 2018.  Very well attended (over 40 local researchers), the consensus was we need to keep up the momentum of collaborating across groups and work towards a centralized Data storage and Processing and Innovation core for the efficient and reproducible advancement of  psychiatric research using MRI and other high dimensional big data technologies.
+
+::: {.office-embed}
+```{=html}
+<iframe src="https://view.officeapps.live.com/op/embed.aspx?src=https%3A%2F%2Fgenxstat.github.io%2Fmental-health-data-science%2Fwp-content%2Fuploads%2F2018%2F06%2FIntro-big-brain-data-Melanie-Wall-1.pptx" title="Intro to Big Brain Data slides (PowerPoint)" loading="lazy"></iframe>
+```
+:::
+
+[Download: Intro to Big Brain Data slides (PowerPoint)](/wp-content/uploads/2018/06/Intro-big-brain-data-Melanie-Wall-1.pptx)
+
+**List of speakers**
+
+::: {.office-embed}
+```{=html}
+<iframe src="https://view.officeapps.live.com/op/embed.aspx?src=https%3A%2F%2Fgenxstat.github.io%2Fmental-health-data-science%2Fwp-content%2Fuploads%2F2018%2F06%2FBIG-DATA-Forum-program-050118.docx" title="Symposium program (Word)" loading="lazy"></iframe>
+```
+:::
+
+[Download: Symposium program (Word)](/wp-content/uploads/2018/06/BIG-DATA-Forum-program-050118.docx)
