@@ -1,7 +1,7 @@
 ---
 title: "Data Science in biostatistics academic curriculums"
 date: 2018-01-10
-categories: [data science, teaching]
+categories: ["Data science & machine learning", "Talks & teaching"]
 ---
 
 In the Department of Biostatistics at Columbia University this 2017-18 school year my colleagues ([Jeff Goldsmith](http://jeffgoldsmith.com/DSI/) and [Yifei Sun)](https://www.mailman.columbia.edu/people/our-faculty/ys3072) have started a sequence on Data Science aimed at our Masters students. It has been very popular and I think this is terrific we are incorporating this sea shift.  I have encouraged biostatisticians who work in our team Mental Health Data Science to sit in the courses

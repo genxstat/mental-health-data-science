@@ -1,7 +1,7 @@
 ---
 title: "The misguided goal of figuring out if A causes B or the reverse"
 date: 2018-01-07
-categories: [causal inference]
+categories: ["Statistical methods"]
 ---
 
 Just read a review essay on Causality and Statistical Learning from 2011 in American Journal of Sociology by Andy Gelman (who btw encouraged me several years ago to start my own blog).  He reviewed 3 books on Causality by Morgan and Winship, by Pearl, and by Sloman.  I am thinking to make the review essay on the reading list for my course on Latent Variable and Structural Equation Modeling (SEM) for Health Science.  Andy's summary of the difficult problems of causal inference is very useful.  I agree with the way he lays out an ordering of views/attitudes on causal reasoning from conservative to permissive, with most traditional users of SEM being on the permissive side.  But, what I really liked was the following critique he made about Sloman's book which reminds me how important it is to keep asking my colleagues: why do we even care if A is a cause of B or which direction the cause is?  Of course, much of time there are good reasons to care (i.e. a different intervention or policy might be implemented if we knew something about the causal direction) but not always,  and so it is a good question to ask to hopefully steer the analytic goals in a different direction.

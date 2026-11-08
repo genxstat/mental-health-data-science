@@ -1,7 +1,7 @@
 ---
 title: "Refocusing what we mean by race as a variable used in statistical analysis"
 date: 2020-06-18
-categories: [race and racism]
+categories: ["Health equity"]
 ---
 
 In meeting today a colleague said "It's interesting that there was a time in the not too distant past when data analysis of outcomes by race was discouraged and if it were to be done needed to have a strong justification for why that was necessary, and now it seems like we have done a 180 and want to emphasize it"

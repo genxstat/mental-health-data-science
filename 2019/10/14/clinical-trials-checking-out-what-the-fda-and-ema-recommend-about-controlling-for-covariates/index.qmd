@@ -1,7 +1,7 @@
 ---
 title: "Clinical Trials: Checking out what the FDA and EMA recommend about controlling for covariates"
 date: 2019-10-14
-categories: [clinical trials]
+categories: ["Statistical methods"]
 ---
 
 At work I recently finalized analyses for a clinical trial that had 4 arms (double blind with 3 dose levels and a placebo) testing a nutritional supplement which may be helpful for cognition.  There were measurements at baseline (before randomization) and 3 followup times with the 2nd followup being the primary endpoint of interest.  I recommended, and we performed, a mixed effects model of change scores from baseline also controlling for the baseline outcome (as in ANCOVA), and also controlling for gender, age, and education all known to be predictors of the primary cognition outcome.

@@ -1,7 +1,7 @@
 ---
 title: "From colleagues at the New York State Office of Mental Health"
 date: 2020-03-18
-categories: [mental health, COVID-19]
+categories: ["News & notes"]
 ---
 
 *The following guidance was shared by colleagues at the New York State Office of Mental Health in March 2020.*

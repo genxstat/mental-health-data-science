@@ -1,7 +1,7 @@
 ---
 title: "Towards empirical methods for studying intersectionality"
 date: 2021-04-09
-categories: [intersectionality, talks]
+categories: ["Health equity", "Talks & teaching"]
 ---
 
 [Towards empirical methods for studying intersectionality in research](https://drive.google.com/file/d/1dXO9qRG4GO-bqPCD64MvgHOu2ZfTuSSu/view?usp=sharing)

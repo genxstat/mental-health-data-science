@@ -1,7 +1,7 @@
 ---
 title: "Why Mental Health Data Science?"
 date: 2018-01-07
-categories: [data science]
+categories: ["Data science & machine learning"]
 ---
 
 My name is Melanie Wall.  I am currently the director of [Mental Health Data Science](http://www.columbia.edu/~mmw2177/Overview%20of%20Mental%20Health%20Data%20Science%20-%201-4-2018.pdf) in the New York State Psychiatric Institute (NYSPI) and Columbia University psychiatry department.   I have been a biostatistician for 20 years.  Just this January 2018, I changed the name of the group I lead from Division of Biostatistics in Psychiatry to Division of Mental Health Data Science.  Why?  Well it took a while...I had been rejecting the new term Data Science for several years because I was frustrated/reluctant to believe that it was anything other than a rebranding by *outsiders* of *my* field of biostatistics.  Much has been written about similar feelings by statisticians over the last 5 years, for example this piece by ASA president Marie Davidian...

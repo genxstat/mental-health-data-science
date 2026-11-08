@@ -1,7 +1,7 @@
 ---
 title: "Confidence intervals for a ratio when you only have summary estimates and standard errors"
 date: 2019-06-29
-categories: [R, methods]
+categories: ["Statistical methods", "R"]
 ---
 
 **This post shows how to calculate a confidence interval for a ratio A/B when you have estimates for A and B and also have their standard errors s.e.(A), and s.e.(B).**

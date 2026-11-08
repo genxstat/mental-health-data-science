@@ -1,7 +1,7 @@
 ---
 title: "Symposium for Big Brain Data at NYSPI"
 date: 2018-06-23
-categories: [neuroimaging, talks]
+categories: ["Data science & machine learning", "Talks & teaching"]
 ---
 
 NYSPI held the first Symposium on **Big Brain Data** on May 1 2018.  Very well attended (over 40 local researchers), the consensus was we need to keep up the momentum of collaborating across groups and work towards a centralized Data storage and Processing and Innovation core for the efficient and reproducible advancement of  psychiatric research using MRI and other high dimensional big data technologies.

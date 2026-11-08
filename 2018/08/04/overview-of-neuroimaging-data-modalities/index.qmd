@@ -1,7 +1,7 @@
 ---
 title: "Overview of Neuroimaging data modalities"
 date: 2018-08-04
-categories: [neuroimaging, talks]
+categories: ["Data science & machine learning", "Talks & teaching"]
 ---
 
 This year at the JSM in Vancouver I was asked to be a discussant in a session on statistical methods for high dimensional Neuroimaging markers for mental health disorders.  Given the diversity of the 4 talks, rather than discuss the different statistical methods, I took the opportunity to pull together in one place a basic description of the different Neuroimaging modalities that were used in the talks: EEG, MRI, fMRI, dMRI, MRS.

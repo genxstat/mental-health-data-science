@@ -1,7 +1,7 @@
 ---
 title: "Finally started learning the TIDYVERSE in R!!!"
 date: 2018-06-23
-categories: [R]
+categories: ["R"]
 image: weather-ggplot.png
 ---
 

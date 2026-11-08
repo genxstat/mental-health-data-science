@@ -1,7 +1,7 @@
 ---
 title: "Examining binomial regression of events/trials and overdispersion"
 date: 2023-06-24
-categories: [R, methods]
+categories: ["Statistical methods", "R"]
 ---
 
 This document shows different ways to code/model binomial count (events/trials) data with R's `glm()` function, and also demonstrates the results when we aggregate data across units and when we account for overdispersion across units.

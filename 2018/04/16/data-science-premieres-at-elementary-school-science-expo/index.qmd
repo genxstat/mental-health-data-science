@@ -1,7 +1,7 @@
 ---
 title: "Data Science premieres at Elementary School Science Expo"
 date: 2018-04-16
-categories: [teaching]
+categories: ["Talks & teaching"]
 image: /wp-content/uploads/2018/04/image1.jpg
 ---
 

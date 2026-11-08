@@ -1,7 +1,7 @@
 ---
 title: "Survival analysis always makes me nervous"
 date: 2019-12-05
-categories: [survival analysis]
+categories: ["Statistical methods"]
 ---
 
 This post is heavy on questions, and not too many answers.  Whenever I'm faced with a data analysis that seems to warrant using a survival analysis model, I get a bit nervous.   There is something about modeling time-to-event data that feels prone to mistakes and it is probably because each modeling question seems to beget other fundamental questions.  Maybe because I have less experience with performing survival analysis than other types of  modeling problems, I have not built up a strong intuition regarding the relative importance of the different questions.  Here is a list of things I worry about:

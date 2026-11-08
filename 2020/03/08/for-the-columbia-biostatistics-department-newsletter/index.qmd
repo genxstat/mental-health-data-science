@@ -1,7 +1,7 @@
 ---
 title: "For the Columbia Biostatistics department newsletter"
 date: 2020-03-08
-categories: [about me]
+categories: ["News & notes"]
 ---
 
 *Mailman School of Public Health at Columbia University asked to "interview" me for a profile about biostatistics faculty. Here's what I said...*

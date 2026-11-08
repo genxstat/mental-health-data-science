@@ -1,7 +1,7 @@
 ---
 title: "p-hacking and the danger zone of knowing just enough statistics to be dangerous"
 date: 2018-03-06
-categories: [reproducibility]
+categories: ["Statistical methods"]
 ---
 
 The danger zone of data science is the intersection of content knowledge with computer skills good enough to run statistical "data science" software without the statistical knowledge/principles to know when to stop hunting.

@@ -1,7 +1,7 @@
 ---
 title: "To explain or predict"
 date: 2018-01-07
-categories: [data science, prediction]
+categories: ["Statistical methods"]
 ---
 
 Just discovered the work "To explain or predict" of Galit Shmueli (<http://www.galitshmueli.com/content/explain-or-predict>). She excellently clarifies the concepts of "explanatory modeling" and "predictive modeling" which mean different things to statisticians, social scientists, computer scientists and other scientists.
