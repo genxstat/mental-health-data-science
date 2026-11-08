@@ -1,0 +1,45 @@
+project:
+  type: website
+  resources:
+    - wp-content/uploads/**
+
+website:
+  title: "Mental Health Data Science"
+  description: "Ideas, helpful hints, and discussion about biostatistics and data science in psychiatry and mental health research, by Melanie Wall."
+  site-url: https://genxstat.github.io/mental-health-data-science/
+  repo-url: https://github.com/genxstat/mental-health-data-science
+  favicon: wp-content/uploads/2021/01/cropped-logo-2021.jpg
+  image: wp-content/uploads/2021/01/logo-2021.jpg
+  open-graph: true
+  search: true
+  navbar:
+    logo: wp-content/uploads/2021/01/cropped-logo-2021.jpg
+    logo-alt: "Mental Health Data Science logo"
+    left:
+      - text: Home
+        href: index.qmd
+      - text: About me
+        href: about-me/index.qmd
+    right:
+      - icon: rss
+        href: index.xml
+        aria-label: RSS feed
+      - icon: github
+        href: https://github.com/genxstat/mental-health-data-science
+        aria-label: GitHub repository
+  page-footer:
+    left: "© Melanie Wall"
+    right: "Built with [Quarto](https://quarto.org)"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: false
+    code-copy: true
+    code-overflow: scroll
+    highlight-style: github
+    link-external-newwindow: false
+
+execute:
+  freeze: auto

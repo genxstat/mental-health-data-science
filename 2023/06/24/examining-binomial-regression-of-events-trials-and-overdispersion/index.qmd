@@ -1,0 +1,303 @@
+---
+title: "Examining binomial regression of events/trials and overdispersion"
+date: 2023-06-24
+categories: [R, methods]
+---
+
+This document shows different ways to code/model binomial count (events/trials) data with R's `glm()` function, and also demonstrates the results when we aggregate data across units and when we account for overdispersion across units.
+
+The data for demonstration are about bird extinctions, from the R package **Sleuth3**. To get it: `install.packages("Sleuth3")`. The data (shown below) are from 18 islands (the Krunnit Islands in Finland) and are counts of how many different bird species there are, i.e. "trials" (`AtRisk`), and how many species went extinct, i.e. "events" (`Extinct`).
+
+For illustration, I created a dichotomous predictor variable called `group`, which is 0 for big islands and 1 for small islands.
+
+```r
+library(Sleuth3)
+library(tidyverse)
+```
+
+```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.2     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.1
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+```
+
+```r
+krunnit <- case2101
+
+####create a grouping variable for demonstration
+krunnit$group = if_else(krunnit$Area < 10,1,0)
+
+# > krunnit
+#             Island   Area AtRisk Extinct group
+# 1       Ulkokrunni 185.80     75       5     0
+# 2        Maakrunni 105.80     67       3     0
+# 3        Ristikari  30.70     66      10     0
+# 4   Isonkivenletto   8.50     51       6     1
+# 5   Hietakraasukka   4.80     28       3     1
+# 6        Kraasukka   4.50     20       4     1
+# 7       Lansiletto   4.30     43       8     1
+# 8      Pihlajakari   3.60     31       3     1
+# 9             Tyni   2.60     28       5     1
+# 10    Tasasenletto   1.70     32       6     1
+# 11          Raiska   1.20     30       8     1
+# 12     Pohjanletto   0.70     20       2     1
+# 13            Toro   0.70     31       9     1
+# 14      Luusiletto   0.60     16       5     1
+# 15   Vatunginletto   0.40     15       7     1
+# 16   Vatunginnokka   0.30     33       8     1
+# 17       Tiirakari   0.20     40      13     1
+# 18 Ristikarenletto   0.07      6       3     1
+```
+
+## Two ways of coding a binomial in `glm()`
+
+1. The proportion (events/trials) as the outcome, with `weights = trials`
+2. `cbind(events, trials - events)` as a bivariate outcome, with no need to include weights
+
+See below:
+
+```r
+krunnit$prop = krunnit$Extinct/krunnit$AtRisk
+
+###uses proportion as outcome with weight = number of trials ("AtRisk"); n=18 islands
+fit1<-glm(prop ~ group, family = binomial(), weights = AtRisk, data = krunnit)
+
+###uses number of events ("Extinct") and number of non-events ("AtRisk - Extinct") as bivariate outcome (using cbind);  n=18 islands
+fit2<-glm(cbind(Extinct, AtRisk - Extinct) ~ group, family = binomial(), data = krunnit)
+```
+
+## What if we aggregate events across islands so the data are summarized just by group?
+
+```r
+###aggregates events and non-events across islands
+
+aggkrunnit<-krunnit %>% select(AtRisk, Extinct, group) %>% group_by(group)%>%
+  summarise(totAtRisk=sum(AtRisk),
+            totExtinct = sum(Extinct))%>%
+            mutate(totprop = totExtinct/totAtRisk)
+aggkrunnit
+```
+
+```
+## # A tibble: 2 × 4
+##   group totAtRisk totExtinct totprop
+##   <dbl>     <int>      <int>   <dbl>
+## 1     0       208         18  0.0865
+## 2     1       424         90  0.212
+```
+
+```r
+###uses aggregated data and proportion as outcome with weight = number of trials ("AtRisk") n=2 groups
+fit3<-glm(totprop ~ group, family = binomial(), weights = totAtRisk, data = aggkrunnit)
+
+###uses aggregated data number of events ("Extinct") and number of non-events ("AtRisk - Extinct") as outcome n=2 groups
+fit4<-glm(cbind(totExtinct, totAtRisk-totExtinct) ~ group, family = binomial(), data = aggkrunnit)
+
+
+summary(fit1)
+```
+
+```
+##
+## Call:
+## glm(formula = prop ~ group, family = binomial(), data = krunnit,
+##     weights = AtRisk)
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  -2.3567     0.2466  -9.556  < 2e-16 ***
+## group         1.0453     0.2737   3.819 0.000134 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance: 45.338  on 17  degrees of freedom
+## Residual deviance: 28.185  on 16  degrees of freedom
+## AIC: 91.517
+##
+## Number of Fisher Scoring iterations: 4
+```
+
+```r
+summary(fit2)
+```
+
+```
+##
+## Call:
+## glm(formula = cbind(Extinct, AtRisk - Extinct) ~ group, family = binomial(),
+##     data = krunnit)
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  -2.3567     0.2466  -9.556  < 2e-16 ***
+## group         1.0453     0.2737   3.819 0.000134 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance: 45.338  on 17  degrees of freedom
+## Residual deviance: 28.185  on 16  degrees of freedom
+## AIC: 91.517
+##
+## Number of Fisher Scoring iterations: 4
+```
+
+```r
+summary(fit3)
+```
+
+```
+##
+## Call:
+## glm(formula = totprop ~ group, family = binomial(), data = aggkrunnit,
+##     weights = totAtRisk)
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  -2.3567     0.2466  -9.556  < 2e-16 ***
+## group         1.0453     0.2737   3.819 0.000134 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance:  1.7153e+01  on 1  degrees of freedom
+## Residual deviance: -2.6201e-14  on 0  degrees of freedom
+## AIC: 14.748
+##
+## Number of Fisher Scoring iterations: 3
+```
+
+```r
+summary(fit4)
+```
+
+```
+##
+## Call:
+## glm(formula = cbind(totExtinct, totAtRisk - totExtinct) ~ group,
+##     family = binomial(), data = aggkrunnit)
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  -2.3567     0.2466  -9.556  < 2e-16 ***
+## group         1.0453     0.2737   3.819 0.000134 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance:  1.7153e+01  on 1  degrees of freedom
+## Residual deviance: -2.6201e-14  on 0  degrees of freedom
+## AIC: 14.748
+##
+## Number of Fisher Scoring iterations: 3
+```
+
+Note that the results from all 4 ways of modeling above (`fit1`, `fit2`, `fit3`, `fit4`) give the EXACT same coefficients and EXACT same standard error for `group`. That is, it doesn't matter whether we use the coding method with `prop` or `cbind(event, trial - event)` as the outcome. And, more importantly and interestingly, it doesn't make a difference whether we use all 18 sets of counts (1 for each island) separately (like in `fit1` and `fit2`) or else include only the aggregated data across islands by group (n=2) (like in `fit3` and `fit4`).
+
+## Why the standard errors don't change
+
+The fact that the standard errors are the same whether we aggregate or not pointed to something important about what the binomial model is assuming. The reason the disaggregated and aggregated are the same is that the binomial model has only 1 parameter (i.e. the probability of an event) and the regression model is actually assuming all the trials are independent across all islands. The model doesn't care/notice that the data come from different islands. It is focused on just modeling the probability of an event out of all the possible trials aggregating across big and small islands.
+
+But this is a problem because we know the species at risk are clustered within islands and so there is another variability which should probably be considered which is island-island variability. This extra variability due to clustering in binomial data (and also in Poisson data) is often called "overdispersion". There are multiple ways to incorporate it ([see this paper](https://journals.sagepub.com/doi/pdf/10.1177/0962280215588569)), but the simplest is to adjust the standard errors by a scale factor either using the Pearson or the Deviance residuals which quantifies how much the variability in the residuals deviates from that expected if all islands had the same exact true probability of an event (after accounting for covariates).
+
+## Accounting for overdispersion with `quasibinomial()`
+
+Notice in the binomial output it says "(Dispersion parameter for binomial family taken to be 1)". We can change that by using `family = quasibinomial()`, as below:
+
+```r
+##### Using quasibinomial() to account for island to island variability in proportions
+
+fit1disp<-glm(prop ~ group, family = quasibinomial(), weights = AtRisk, data = krunnit)
+fit2disp<-glm(cbind(Extinct, AtRisk-Extinct) ~ group, family = quasibinomial(), data = krunnit)
+
+summary(fit1disp)
+```
+
+```
+##
+## Call:
+## glm(formula = prop ~ group, family = quasibinomial(), data = krunnit,
+##     weights = AtRisk)
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  -2.3567     0.3324  -7.091 2.56e-06 ***
+## group         1.0453     0.3689   2.834    0.012 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for quasibinomial family taken to be 1.816271)
+##
+##     Null deviance: 45.338  on 17  degrees of freedom
+## Residual deviance: 28.185  on 16  degrees of freedom
+## AIC: NA
+##
+## Number of Fisher Scoring iterations: 4
+```
+
+```r
+summary(fit2disp)
+```
+
+```
+##
+## Call:
+## glm(formula = cbind(Extinct, AtRisk - Extinct) ~ group, family = quasibinomial(),
+##     data = krunnit)
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  -2.3567     0.3324  -7.091 2.56e-06 ***
+## group         1.0453     0.3689   2.834    0.012 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for quasibinomial family taken to be 1.816271)
+##
+##     Null deviance: 45.338  on 17  degrees of freedom
+## Residual deviance: 28.185  on 16  degrees of freedom
+## AIC: NA
+##
+## Number of Fisher Scoring iterations: 4
+```
+
+The dispersion parameter is 1.816271 above. Note that the coefficient estimates for the effects for `group` are the same as when we just used `family = binomial` earlier, but now with `family = quasibinomial`, the STANDARD ERRORS and consequently P-VALUES are different (bigger). Specifically, the group coefficient (SE) = 0.3689 now whereas before it was 0.2737 without overdispersion. We can see that 0.3689 = sqrt(1.816271) × 0.2737. That is, the standard errors are now inflated by sqrt of the overdispersion parameter. **Conclusion:** if we want to test the group effect on the probability of a species going extinct, it is more accurate to account for the fact that species are clustered within islands and not all islands have the same probability of bird species going extinct, hence it is better to adjust/inflate the standard errors for "overdispersion".
+
+And if we try (below) to use quasibinomial with the aggregated data, as expected it will not work, because there are no residuals that can be used to estimate the overdispersion, i.e. there is no way to check whether there is any variability at the island level when we collapse across islands.
+
+```r
+fit3disp<-glm(totprop ~ group, family = quasibinomial(), weights = totAtRisk, data = aggkrunnit)
+summary(fit3disp)
+```
+
+```
+##
+## Call:
+## glm(formula = totprop ~ group, family = quasibinomial(), data = aggkrunnit,
+##     weights = totAtRisk)
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   -2.357        NaN     NaN      NaN
+## group          1.045        NaN     NaN      NaN
+##
+## (Dispersion parameter for quasibinomial family taken to be NaN)
+##
+##     Null deviance:  1.7153e+01  on 1  degrees of freedom
+## Residual deviance: -2.6201e-14  on 0  degrees of freedom
+## AIC: NA
+##
+## Number of Fisher Scoring iterations: 3
+```

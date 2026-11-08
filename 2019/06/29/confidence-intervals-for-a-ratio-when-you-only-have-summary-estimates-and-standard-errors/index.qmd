@@ -1,0 +1,95 @@
+---
+title: "Confidence intervals for a ratio when you only have summary estimates and standard errors"
+date: 2019-06-29
+categories: [R, methods]
+---
+
+**This post shows how to calculate a confidence interval for a ratio A/B when you have estimates for A and B and also have their standard errors s.e.(A), and s.e.(B).**
+
+This problem may arise if you have prevalence estimates and associated standard errors for some dichotomous outcome (e.g. cannabis use) in two exposure groups (e.g. people with and without a painful condition) and you want to get the confidence interval for the Relative Risk but you don't have access to the raw data, only the summary estimates. Indeed, just such problem came up recently in a project I was working on.
+
+For example,
+
+-   Prevalence of cannabis use for people **with** pain is a = 5.15%, with standard error s.e.(a) = 0.39%
+-   Prevalence of cannabis use for people **without** pain is b = 3.74%, with standard error s.e.(b) = 0.14%
+-   We want the 95% confidence interval for the relative risk RR = a/b = 5.15/3.74 = 1.377
+
+The method (formula) is attributed to Fieller, EC. (1940) "The biological standardisation of insulin". Journal of the Royal Statistical Society (Supplement). 1:1--54. I took a look at the 1940 paper and there are many many formulas but after about 30 minutes I gave up trying to find which one is for the ratio and instead found a simple version of the specific formulation [here](https://i.stack.imgur.com/vO8Ip.png)
+
+Fieller's method incorporates the value **g** below and can only be used when g\<1 which occurs when the s.e.(B) is smaller than half of B (i.e. the denominator of the ratio). The formula will yield non-symmetric confidence intervals.
+
+I checked the confidence interval estimates from my code below against estimates obtained from an online calculator at <https://www.graphpad.com/quickcalcs/errorProp1/?Format=SEM> and they are very very similar (to 3 decimal places)
+
+```r
+a=c(5.15)   ###Prevalence of cannabis use for people with pain
+sea=c(.39)  ###standard error of prevalence
+
+b=c(3.74)   ###Prevalence of cannabis use for people without pain
+seb = c(.14) ####standard error of prevalence
+
+q = a/b
+
+### using simple delta method gives similar results in our case to the Fiellers method since seb is small compared to b
+### here is the formula but I leave it commented out since we might as well use the Fiellers method which is expected
+### to be more accurate and can produce non-symmetric confidence intervals more appropriate for risk ratios
+#seqdelta = q*sqrt(sea^2/a^2 + seb^2/b^2)
+#q
+#q-1.96*seqdelta
+#q+1.96*seqdelta
+
+###Fieller's formula for the standard error
+### if g > 1 then do not use this formula it is not a good approximation
+
+g=(1.96*seb/b)^2
+if (g<1) {
+q = a/b
+serr = (q/(1-g))*sqrt((1-g)*sea^2/a^2 + seb^2/b^2)
+}
+```
+
+This outputs the 95% confidence interval for the risk ratio RR = A/B = prevalence of cannabis use in the pain group / prevalence of cannabis use in the no-pain group = 1.377:
+
+```r
+a
+```
+
+```
+## [1] 5.15
+```
+
+```r
+b
+```
+
+```
+## [1] 3.74
+```
+
+```r
+###risk ratio
+q
+```
+
+```
+## [1] 1.377005
+```
+
+```r
+###left side of 95% confidence interval
+q/(1-g) - 1.96*serr
+```
+
+```
+## [1] 1.155729
+```
+
+```r
+###right side of 95% confidence interval
+q/(1-g) + 1.96*serr
+```
+
+```
+## [1] 1.613187
+```
+
+**So the 95% confidence interval for RR = 1.377 using Fieller's method is (1.156, 1.613).**

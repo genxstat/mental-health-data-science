@@ -1,0 +1,7 @@
+---
+title: "About me"
+---
+
+I am a biostatistician who has worked on applied research questions in psychosocial and behavioral public health and psychiatry my whole career. Here is a place to post ideas, helpful hints, and maybe start discussions about this exciting work, especially as we enter a new era of Data Science.
+
+My Columbia University website and CV: <http://www.columbia.edu/~mmw2177/>

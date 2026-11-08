@@ -1,0 +1,15 @@
+---
+title: "Overview of Neuroimaging data modalities"
+date: 2018-08-04
+categories: [neuroimaging, talks]
+---
+
+This year at the JSM in Vancouver I was asked to be a discussant in a session on statistical methods for high dimensional Neuroimaging markers for mental health disorders.  Given the diversity of the 4 talks, rather than discuss the different statistical methods, I took the opportunity to pull together in one place a basic description of the different Neuroimaging modalities that were used in the talks: EEG, MRI, fMRI, dMRI, MRS.
+
+::: {.office-embed}
+```{=html}
+<iframe src="https://view.officeapps.live.com/op/embed.aspx?src=https%3A%2F%2Fgenxstat.github.io%2Fmental-health-data-science%2Fwp-content%2Fuploads%2F2018%2F08%2Fdiscussant-Wall-2018-small.pptx" title="JSM 2018 discussant slides (PowerPoint)" loading="lazy"></iframe>
+```
+:::
+
+[Download: JSM 2018 discussant slides (PowerPoint)](/wp-content/uploads/2018/08/discussant-Wall-2018-small.pptx)
